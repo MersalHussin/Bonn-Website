@@ -22,7 +22,7 @@ export default function NotFound() {
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="text-5xl font-extrabold mb-4 text-[#0056D2]"
+        className="text-5xl font-extrabold mb-4 text-main"
       >
         {isAr ? "الصفحة غير موجودة" : "Page Not Found"}
       </motion.h1>
@@ -47,14 +47,14 @@ export default function NotFound() {
       >
         <Link
           href="/"
-          className="px-7 py-3 bg-[#0056D2] text-white rounded-xl text-lg font-medium hover:bg-[#0049b8] transition shadow-md"
+          className="px-7 py-3 bg-main text-white rounded-xl text-lg font-medium hover:bg-[#0049b8] transition shadow-md"
         >
           {isAr ? "الصفحة الرئيسية" : "Home"}
         </Link>
 
         <Link
           href="/services"
-          className="px-7 py-3 border-2 border-[#0056D2] text-[#0056D2] rounded-xl text-lg font-medium hover:bg-[#0056D2] hover:text-white transition shadow-md"
+          className="px-7 py-3 border-2 border-main text-main rounded-xl text-lg font-medium hover:bg-main hover:text-white transition shadow-md"
         >
           {isAr ? "مشاهدة المنتجات" : "Browse Products"}
         </Link>

@@ -83,11 +83,11 @@ export default function AdminLogin() {
 
   return (
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#0056D2] to-[#003a8c]">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-main to-[#003a8c]">
   <div className="w-full max-w-md bg-white/95 backdrop-blur border border-white/20 rounded-3xl shadow-2xl p-8 space-y-6">
           {/* Header */}
           <div className="text-center space-y-2">
-            <div className="mx-auto w-12 h-12 rounded-xl bg-[#0056D2] text-white flex items-center justify-center shadow-lg">
+            <div className="mx-auto w-12 h-12 rounded-xl bg-main text-white flex items-center justify-center shadow-lg">
   <ShieldCheck size={22} />
 </div>
 

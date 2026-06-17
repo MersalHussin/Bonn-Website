@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useTranslation } from "react-i18next";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
+import Container from "./Container";
 import "swiper/css";
 
 const clients = [
@@ -29,9 +30,9 @@ export default function ClientsSection() {
 
   return (
     <section className="py-16 bg-gray-50">
-      <div className="mx-auto px-6 text-center"
-        dir="ltr">
-        <h2 className="text-3xl md:text-4xl font-bold text-[#0056D2] mb-10">
+      <Container>
+        <div className="text-center" dir="ltr">
+        <h2 className="text-3xl md:text-4xl font-bold text-main mb-10">
           {t("OurClients")}
         </h2>
         <Swiper
@@ -70,7 +71,8 @@ export default function ClientsSection() {
             </SwiperSlide>
           ))}
         </Swiper>
-      </div>
+        </div>
+      </Container>
     </section>
   );
 }

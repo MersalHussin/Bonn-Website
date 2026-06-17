@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import Container from "./Container";
 
 export default function ServicesGallery() {
   const { t } = useTranslation();
@@ -12,7 +13,7 @@ export default function ServicesGallery() {
       {/* subtle background */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,#E2E8FF_0%,transparent_55%)] -z-10" />
 
-      <div className="max-w-7xl mx-auto px-6 space-y-24">
+      <Container className="space-y-24">
 
         {/* ===== Header ===== */}
         <div className="max-w-3xl">
@@ -26,7 +27,7 @@ export default function ServicesGallery() {
           </motion.h2>
 
           <motion.div
-            className="mt-5 w-28 h-[3px] bg-gradient-to-r from-[#0056D2] to-[#7BA7FF] rounded-full"
+            className="mt-5 w-28 h-[3px] bg-gradient-to-r from-main to-[#7BA7FF] rounded-full"
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             transition={{ delay: 0.2 }}
@@ -48,12 +49,12 @@ export default function ServicesGallery() {
 
           {/* Video 1 */}
           <motion.div
-            className="relative rounded-xl overflow-hidden border border-[#0056D2]/20 bg-white"
+            className="relative rounded-xl overflow-hidden border border-main/20 bg-white"
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <div className="absolute inset-0 bg-[#0056D2]/10 mix-blend-multiply z-10 pointer-events-none" />
+            <div className="absolute inset-0 bg-main/10 mix-blend-multiply z-10 pointer-events-none" />
             <video
               src="https://res.cloudinary.com/dbgdvnkev/video/upload/v1761160485/whiteboard_final_v_1_nujzk5.webm"
               controls
@@ -64,12 +65,12 @@ export default function ServicesGallery() {
 
           {/* Video 2 */}
           <motion.div
-            className="relative rounded-xl overflow-hidden border border-[#0056D2]/20 bg-white"
+            className="relative rounded-xl overflow-hidden border border-main/20 bg-white"
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <div className="absolute inset-0 bg-[#0056D2]/10 mix-blend-multiply z-10 pointer-events-none" />
+            <div className="absolute inset-0 bg-main/10 mix-blend-multiply z-10 pointer-events-none" />
             <video
               src="https://res.cloudinary.com/dbgdvnkev/video/upload/v1770045989/finesh_1_1_1_owz1uo.webm"
               controls
@@ -79,7 +80,7 @@ export default function ServicesGallery() {
           </motion.div>
 
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

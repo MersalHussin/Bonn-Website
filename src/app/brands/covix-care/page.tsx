@@ -618,7 +618,7 @@ We also expanded intimate care into a full range — because real care means off
     {/* PRODUCTS CAROUSEL */}
     {Object.entries(grouped).map(([brandName, items]) => {
       const brandUI = BRAND_UI[brandName];
-      const primary = brandUI?.primary || "#0056D2";
+      const primary = brandUI?.primary || "var(--main-color)";
 
       return (
         <div key={brandName} className="space-y-8">

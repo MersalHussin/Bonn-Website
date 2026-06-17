@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaYoutube, FaLinkedin, FaTiktok } from "react-icons/fa";
 import { motion } from "framer-motion";
+import Container from "./Container";
 
 export default function ContactUs() {
   const { t, i18n } = useTranslation();
@@ -34,14 +35,15 @@ export default function ContactUs() {
   };
 
   return (
-    <div id="contact" className="max-w-5xl mx-auto p-6 space-y-10" dir="ltr">
+    <Container id="contact" className="py-10 space-y-10">
+      <div dir="ltr">
       <motion.div
         variants={fadeUp}
         animate= "visible"
         transition={{ duration: 0.6 }}
         className="text-center"
       >
-        <h2 className="text-4xl font-bold text-[#0056D2] mb-1 text-center">{t("title")}</h2>
+        <h2 className="text-4xl font-bold text-main mb-1 text-center">{t("title")}</h2>
         <p className="text-gray-600">{t("subtitle")}</p>
       </motion.div>
 
@@ -54,7 +56,7 @@ export default function ContactUs() {
         {/* Contact Info */}
         <div className="space-y-6" dir={isArabic ? "rtl" : "ltr"}>
           <div className="flex items-start gap-4">
-            <FaMapMarkerAlt className="text-xl mt-1 text-blue-600" />
+            <FaMapMarkerAlt className="text-xl mt-1 text-main" />
             <div>
               <h4 className="font-semibold">{t("address")}</h4>
               <p>{t("theAddress")}</p>
@@ -167,7 +169,7 @@ export default function ContactUs() {
           ></textarea>
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-700 transition"
+            className="w-full bg-main text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-700 transition"
             dir={isArabic ? "rtl" : "ltr"}
           >
             {t("send")}
@@ -192,6 +194,7 @@ export default function ContactUs() {
           loading="lazy"
         ></iframe>
       </motion.div>
-    </div>
+      </div>
+    </Container>
   );
 }

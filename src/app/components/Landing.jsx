@@ -5,50 +5,33 @@ import { useTranslation } from "react-i18next";
 import { ArrowRight, ArrowLeft } from "lucide-react";
 import i18n from "../../i18n";
 import Link from "next/link";
+import Image from "next/image";
+import Container from "./Container";
 
 export default function Hero() {
   const { t } = useTranslation();
-  const isArabic = i18n.language === "ar";
+  const isArabic = i18n.language === "ar";  
 
   return (
-    <section className="relative w-full h-[65vh] max-[450px]:h-[75svh] overflow-hidden mt-[65px]">
-      {/* Background Video */}
-      <video
-        className="absolute inset-0 w-full h-full object-cover scale-112 m-0 p-0"
-        src="https://res.cloudinary.com/dbgdvnkev/video/upload/v1768245923/Promo_-_V2-2-2_xa4zoc.webm"
-        autoPlay
-        muted
-        loop
-        playsInline
-      />
+    <section className="relative w-full h-[80vh] max-[450px]:h-[75svh] overflow-hidden mt-[65px] bg-main" dir="ltr">
+    
 
       {/* Gradient Overlay */}
-      <div className="absolute inset-0 z-10 bg-gradient-to-b from-[#050b18]/90 via-[#050b18]/70 to-[#050b18]/95" />
+      <div className="absolute inset-0 z-10 bg-gradient-to-b from-[#0033a0]/90 via-[#0033a0]/70 to-[#07327b]/95" />
 
       {/* Content */}
-      <div className="relative z-20 h-full flex items-center justify-center px-6">
+      <Container className="relative z-20 h-full flex items-center justify-between">
+        <Image src={'/images/bonnHero.jpeg'} alt="Bonn Industry" width={650} height={650} className="rounded-2xl hidden xl:flex"/>
         <div className="max-w-4xl text-center text-white">
-
-          {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="inline-block mb-4 px-4 py-1 rounded-full border border-[#4ca1ff]/40 text-[#4ca1ff] text-xs md:text-sm tracking-wide"
-          >
-            {isArabic
-              ? "تصنيع طبي معتمد في السعودية"
-              : "Certified Medical Manufacturing – Saudi Arabia"}
-          </motion.div>
-
           {/* Headline */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-6xl max-[450px]:text-3xl font-extrabold leading-tight mb-6"
+            className="text-4xl md:text-5xl max-[450px]:text-3xl font-extrabold leading-tight mb-3"
           >
             {isArabic
-              ? "نحوّل الأفكار الطبية إلى منتجات تنافس عالميًا"
+              ? "نحوّل الأفكار الطبية إلـى منتجات تنافس عالمـــيًا"
               : "We Transform Medical Ideas Into Globally Competitive Products"}
           </motion.h1>
 
@@ -57,10 +40,10 @@ export default function Hero() {
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-gray-300 max-w-2xl mx-auto mb-10 text-sm md:text-lg"
+            className="text-gray-300 max-w-115 mx-auto mb-10 text-md md:text-xl"
           >
             {isArabic
-              ? "شريكك في تصنيع مستحضرات التجميل الطبية والمستلزمات الصحية من الفكرة وحتى السوق."
+              ? "شريكك في تصنيع مستحضرات التجميل الطبيـــــــــــــــــة والمستلزمات الصحية من الفكرة وحتى الســـــــــــــــــوق"
               : "Your trusted partner for manufacturing cosmetic, healthcare, and medical products — from concept to market."}
           </motion.p>
 
@@ -69,11 +52,11 @@ export default function Hero() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center"
+            className="flex flex-col sm:flex-row-reverse gap-4 justify-center "
           >
             <Link
               href="/registration"
-              className="group relative inline-flex items-center justify-center px-8 py-3 rounded-xl bg-[#4ca1ff] text-black font-semibold transition-all duration-300 hover:scale-[1.03]"
+              className="group relative inline-flex items-center justify-center px-8 py-3 rounded-xl bg-white text-main font-bold transition-all duration-300 hover:scale-[1.03]"
             >
               {isArabic ? "ابدأ مشروعك" : "Start Your Project"}
               <span className="ml-2 group-hover:translate-x-1 transition-transform">
@@ -89,7 +72,7 @@ export default function Hero() {
             </Link>
           </motion.div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

@@ -28,28 +28,28 @@ export default function Footer() {
 
         {/* Navigation */}
         <div className="flex flex-col gap-3">
-          <h3 className="text-[#0056D2] font-semibold text-lg">{t("footer.links", "Quick Links")}</h3>
-          <Link href="/" className="hover:text-[#0056D2] transition">{t("home")}</Link>
-          <Link href="/about" className="hover:text-[#0056D2] transition">{t("about")}</Link>
-          <Link href="/services" className="hover:text-[#0056D2] transition">{t("services.title")}</Link>
-          <Link href="/certifications" className="hover:text-[#0056D2] transition">{t("certifications")}</Link>
-          <Link href="/#contact" className="hover:text-[#0056D2] transition">{t("contact")}</Link>
+          <h3 className="text-main font-semibold text-lg">{t("footer.links", "Quick Links")}</h3>
+          <Link href="/" className="hover:text-main transition">{t("home")}</Link>
+          <Link href="/about" className="hover:text-main transition">{t("about")}</Link>
+          <Link href="/services" className="hover:text-main transition">{t("services.title")}</Link>
+          <Link href="/certifications" className="hover:text-main transition">{t("certifications")}</Link>
+          <Link href="/#contact" className="hover:text-main transition">{t("contact")}</Link>
         </div>
 
         {/* Social & Language */}
         <div className="flex flex-col gap-4">
-          <h3 className="text-[#0056D2] font-semibold text-lg">{t("footer.followUs", "Follow Us")}</h3>
+          <h3 className="text-main font-semibold text-lg">{t("footer.followUs", "Follow Us")}</h3>
           <div className="flex gap-4 text-white">
-            <Link href="https://www.facebook.com/bonnmedical" aria-label="Visit Our Facebook" target="_blank" rel="noopener noreferrer" className="bg-[#0056D2] p-2 rounded-full hover:scale-110 transition">
+            <Link href="https://www.facebook.com/bonnmedical" aria-label="Visit Our Facebook" target="_blank" rel="noopener noreferrer" className="bg-main p-2 rounded-full hover:scale-110 transition">
               <FaFacebookF />
             </Link>
-            <Link href="https://instagram.com/bonnmedical" aria-label="Visit Our Instagram" target="_blank" rel="noopener noreferrer" className="bg-[#0056D2] p-2 rounded-full hover:scale-110 transition">
+            <Link href="https://instagram.com/bonnmedical" aria-label="Visit Our Instagram" target="_blank" rel="noopener noreferrer" className="bg-main p-2 rounded-full hover:scale-110 transition">
               <FaInstagram />
             </Link>
-            <Link href="https://www.linkedin.com/company/bonnmedical" aria-label="Visit Our Linkedin" target="_blank" rel="noopener noreferrer" className="bg-[#0056D2] p-2 rounded-full hover:scale-110 transition">
+            <Link href="https://www.linkedin.com/company/bonnmedical" aria-label="Visit Our Linkedin" target="_blank" rel="noopener noreferrer" className="bg-main p-2 rounded-full hover:scale-110 transition">
               <FaLinkedinIn />
             </Link>
-                      <Link href="https://www.youtube.com/@BonnMedical" aria-label="Visit Our Instagram" target="_blank" rel="noopener noreferrer" className="bg-[#0056D2] p-2 rounded-full hover:scale-110 transition">
+                      <Link href="https://www.youtube.com/@BonnMedical" aria-label="Visit Our Instagram" target="_blank" rel="noopener noreferrer" className="bg-main p-2 rounded-full hover:scale-110 transition">
               <FaYoutube />
             </Link>
           </div>

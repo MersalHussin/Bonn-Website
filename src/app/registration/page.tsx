@@ -256,7 +256,7 @@ export default function FullClientEvaluationForm() {
 
   /* input classes - kept same tailwind details as original inputs */
   const inputClass =
-    "w-full mt-2 px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-[#0056D2] outline-none";
+    "w-full mt-2 px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-main outline-none";
   const textareaClass = inputClass + " resize-none";
 
   /* handle generic change for inputs/selects/textarea */
@@ -431,17 +431,17 @@ const circleY = typeof window !== "undefined" ? (window.innerHeight * parseFloat
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <h2 className="text-3xl md:text-4xl font-extrabold text-[#003D99] text-center mb-6">{t("form.title")}</h2>
+        <h2 className="text-3xl md:text-4xl font-extrabold text-[var(--second-color)] text-center mb-6">{t("form.title")}</h2>
         <p className="text-center text-gray-600 mb-10">{t("form.subtitle")}</p>
 
         <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6">
           {/* Section 1 Card */}
           <div className="bg-white rounded-2xl p-6 border border-[#F1F5FF] shadow-sm">
-            <h3 className="text-xl font-semibold text-[#003D99] mb-4">{t("form.section1Title")}</h3>
+            <h3 className="text-xl font-semibold text-[var(--second-color)] mb-4">{t("form.section1Title")}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Company name */}
               <div className="col-span-2">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.companyName")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.companyName")}</label>
                 <input
                   type="text"
                   name="companyName"
@@ -454,7 +454,7 @@ const circleY = typeof window !== "undefined" ? (window.innerHeight * parseFloat
 
               {/* Contact person */}
               <div className="col-span-2 md:col-span-1">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.contactPerson")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.contactPerson")}</label>
                 <input
                   type="text"
                   name="contactPerson"
@@ -466,31 +466,31 @@ const circleY = typeof window !== "undefined" ? (window.innerHeight * parseFloat
 
               {/* Telephone */}
               <div className="col-span-2 md:col-span-1">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.telephone")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.telephone")}</label>
                 <input type="tel" name="telephone" value={formData.telephone} onChange={handleChange} className={inputClass} />
               </div>
 
               {/* Email */}
               <div className="col-span-2 md:col-span-1">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.email")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.email")}</label>
                 <input type="email" name="email" value={formData.email} onChange={handleChange} className={inputClass} />
               </div>
 
               {/* Website */}
               <div className="col-span-2 md:col-span-1">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.website")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.website")}</label>
                 <input type="text" name="website" value={formData.website} onChange={handleChange} className={inputClass} />
               </div>
 
               {/* Postal Address */}
               <div className="col-span-2">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.postalAddress")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.postalAddress")}</label>
                 <input type="text" name="postalAddress" value={formData.postalAddress} onChange={handleChange} className={inputClass} />
               </div>
 
               {/* Country select with flags */}
               <div className="col-span-2 md:col-span-1">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.countryOfRegistration")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.countryOfRegistration")}</label>
                 <div className="mt-2">
                   <Select
                     options={countries}
@@ -513,19 +513,19 @@ const circleY = typeof window !== "undefined" ? (window.innerHeight * parseFloat
 
               {/* Trade / license */}
               <div className="col-span-2 md:col-span-1">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.tradeLicense")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.tradeLicense")}</label>
                 <input type="text" name="tradeLicense" value={formData.tradeLicense} onChange={handleChange} className={inputClass} />
               </div>
 
               {/* Year established */}
               <div className="col-span-2 md:col-span-1">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.yearEstablished")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.yearEstablished")}</label>
                 <input type="number" name="yearEstablished" value={formData.yearEstablished} onChange={handleChange} className={inputClass} />
               </div>
 
               {/* Owners */}
               <div className="col-span-2">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.owners")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.owners")}</label>
                 <textarea name="owners" value={formData.owners} onChange={handleChange} rows={2} className={textareaClass} />
               </div>
             </div>
@@ -533,11 +533,11 @@ const circleY = typeof window !== "undefined" ? (window.innerHeight * parseFloat
 
           {/* Section 2 Card */}
           <div className="bg-white rounded-2xl p-6 border border-[#F1F5FF] shadow-sm">
-            <h3 className="text-xl font-semibold text-[#003D99] mb-4">{t("form.section2Title")}</h3>
+            <h3 className="text-xl font-semibold text-[var(--second-color)] mb-4">{t("form.section2Title")}</h3>
             <div className="grid grid-cols-2 md:grid-cols-1 gap-6">
               {/* Business Type (select) */}
               <div className="col-span-2 md:grid-cols-1">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.businessType")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.businessType")}</label>
                 <select name="businessType" value={formData.businessType} onChange={handleChange} className={inputClass}>
                   <option value="">{t("form.selectOption")}</option>
                   <option value="brandOwner">{t("form.brandOwner")}</option>
@@ -550,19 +550,19 @@ const circleY = typeof window !== "undefined" ? (window.innerHeight * parseFloat
 
               {/* Presence */}
               <div className="col-span-2 md:grid-cols-1">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.presence")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.presence")}</label>
                 <input type="text" name="presence" value={formData.presence} onChange={handleChange} className={inputClass} />
               </div>
 
               {/* Turnover */}
               <div className="col-span-2 md:grid-cols-1">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.turnover")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.turnover")}</label>
                 <input type="text" name="turnover" value={formData.turnover} onChange={handleChange} className={inputClass} />
               </div>
 
               {/* Team size */}
               <div className="col-span-2 md:grid-cols-1">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.teamSize")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.teamSize")}</label>
                 <select name="teamSize" value={formData.teamSize} onChange={handleChange} className={inputClass}>
                   <option value="">{t("form.selectOption")}</option>
                   <option value="1-10">{t("form.size_small")}</option>
@@ -574,19 +574,19 @@ const circleY = typeof window !== "undefined" ? (window.innerHeight * parseFloat
 
               {/* Partner brands */}
               <div className="col-span-2">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.partnerBrands")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.partnerBrands")}</label>
                 <textarea name="partnerBrands" value={formData.partnerBrands} onChange={handleChange} rows={2} className={textareaClass} />
               </div>
 
               {/* References */}
               <div className="col-span-2">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.references")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.references")}</label>
                 <textarea name="references" value={formData.references} onChange={handleChange} rows={2} className={textareaClass} />
               </div>
 
               {/* Competitors */}
               <div className="col-span-2">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.competitors")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.competitors")}</label>
                 <textarea name="competitors" value={formData.competitors} onChange={handleChange} rows={2} className={textareaClass} />
               </div>
             </div>
@@ -594,23 +594,23 @@ const circleY = typeof window !== "undefined" ? (window.innerHeight * parseFloat
 
           {/* Section 3 Card */}
           <div className="bg-white rounded-2xl p-6 border border-[#F1F5FF] shadow-sm">
-            <h3 className="text-xl font-semibold text-[#003D99] mb-4">{t("form.section3Title")}</h3>
+            <h3 className="text-xl font-semibold text-[var(--second-color)] mb-4">{t("form.section3Title")}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Requested products */}
               <div className="col-span-2">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.requestedProducts")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.requestedProducts")}</label>
                 <textarea name="requestedProducts" value={formData.requestedProducts} onChange={handleChange} rows={3} className={textareaClass} />
               </div>
 
               {/* Target consumer */}
               <div className="col-span-2">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.targetProfile")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.targetProfile")}</label>
                 <input type="text" name="targetProfile" value={formData.targetProfile} onChange={handleChange} className={inputClass} />
               </div>
 
               {/* Category */}
               <div className="col-span-2">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.productCategory")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.productCategory")}</label>
                 <select name="productCategory" value={formData.productCategory} onChange={handleChange} className={inputClass}>
                   <option value="">{t("form.selectOption")}</option>
                   <option value="hair">{t("form.hairCare")}</option>
@@ -623,7 +623,7 @@ const circleY = typeof window !== "undefined" ? (window.innerHeight * parseFloat
 
               {/* Estimated launch */}
               <div className="col-span-2 md:col-span-1">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.launchDate")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.launchDate")}</label>
                 <input type="text" name="launchDate" value={formData.launchDate} onChange={handleChange} placeholder={t("form.launchDatePlaceholder")} className={inputClass} />
               </div>
             </div>
@@ -631,10 +631,10 @@ const circleY = typeof window !== "undefined" ? (window.innerHeight * parseFloat
 
           {/* Section 4 Card */}
           <div className="bg-white rounded-2xl p-6 border border-[#F1F5FF] shadow-sm">
-            <h3 className="text-xl font-semibold text-[#003D99] mb-4">{t("form.section4Title")}</h3>
+            <h3 className="text-xl font-semibold text-[var(--second-color)] mb-4">{t("form.section4Title")}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="col-span-2">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.customFormulation")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.customFormulation")}</label>
                 <select name="customFormulation" value={formData.customFormulation} onChange={handleChange} className={inputClass}>
                   <option value="">{t("form.selectOption")}</option>
                   <option value="yes">{t("form.yes")}</option>
@@ -643,22 +643,22 @@ const circleY = typeof window !== "undefined" ? (window.innerHeight * parseFloat
               </div>
 
               <div className="col-span-2 md:grid-cols-1">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.formulationDetails")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.formulationDetails")}</label>
                 <textarea name="formulationDetails" value={formData.formulationDetails} onChange={handleChange} rows={3} className={textareaClass} />
               </div>
 
               <div className="col-span-2 md:grid-cols-1">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.sampleQty")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.sampleQty")}</label>
                 <input type="number" name="sampleQty" value={formData.sampleQty} onChange={handleChange} className={inputClass} />
               </div>
 
               <div className="col-span-2 md:grid-cols-1">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.sampleDeadline")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.sampleDeadline")}</label>
                 <input type="text" name="sampleDeadline" value={formData.sampleDeadline} onChange={handleChange} className={inputClass} />
               </div>
 
               <div className="col-span-2 md:grid-cols-1">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.testingRequirements")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.testingRequirements")}</label>
                 <textarea name="testingRequirements" value={formData.testingRequirements} onChange={handleChange} rows={3} className={textareaClass} />
               </div>
             </div>
@@ -666,30 +666,30 @@ const circleY = typeof window !== "undefined" ? (window.innerHeight * parseFloat
 
           {/* Section 5 Card */}
           <div className="bg-white rounded-2xl p-6 border border-[#F1F5FF] shadow-sm">
-            <h3 className="text-xl font-semibold text-[#003D99] mb-4">{t("form.section5Title")}</h3>
+            <h3 className="text-xl font-semibold text-[var(--second-color)] mb-4">{t("form.section5Title")}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="col-span-2 md:grid-cols-1">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.packagingRequirements")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.packagingRequirements")}</label>
                 <textarea name="packagingRequirements" value={formData.packagingRequirements} onChange={handleChange} rows={3} className={textareaClass} />
               </div>
 
               <div className="col-span-2 md:grid-cols-1">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.packagingDetails")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.packagingDetails")}</label>
                 <input type="text" name="packagingDetails" value={formData.packagingDetails} onChange={handleChange} className={inputClass} />
               </div>
 
               <div className="col-span-2 md:grid-cols-1">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.artwork")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.artwork")}</label>
                 <input type="text" name="artwork" value={formData.artwork} onChange={handleChange} className={inputClass} />
               </div>
 
               <div className="col-span-2 md:grid-cols-1">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.barcode")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.barcode")}</label>
                 <input type="text" name="barcode" value={formData.barcode} onChange={handleChange} className={inputClass} />
               </div>
 
              <div className="col-span-2 md:grid-cols-1">
-  <label className="block text-sm font-medium text-[#003D99]">
+  <label className="block text-sm font-medium text-[var(--second-color)]">
     {t("form.localLanguage")}
   </label>
 
@@ -711,35 +711,35 @@ const circleY = typeof window !== "undefined" ? (window.innerHeight * parseFloat
 
           {/* Section 6 Card */}
           <div className="bg-white rounded-2xl p-6 border border-[#F1F5FF] shadow-sm">
-            <h3 className="text-xl font-semibold text-[#003D99] mb-4">{t("form.section6Title")}</h3>
+            <h3 className="text-xl font-semibold text-[var(--second-color)] mb-4">{t("form.section6Title")}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="col-span-2 md:grid-cols-1">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.logisticsNeeds")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.logisticsNeeds")}</label>
                 <textarea name="logisticsNeeds" value={formData.logisticsNeeds} onChange={handleChange} rows={3} className={textareaClass} />
               </div>
 
               <div className="col-span-2 md:grid-cols-1">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.incoterms")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.incoterms")}</label>
                 <input type="text" name="incoterms" value={formData.incoterms} onChange={handleChange} className={inputClass} />
               </div>
 
               <div className="col-span-2 md:grid-cols-1">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.serialization")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.serialization")}</label>
                 <input type="text" name="serialization" value={formData.serialization} onChange={handleChange} className={inputClass} />
               </div>
 
               <div className="col-span-2 md:grid-cols-1">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.deliveryLeadTime")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.deliveryLeadTime")}</label>
                 <input type="text" name="deliveryLeadTime" value={formData.deliveryLeadTime} onChange={handleChange} className={inputClass} />
               </div>
 
               <div className="col-span-2 md:grid-cols-1">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.authorizedDistributors")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.authorizedDistributors")}</label>
                 <input type="text" name="authorizedDistributors" value={formData.authorizedDistributors} onChange={handleChange} className={inputClass} />
               </div>
 
               <div className="col-span-2 md:grid-cols-1">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.storageConditions")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.storageConditions")}</label>
                 <textarea name="storageConditions" value={formData.storageConditions} onChange={handleChange} rows={2} className={textareaClass} />
               </div>
             </div>
@@ -747,22 +747,22 @@ const circleY = typeof window !== "undefined" ? (window.innerHeight * parseFloat
 
           {/* Declaration Card */}
           <div className="bg-white rounded-2xl p-6 border border-[#F1F5FF] shadow-sm">
-            <h3 className="text-xl font-semibold text-[#003D99] mb-4">{t("form.declarationTitle")}</h3>
+            <h3 className="text-xl font-semibold text-[var(--second-color)] mb-4">{t("form.declarationTitle")}</h3>
             <p className="text-sm text-gray-600 mb-4">{t("form.declarationText")}</p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="col-span-2 md:grid-cols-1">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.otherNotes")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.otherNotes")}</label>
                 <textarea name="otherNotes" value={formData.otherNotes} onChange={handleChange} rows={3} className={textareaClass} />
               </div>
 
               <div className="col-span-2 md:grid-cols-1">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.signature")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.signature")}</label>
                 <input type="text" name="signature" value={formData.signature} onChange={handleChange} className={inputClass} />
               </div>
 
               <div className="col-span-2 md:grid-cols-1">
-                <label className="block text-sm font-medium text-[#003D99]">{t("form.date")}</label>
+                <label className="block text-sm font-medium text-[var(--second-color)]">{t("form.date")}</label>
                 <input type="date" name="date" value={formData.date} onChange={handleChange} className={inputClass} />
               </div>
             </div>
@@ -806,7 +806,7 @@ const circleY = typeof window !== "undefined" ? (window.innerHeight * parseFloat
           <button
             type="submit"
             disabled={isSubmitDisabled}
-            className={`w-full py-3 bg-[#0056D2] text-white font-bold rounded-lg shadow-lg hover:scale-[1.02] transition-transform ${
+            className={`w-full py-3 bg-main text-white font-bold rounded-lg shadow-lg hover:scale-[1.02] transition-transform ${
               isSubmitDisabled ? "opacity-50 cursor-not-allowed" : ""
             }`}
             aria-label="Submit Registration Form"

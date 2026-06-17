@@ -27,7 +27,7 @@ export default function LocationForm({ initialData, onClose, onSaved }: Props) {
     {
       id: "bonn_medical_industries",
       name: "Bonn Medical Industries",
-      color: "#0056D2",
+      color: "var(--main-color)",
       logo: "/images/logo.webp",
     },
     {

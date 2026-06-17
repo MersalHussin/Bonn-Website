@@ -9,8 +9,9 @@ import { supabase } from "../lib/supabaseClient";
 import { useMap } from "react-leaflet";
 import { X } from "lucide-react";
 import Image from "next/image";
+import Container from "./Container";
 import type * as LeafletType from "leaflet";
-import "leaflet/dist/leaflet.css";
+// import "leaflet/dist/leaflet.css";
 
 /* ================= TYPES ================= */
 type LocationData = {
@@ -119,7 +120,7 @@ const createPin = (color: string, isActive = false) => {
   };
 
 return (
-    <section className="relative py-24 bg-gradient-to-b from-[#0056D2] to-[#003a8c] overflow-hidden">
+    <section className="relative py-24 bg-gradient-to-b from-main to-[#003a8c] overflow-hidden">
         {/* Fix Z-Index */}
         <style jsx global>{`
             .leaflet-container {
@@ -135,16 +136,16 @@ return (
             }
         `}</style>
 
-        {/* ===== Heading ===== */}
-        <div className="relative z-10 max-w-7xl mx-auto px-6 text-center mb-14">
+        <Container>
+            {/* ===== Heading ===== */}
+            <div className="relative z-10 text-center mb-14">
             <h2 className="text-4xl md:text-5xl font-extrabold text-white">
                 {t("globalPresenceTitle")}
             </h2>
-            <p className="mt-4 text-white/80 max-w-2xl mx-auto">{t("globalPresenceDesc")}</p>
-        </div>
+                <p className="mt-4 text-white/80 max-w-2xl mx-auto">{t("globalPresenceDesc")}</p>
+            </div>
 
-        {/* ===== Map Wrapper ===== */}
-        <div className="relative z-0 max-w-7xl mx-auto px-6">
+            {/* ===== Map Wrapper ===== */}
             <div className="relative h-[380px] sm:h-[480px] lg:h-[560px] rounded-3xl overflow-hidden bg-white shadow-[0_20px_60px_rgba(0,0,0,0.3)]">
                 <MapContainer
                     center={[22, 10]}
@@ -159,7 +160,7 @@ return (
                     <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" />
                     <MapController active={active} reset={resetMap} />
                     {locations.map((loc) => {
-                        const icon = createPin(loc.brand_color || "#0056D2", active?.id === loc.id);
+                        const icon = createPin(loc.brand_color || "var(--main-color)", active?.id === loc.id);
                         if (!icon) return null;
                         return (
                             <Marker
@@ -194,7 +195,7 @@ return (
                             exit={{ x: "110%", opacity: 0 }}
                             transition={{ duration: 0.45, ease: "easeOut" }}
                             style={{
-                                borderLeft: `6px solid ${active.brand_color || "#0056D2"}`,
+                                borderLeft: `6px solid ${active.brand_color || "var(--main-color)"}`,
                             }}
                             className="absolute top-0 right-0 h-full w-full sm:w-[420px] z-[999] bg-white p-6 shadow-[0_0_40px_rgba(0,0,0,0.3)]sm:rounded-l-3xl"
                         >
@@ -222,7 +223,7 @@ return (
                                 <div>
                                     <h3
                                         className="text-xl font-bold"
-                                        style={{ color: active.brand_color || "#0056D2" }}
+                                        style={{ color: active.brand_color || "var(--main-color)" }}
                                     >
                                         {active.brand_name}
                                     </h3>
@@ -258,7 +259,7 @@ return (
                                         href={active.website}
                                         target="_blank"
                                         className="px-4 py-2 rounded-lg text-sm text-white font-medium"
-                                        style={{ background: active.brand_color || "#0056D2" }}
+                                        style={{ background: active.brand_color || "var(--main-color)" }}
                                         rel="noopener noreferrer"
                                     >
                                         Website
@@ -279,7 +280,7 @@ return (
                     )}
                 </AnimatePresence>
             </div>
-        </div>
+        </Container>
     </section>
 );
 }

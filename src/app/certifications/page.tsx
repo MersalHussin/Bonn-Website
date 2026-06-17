@@ -44,7 +44,7 @@ export default function CertificatesPage() {
     <div className="w-full">
       {/* 2. Certificates Grid */}
       <section className="py-20 px-6 md:px-12 bg-[#F4F8FF]">
-        <h2 className="text-4xl font-bold text-[#0056D2] mb-14 text-center">
+        <h2 className="text-4xl font-bold text-main mb-14 text-center">
           {t("certifications") || "الشهادات"}
         </h2>
 
@@ -71,7 +71,7 @@ export default function CertificatesPage() {
                 />
               </div>
               <div className="p-5 flex-1 flex flex-col">
-                <h3 className="font-semibold text-lg text-[#003D99] mb-4 text-center">
+                <h3 className="font-semibold text-lg text-[var(--second-color)] mb-4 text-center">
                   {cert.title}
                 </h3>
 </div>

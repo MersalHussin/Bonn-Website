@@ -67,7 +67,7 @@ bg-clip-text text-transparent
 
 export default function StatsCarousel() {
   return (
-    <section className="relative py-4 overflow-hidden bg-gradient-to-br from-[#0056D2] via-[#0046b0] to-[#003a8c]">
+    <section className="relative py-4 overflow-hidden bg-gradient-to-br from-main via-[#0046b0] to-[#003a8c]">
       
       {/* background blobs */}
       <div className="absolute -top-20 -left-20 w-72 h-72 bg-white/10 rounded-full blur-3xl" />

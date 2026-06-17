@@ -6,6 +6,7 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import Image from "next/image";
 import clsx from "clsx";
 import Link from "next/link";
+import Container from "./Container";
 
 const aboutImages = [
   "/images/bonn1.jpeg",
@@ -89,8 +90,9 @@ export default function About() {
   }, []);
 
   return (
-    <section className="w-full bg-gradient-to-br from-white to-[#F1F6FD] py-16 px-6 md:px-8">
-      <div className="flex flex-col-reverse items-center gap-10 md:flex-row-reverse">
+    <section className="w-full bg-gradient-to-br from-white to-[#F1F6FD] py-16">
+      <Container>
+        <div className="flex flex-col-reverse items-center gap-10 md:flex-row-reverse">
         {/* Carousel */}
         <div className="w-full md:w-1/2 relative">
           <div
@@ -123,14 +125,14 @@ export default function About() {
           {/* Arrows */}
           <button
             onClick={() => handleArrowClick("prev")}
-            className="absolute top-1/2 left-4 -translate-y-1/2 bg-white text-[#0056D2] p-2 rounded-full shadow hover:bg-gray-100"
+            className="absolute top-1/2 left-4 -translate-y-1/2 bg-white text-main p-2 rounded-full shadow hover:bg-gray-100"
             aria-label="Previous"
           >
             <FaArrowLeft />
           </button>
           <button
             onClick={() => handleArrowClick("next")}
-            className="absolute top-1/2 right-4 -translate-y-1/2 bg-white text-[#0056D2] p-2 rounded-full shadow hover:bg-gray-100"
+            className="absolute top-1/2 right-4 -translate-y-1/2 bg-white text-main p-2 rounded-full shadow hover:bg-gray-100"
             aria-label="Next"
           >
             <FaArrowRight />
@@ -145,7 +147,7 @@ export default function About() {
                 className={clsx(
                   "h-3 rounded-full transition-all duration-300",
                   i === activeIndex
-                    ? "w-6 bg-[#0056D2]"
+                    ? "w-6 bg-main"
                     : "w-3 bg-gray-300 hover:bg-gray-400"
                     
                 )}
@@ -156,7 +158,7 @@ export default function About() {
         </div>
 
         {/* Text Section */}
-        <div className="w-full md:w-1/2 text-[#003D99] space-y-6">
+        <div className="w-full md:w-1/2 text-[var(--second-color)] space-y-6">
           <h2 className="text-4xl font-extrabold min-h-[48px] drop-shadow-md">
             {typingText}
             <span className="blinking-cursor text-gray-400">|</span>
@@ -170,12 +172,13 @@ export default function About() {
           </p>
           <Link
             href="/about"
-            className="inline-block mt-4 text-[#0056D2] font-semibold hover:underline transition"
+            className="inline-block mt-4 text-main font-semibold hover:underline transition"
           >
             {t("readMore")}
           </Link>
         </div>
-      </div>
+        </div>
+      </Container>
     </section>
   );
 }

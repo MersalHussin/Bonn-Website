@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { supabase } from "../lib/supabaseClient";
+import Container from "../components/Container";
 import {
   Brain,
   FlaskConical,
@@ -141,7 +142,7 @@ export default function ServicesAndProducts() {
     <main>
       {/* ================= HERO / SERVICES ================= */}
       <section className="py-32 bg-gradient-to-br from-[#032e6a] via-[#0046b0] to-[#00265a] text-white">
-        <div className="max-w-7xl mx-auto px-6">
+        <Container>
           <h1 className="text-6xl font-bold mb-6 max-[468px]:text-5xl ">{t("services.title")}</h1>
           <p className="text-white/70 max-w-2xl mb-20">
             {t("services.subtitle")}
@@ -164,14 +165,14 @@ export default function ServicesAndProducts() {
               </motion.div>
             ))}
           </div>
-        </div>
+        </Container>
       </section>
       {/* ================= PRODUCTS ================= */}
       <section className="py-32 bg-[#F8FAFF]">
-        <div className="max-w-7xl mx-auto px-6 space-y-32">
+        <Container className="space-y-32">
           {Object.entries(grouped).map(([brandName, items]) => {
             const brandUI = BRAND_UI[brandName];
-            const primary = brandUI?.primary || "#0056D2";
+            const primary = brandUI?.primary || "var(--main-color)";
 
             return (
               <div key={brandName} className="space-y-8 w-7xl">
@@ -285,17 +286,17 @@ className={`
               </div>
             );
           })}
-        </div>
+        </Container>
       </section>
 
 
       {/* ================= GALLERY ================= */}
-<section className="relative py-28 bg-[#F6F9FF] overflow-hidden">
+      <section className="relative py-28 bg-[#F6F9FF] overflow-hidden">
 
       {/* subtle background */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,#E2E8FF_0%,transparent_55%)] -z-10" />
 
-      <div className="max-w-7xl mx-auto px-6 space-y-24">
+      <Container className="space-y-24">
 
         {/* ===== Header ===== */}
         <div className="max-w-3xl">
@@ -309,7 +310,7 @@ className={`
           </motion.h2>
 
           <motion.div
-            className="mt-5 w-28 h-[3px] bg-gradient-to-r from-[#0056D2] to-[#7BA7FF] rounded-full"
+            className="mt-5 w-28 h-[3px] bg-gradient-to-r from-main to-[#7BA7FF] rounded-full"
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             transition={{ delay: 0.2 }}
@@ -348,12 +349,12 @@ className={`
 
           {/* Video 1 */}
           <motion.div
-            className="relative rounded-xl overflow-hidden border border-[#0056D2]/20 bg-white"
+            className="relative rounded-xl overflow-hidden border border-main/20 bg-white"
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <div className="absolute inset-0 bg-[#0056D2]/10 mix-blend-multiply z-10 pointer-events-none" />
+            <div className="absolute inset-0 bg-main/10 mix-blend-multiply z-10 pointer-events-none" />
             <video
               src="https://res.cloudinary.com/dbgdvnkev/video/upload/v1761160485/whiteboard_final_v_1_nujzk5.webm"
               controls
@@ -364,12 +365,12 @@ className={`
 
           {/* Video 2 */}
           <motion.div
-            className="relative rounded-xl overflow-hidden border border-[#0056D2]/20 bg-white"
+            className="relative rounded-xl overflow-hidden border border-main/20 bg-white"
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <div className="absolute inset-0 bg-[#0056D2]/10 mix-blend-multiply z-10 pointer-events-none" />
+            <div className="absolute inset-0 bg-main/10 mix-blend-multiply z-10 pointer-events-none" />
             <video
               src="https://res.cloudinary.com/dbgdvnkev/video/upload/v1770045989/finesh_1_1_1_owz1uo.webm"
               controls
@@ -379,7 +380,7 @@ className={`
           </motion.div>
 
         </div>
-      </div>
+      </Container>
     </section>
     </main>
   );

@@ -130,7 +130,7 @@ export default function RootLayout({
 
   return (
     <html lang={i18n.language} dir={i18n.language === "ar" ? "rtl" : "ltr"}>
-      <body className={`font-din antialiased`}>
+      <body className="font-din antialiased overflow-x-hidden">
         <script
   type="application/ld+json"
   dangerouslySetInnerHTML={{
@@ -216,8 +216,9 @@ export default function RootLayout({
 />
         <I18nProvider>
           <Header />
-           <div className="margin-top"></div>
-          {children}
+          <main className=" mx-auto">
+            {children}
+          </main>
           <Toaster position="top-right" richColors />
           <script
           dangerouslySetInnerHTML={{

@@ -10,6 +10,7 @@ import {
   Factory,
   FileCheck2,
 } from "lucide-react";
+import Container from "./Container";
 
 const services = [
   {
@@ -55,19 +56,20 @@ export default function ServicesAndBrands() {
   const { t } = useTranslation();
 
   return (
-    <section className="py-20 px-6 bg-gradient-to-br from-[#032e6a] via-[#0046b0] to-[#00265a] text-white">
-      {/* Services */}
-      <div className="text-center mb-16">
+    <section className="py-20 bg-gradient-to-br from-[#032e6a] via-[#0046b0] to-[#00265a] text-white">
+      <Container>
+        {/* Services */}
+        <div className="text-center mb-16">
         <h2 className="text-5xl font-bold text-gray-200 mb-2">
           {t("our_services")}
         </h2>
         <p className="text-gray-200 text-xl max-w-2xl mx-auto">
           {t("we_build_brands")}
         </p>
-      </div>
+        </div>
 
-<div className="background grid md:grid-cols-3 gap-5 md:ml-0 md:mr-0">
-  {services.map((service, index) => (
+        <div className="grid md:grid-cols-3 gap-5">
+          {services.map((service, index) => (
 <motion.div
   key={service.title}
   initial={{ opacity: 0, y: 40 }}
@@ -82,9 +84,10 @@ export default function ServicesAndBrands() {
         {t(service.title)}
       </h3>
       <p className="text-gray-1000 text-center mb-4">{t(service.description)}</p>
-    </motion.div>
-  ))}
-</div>
+            </motion.div>
+          ))}
+        </div>
+      </Container>
     </section>
   );
 }

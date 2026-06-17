@@ -52,7 +52,7 @@ function Lines() {
           key={i}
           object={new THREE.Line(
             geo,
-            new THREE.LineBasicMaterial({ color: "#0056D2", linewidth: 1.5 })
+            new THREE.LineBasicMaterial({ color: "var(--main-color)", linewidth: 1.5 })
           )}
           ref={(el: THREE.Object3D | null) => {
             if (el instanceof THREE.Line) {

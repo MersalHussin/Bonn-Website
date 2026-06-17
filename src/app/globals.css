@@ -1,5 +1,19 @@
 @import "tailwindcss";
 
+@theme {
+  --color-main: #04349C;
+  --color-second: #16478d;
+  --color-main-light: #05419e;
+  --color-main-hover: #032a7a;
+}
+
+:root {
+  --main-color: #04349C;
+  --second-color: #16478d;
+  --main-color-light: #05419e;
+  --main-color-hover: #032a7a;
+}
+
 @font-face {
   font-family: 'DINArabic';
   src: url('/fonts/DIN Arabic Regular.otf') format('opentype');
@@ -72,7 +86,24 @@
   }
 }
 
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
 
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(4, 52, 156, 0.3);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(4, 52, 156, 0.5);
+}
 
 .glow-pink {
   background: linear-gradient(120deg, #f9a8d4, #ec4899);
@@ -160,5 +191,3 @@
 .textarea {
   @apply w-full border rounded-lg px-3 py-2 min-h-[110px] resize-none focus:outline-none focus:ring-2 focus:ring-blue-500;
 }
-
-
