@@ -316,37 +316,64 @@ useEffect(() => {
     </AnimatePresence>
 
     {showIntro && (
-  <motion.div
-    initial={{ opacity: 1 }}
-    animate={{ opacity: 1 }}
-    exit={{ opacity: 0 }}
-    className="fixed inset-0 bg-main z-[998] flex flex-col justify-center items-center"
-  >
-    <motion.div
-      initial={{ scale: 0 }}
-      animate={{ scale: 1 }}
-      transition={{ duration: 1 }}
-      className="w-[120px] h-[120px] object-contain"
-    >
-      <Image
-      src="/images/logo.svg"
-      alt="logo"
-      width="120"
-      height="120"
-      className="object-contain  p-2"
-      />
-      </motion.div>
+      <motion.div
+        initial={{ opacity: 1 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0, transition: { duration: 0.5, ease: "easeInOut" } }}
+        className="fixed inset-0 bg-white z-[9999] flex flex-col justify-center items-center"
+      >
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-50 via-white to-white opacity-60"></div>
+        
+        <div className="relative z-10 flex flex-col items-center">
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="relative"
+          >
+            {/* Pulse Ring Behind Logo */}
+            <motion.div
+              animate={{ 
+                scale: [1, 1.2, 1],
+                opacity: [0.5, 0, 0.5]
+              }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute inset-0 bg-main/10 rounded-full blur-xl"
+            />
+            
+            <Image
+              src="./images/logo.svg"
+              alt="Bonn Medical Logo"
+              width="140"
+              height="140"
+              className="object-contain drop-shadow-xl relative z-10"
+              priority
+            />
+          </motion.div>
 
-    <motion.h1
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 1, duration: 1 }}
-      className="mt-6 text-2xl font-bold text-main"
-    >
-      {mounted ? (i18n.language === "ar" ? "احلامك، مهمتنا" : "Your Dreams, Our Mission") : "Your Dreams, Our Mission"}
-    </motion.h1>
-  </motion.div>
-)}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.8 }}
+            className="flex flex-col items-center mt-8"
+          >
+            <h1 className="text-2xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#0b5bd3] to-[#1f7af1] tracking-wide mb-4">
+              {mounted ? (i18n.language === "ar" ? "أحلامك، مهمتنا" : "Your Dreams, Our Mission") : "Your Dreams, Our Mission"}
+            </h1>
+            
+            {/* Loading Bar */}
+            <div className="w-48 h-1 bg-gray-100 rounded-full overflow-hidden">
+              <motion.div 
+                initial={{ x: "-100%" }}
+                animate={{ x: "100%" }}
+                transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+                className="w-1/2 h-full bg-main rounded-full"
+              />
+            </div>
+          </motion.div>
+        </div>
+      </motion.div>
+    )}
 <AnimatePresence>
   {isOpen && (
     <motion.div
