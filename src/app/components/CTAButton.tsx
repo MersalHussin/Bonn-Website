@@ -2,32 +2,24 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import i18n from "../../i18n";
+import { useTranslation } from "react-i18next";
 import { Pencil, ArrowLeft, ArrowRight } from "lucide-react";
 
 export default function FloatingCTA() {
   const [show, setShow] = useState(false);
-  const [lang, setLang] = useState(i18n.language); 
+  const { t, i18n } = useTranslation(); 
 
   useEffect(() => {
     const handleScroll = () => {
       setShow(window.scrollY > 450);
     };
 
-    const handleLangChange = () => {
-      setLang(i18n.language);
-    };
-
     window.addEventListener("scroll", handleScroll);
-    i18n.on("languageChanged", handleLangChange);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      i18n.off("languageChanged", handleLangChange);
     };
   }, []);
-
-  const isArabic = lang === "ar";
 
   return (
     <motion.div
@@ -41,7 +33,7 @@ fixed bottom-6 left-1/2 -translate-x-1/2 z-[9999]
               <div
         className={`
         md:bottom-4
-          ${isArabic ? "md:left-6" : "md:right-6"}
+          ${i18n.language === "ar" ? "md:left-6" : "md:right-6"}
         `}
       >
 <Link href="/registration">
@@ -61,13 +53,13 @@ fixed bottom-6 left-1/2 -translate-x-1/2 z-[9999]
             cursor-pointer
           "
         >
-          <Pencil size={isArabic ? 16 : 16} className="max-[375px]:w-4 max-[375px]:h-4" />
+          <Pencil size={16} className="max-[375px]:w-4 max-[375px]:h-4" />
 
           <span className="max-[375px]:text-sm">
-            {isArabic ? "اطلب تصنيع علامتك" : "Start Manufacturing"}
+            {t("cta.startManufacturing")}
           </span>
 
-          {isArabic ? (
+          {i18n.language === "ar" ? (
             <ArrowLeft size={16} className="max-[375px]:w-4 max-[375px]:h-4" />
           ) : (
             <ArrowRight size={16} className="max-[375px]:w-4 max-[375px]:h-4" />

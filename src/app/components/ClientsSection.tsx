@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import Container from "./Container";
+import SectionTitle from "./SectionTitle";
 import "swiper/css";
 
 const clients = [
@@ -32,9 +33,7 @@ export default function ClientsSection() {
     <section className="py-16 bg-gray-50">
       <Container>
         <div className="text-center" dir="ltr">
-        <h2 className="text-3xl md:text-4xl font-bold text-main mb-10">
-          {t("OurClients")}
-        </h2>
+        <SectionTitle title={t("OurClients")} align="center" theme="dark" />
         <Swiper
           modules={[Autoplay]}
           spaceBetween={0}

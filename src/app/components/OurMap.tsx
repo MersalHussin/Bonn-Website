@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import i18n from "../../i18n";
 import { supabase } from "../lib/supabaseClient";
 import { useMap } from "react-leaflet";
 import { X } from "lucide-react";
@@ -75,8 +74,7 @@ useEffect(() => {
 }, []);
 
   
-  const { t } = useTranslation();
-  const isArabic = i18n.language === "ar";
+  const { t, i18n } = useTranslation();
 
   const [locations, setLocations] = useState<LocationData[]>([]);
   const [active, setActive] = useState<LocationData | null>(null);
@@ -229,7 +227,7 @@ return (
                                     </h3>
                                     {(active.name_en || active.name_ar) && (
                                         <span className="text-xs text-gray-500">
-                                            {isArabic ? active.name_ar : active.name_en}
+                                            {i18n.language === "ar" ? active.name_ar : active.name_en}
                                         </span>
                                     )}
                                 </div>

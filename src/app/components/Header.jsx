@@ -320,7 +320,7 @@ useEffect(() => {
     initial={{ opacity: 1 }}
     animate={{ opacity: 1 }}
     exit={{ opacity: 0 }}
-    className="fixed inset-0 bg-white z-[998] flex flex-col justify-center items-center"
+    className="fixed inset-0 bg-main z-[998] flex flex-col justify-center items-center"
   >
     <motion.div
       initial={{ scale: 0 }}
@@ -329,11 +329,11 @@ useEffect(() => {
       className="w-[120px] h-[120px] object-contain"
     >
       <Image
-      src="/images/logo.webp"
+      src="/images/logo.svg"
       alt="logo"
       width="120"
       height="120"
-      className="object-contain"
+      className="object-contain  p-2"
       />
       </motion.div>
 

@@ -88,7 +88,6 @@ function useTypingEffect(texts: string[], typingSpeed = 100, pauseTime = 2000) {
 
 export default function AboutUsPage() {
   const { t, i18n } = useTranslation();
-  const isArabic = i18n.language === "ar";
   const [showStory, setShowStory] = useState(false);
 
   const typingText = useTypingEffect([
@@ -115,7 +114,7 @@ export default function AboutUsPage() {
       </Head>
 
       <section
-        dir={isArabic ? "rtl" : "ltr"}
+        dir={i18n.language === "ar" ? "rtl" : "ltr"}
         className="w-full mt-10 px-4 md:px-20 py-16 text-[#1A3351] bg-gradient-to-b from-[#DCEEFF]/70 via-white/30 to-white"
       >
         <AnimatedBackground />

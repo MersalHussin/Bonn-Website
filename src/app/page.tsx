@@ -1,6 +1,7 @@
 import HeroSlider from './components/Landing';
-import Products from './components/Products';
+import Products from './components/Services';
 import About from "./components/About"
+import StatsSection from "./components/StatsSection"
 import ContactUs from './components/Contact';
 import StatsCarousel from './components/StatCards';
 import ClientsSection from './components/ClientsSection';
@@ -14,8 +15,9 @@ export default function Home() {
     <>
       <CTAButton />
       <HeroSlider />
-      <StatsCarousel/>
+      {/* <StatsCarousel/> */}
       <About />
+      <StatsSection />
       <Products />
       <ClientsSection />
       <ArtVid />

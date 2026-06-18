@@ -5,10 +5,10 @@ import { useState } from "react";
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaYoutube, FaLinkedin, FaTiktok } from "react-icons/fa";
 import { motion } from "framer-motion";
 import Container from "./Container";
+import SectionTitle from "./SectionTitle";
 
 export default function ContactUs() {
   const { t, i18n } = useTranslation();
-  const isArabic = i18n.language === "ar";
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -43,8 +43,7 @@ export default function ContactUs() {
         transition={{ duration: 0.6 }}
         className="text-center"
       >
-        <h2 className="text-4xl font-bold text-main mb-1 text-center">{t("title")}</h2>
-        <p className="text-gray-600">{t("subtitle")}</p>
+        <SectionTitle title={t("title")} subtitle={t("subtitle")} align="center" theme="dark" className="mb-0" />
       </motion.div>
 
       <motion.div
@@ -54,7 +53,7 @@ export default function ContactUs() {
         className="grid md:grid-cols-2 gap-8"
       >
         {/* Contact Info */}
-        <div className="space-y-6" dir={isArabic ? "rtl" : "ltr"}>
+        <div className="space-y-6" dir={i18n.language === "ar" ? "rtl" : "ltr"}>
           <div className="flex items-start gap-4">
             <FaMapMarkerAlt className="text-xl mt-1 text-main" />
             <div>
@@ -84,7 +83,7 @@ export default function ContactUs() {
             </div>
           </div>
                 {/* Social Media */}
-<div className="pt-2 space-y-3" dir={isArabic ? "rtl" : "ltr"}>
+<div className="pt-2 space-y-3" dir={i18n.language === "ar" ? "rtl" : "ltr"}>
   <h4 className="font-semibold text-gray-800">
     {t("connectWithUs") || "Connect With Us"}
   </h4>
@@ -126,7 +125,7 @@ export default function ContactUs() {
             required
             onChange={handleChange}
             className="w-full border rounded-md px-4 py-2"
-            dir={isArabic ? "rtl" : "ltr"}
+            dir={i18n.language === "ar" ? "rtl" : "ltr"}
           />
           <input
             type="email"
@@ -135,7 +134,7 @@ export default function ContactUs() {
             required
             onChange={handleChange}
             className="w-full border rounded-md px-4 py-2"
-            dir={isArabic ? "rtl" : "ltr"}
+            dir={i18n.language === "ar" ? "rtl" : "ltr"}
           />
           <input
             type="tel"
@@ -143,7 +142,7 @@ export default function ContactUs() {
             placeholder={t("optionalPhone")}
             onChange={handleChange}
             className="w-full border rounded-md px-4 py-2"
-            dir={isArabic ? "rtl" : "ltr"}
+            dir={i18n.language === "ar" ? "rtl" : "ltr"}
           />
           <label htmlFor="subject" className="sr-only">{t("subject")}</label>
           <select
@@ -151,7 +150,7 @@ export default function ContactUs() {
             value={formData.subject}
             onChange={handleChange}
             className="w-full border rounded-md px-4 py-2"
-            dir={isArabic ? "rtl" : "ltr"}
+            dir={i18n.language === "ar" ? "rtl" : "ltr"}
           >
             <option>{t("options.general")}</option>
             <option>{t("options.support")}</option>
@@ -165,12 +164,12 @@ export default function ContactUs() {
             required
             onChange={handleChange}
             className="w-full border rounded-md px-4 py-2 resize-none"
-            dir={isArabic ? "rtl" : "ltr"}
+            dir={i18n.language === "ar" ? "rtl" : "ltr"}
           ></textarea>
           <button
             type="submit"
             className="w-full bg-main text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-700 transition"
-            dir={isArabic ? "rtl" : "ltr"}
+            dir={i18n.language === "ar" ? "rtl" : "ltr"}
           >
             {t("send")}
           </button>

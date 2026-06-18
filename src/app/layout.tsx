@@ -216,7 +216,7 @@ export default function RootLayout({
 />
         <I18nProvider>
           <Header />
-          <main className=" mx-auto">
+          <main className=" mx-auto mt-22">
             {children}
           </main>
           <Toaster position="top-right" richColors />

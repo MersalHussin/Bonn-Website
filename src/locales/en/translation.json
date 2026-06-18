@@ -1,4 +1,9 @@
 {
+  "hero.headline": "We Transform Medical Ideas Into Globally Competitive Products",
+  "hero.description": "Your trusted partner for manufacturing cosmetic, healthcare, and medical products — from concept to market.",
+  "hero.startProject": "Start Your Project",
+  "hero.exploreServices": "Explore Services",
+  "cta.startManufacturing": "Start Manufacturing",
   "home": "Home",
   "about": "About Us",
   "certifications": "Certifications",
@@ -13,6 +18,7 @@
   "whoWeAre": "Who Are We..? ",
   "weAreDifferent": "About Us ",
   "bmiIsFuture": "Bonn Is The Future ",
+  "aboutVideo": "https://www.youtube.com/embed/QVeLyK5S5co",
   "aboutParagraph1": "Bonn is a contract manufacturer located in Riyadh, Saudi Arabia. Equipped with the latest and up to date machines and equipment, we are confident that we are able to provide the latest and novel formulations under cGMP regulations, either for standard formulations as well as bespoke preparations when required. Our highly qualified staff is continuously improving and actualizing their knowledge to attend the constant advances in the sector.",
   "aboutParagraph2": "All these experience and qualifications helped us develop, formulate and manufacture highly professional cosmetics as well as providing the corresponding technical and documental support according to the latest Saudi Food and Drug Administration “SFDA” regulations ...",
   "aboutParagraph3": "With all these qualities, Bonn is the ideal partner for companies searching for quality, security and improvement in their product’s development and manufacturing.",
@@ -434,7 +440,10 @@
     "total": "Total Products",
     "bestSelling": "Best Selling",
     "disabled": "Disabled",
-    "inStock": "In Stock"
+    "inStock": "In Stock",
+    "products": "Products",
+    "tonsPerDay": "Tons/Day",
+    "countries": "Countries"
   },
   "actions": {
     "edit": "Edit",
@@ -495,28 +504,87 @@
 
   "ideation": {
     "title": "Product Ideation",
-    "desc": "Data-driven product concepts built on market demand, regulatory feasibility, and medical value."
+    "desc": "Data-driven product concepts built on market demand, regulatory feasibility, and medical value.",
+    "details": "Our product ideation service helps you define the right product from the very start. We analyze market trends, competitor landscapes, and regulatory requirements to identify the most viable product opportunities for your brand. Our team works closely with you to transform raw ideas into concrete, market-ready concepts.",
+    "features": [
+      "Market trend analysis and competitor benchmarking",
+      "Regulatory feasibility assessment (SFDA compliance)",
+      "Target audience and positioning strategy",
+      "Product concept development and validation",
+      "Cost-in-use optimization from day one"
+    ]
   },
   "formulation": {
     "title": "Custom Formulation",
-    "desc": "Advanced R&D delivering safe, effective, and scalable pharmaceutical formulas."
+    "desc": "Advanced R&D delivering safe, effective, and scalable pharmaceutical formulas.",
+    "details": "Our R&D lab develops custom formulations tailored to your brand's unique requirements. Using cutting-edge ingredient science and strict safety protocols, we create formulas that are stable, effective, and ready for large-scale production. Every formulation undergoes rigorous testing before moving to production.",
+    "features": [
+      "Tailored formulations using active and natural ingredients",
+      "Stability and compatibility testing",
+      "Safety and efficacy validation",
+      "Scalable from lab to full production",
+      "cGMP-compliant development process"
+    ]
   },
   "ready": {
     "title": "Ready Formulas",
-    "desc": "Clinically tested, market-proven formulations ready for fast-track production."
+    "desc": "Clinically tested, market-proven formulations ready for fast-track production.",
+    "details": "Choose from our library of pre-developed, clinically tested formulations that are ready for immediate production. These formulas have been validated for safety, stability, and market appeal, allowing you to launch faster without compromising on quality.",
+    "features": [
+      "Pre-approved, tested formulations",
+      "Faster time-to-market",
+      "Proven stability and shelf life",
+      "Customizable branding and packaging",
+      "Regulatory documentation included"
+    ]
   },
   "packaging": {
     "title": "Packaging & Design",
-    "desc": "Regulatory-compliant packaging engineered for protection and clarity."
+    "desc": "Regulatory-compliant packaging engineered for protection and clarity.",
+    "details": "We design and source packaging solutions that protect your product, comply with regulations, and stand out on shelves. From material selection to artwork design, we ensure every detail aligns with your brand identity and market requirements.",
+    "features": [
+      "Creative and functional packaging design",
+      "Material sourcing and quality assurance",
+      "Regulatory-compliant labeling",
+      "Brand-aligned artwork and visual identity",
+      "Sustainable packaging options"
+    ]
   },
   "production": {
     "title": "Production",
-    "desc": "GMP-certified manufacturing with strict quality control."
+    "desc": "GMP-certified manufacturing with strict quality control.",
+    "details": "Our state-of-the-art manufacturing facility operates under strict GMP standards, ensuring every batch meets the highest quality requirements. From raw material sourcing to filling, labeling, and final quality release, we handle the entire production process with precision and care.",
+    "features": [
+      "Full-scale GMP-certified manufacturing",
+      "In-process quality controls at every stage",
+      "Raw material sourcing and verification",
+      "Filling, labeling, and batch release",
+      "Scalable production capacity (25+ tons/day)"
+    ]
   },
   "registration": {
     "title": "Registration",
-    "desc": "Complete regulatory documentation and market authorization support."
+    "desc": "Complete regulatory documentation and market authorization support.",
+    "details": "We handle the full regulatory journey for your products, from preparing technical documentation to submitting applications and securing market authorizations. Our regulatory affairs team ensures compliance with SFDA requirements and supports international market entry.",
+    "features": [
+      "SFDA product registration and licensing",
+      "Technical documentation preparation",
+      "International market authorization support",
+      "Post-market surveillance compliance",
+      "Regulatory updates and renewal management"
+    ]
   }
+},
+"breadcrumb": {
+  "home": "Home",
+  "services": "Services"
+},
+"servicePage": {
+  "ctaTitle": "Ready to get started?",
+  "ctaDesc": "Contact our team to discuss how we can help bring your product to market.",
+  "ctaPrimary": "Start Your Project",
+  "ctaSecondary": "Explore All Services",
+  "keyFeatures": "Key Features"
 },
 "brandName": "Le Visage Plus",
   "heroTitle": "LE VISAGE PLUS",
