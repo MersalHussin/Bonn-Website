@@ -4,9 +4,10 @@ interface ContainerProps {
   children: ReactNode;
   className?: string;
   fullWidth?: boolean;
+  id?:string
 }
 
-export default function Container({ children, className = "", fullWidth = false }: ContainerProps) {
+export default function Container({ id, children, className = "", fullWidth = false }: ContainerProps) {
   if (fullWidth) {
     return <div className={className}>{children}</div>;
   }

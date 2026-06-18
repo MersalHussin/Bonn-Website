@@ -1,11 +1,17 @@
 import { google } from "googleapis";
 
-const auth = new google.auth.GoogleAuth({
-  credentials: JSON.parse(
-    Buffer.from(process.env.GOOGLE_REGISTRATION_KEY_BASE64!, "base64").toString("utf8")
-  ),
-  scopes: ["https://www.googleapis.com/auth/spreadsheets"],
-});
+export const getSheetsClient = () => {
+  if (!process.env.GOOGLE_REGISTRATION_KEY_BASE64) {
+    throw new Error("Missing GOOGLE_REGISTRATION_KEY_BASE64 environment variable");
+  }
 
-export const sheets = google.sheets({ version: "v4", auth });
+  const auth = new google.auth.GoogleAuth({
+    credentials: JSON.parse(
+      Buffer.from(process.env.GOOGLE_REGISTRATION_KEY_BASE64, "base64").toString("utf8")
+    ),
+    scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+  });
+
+  return google.sheets({ version: "v4", auth });
+};
 

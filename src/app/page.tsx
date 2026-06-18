@@ -19,9 +19,9 @@ export default function Home() {
       <About />
       <StatsSection />
       <Products />
-      <ClientsSection />
       <ArtVid />
       <OurMap />
+      <ClientsSection />
       <ContactUs />
     </>
   );

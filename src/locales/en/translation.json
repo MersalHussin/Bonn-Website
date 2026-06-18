@@ -669,5 +669,16 @@
     "viewBrandProducts": "View Brand Products →",
     "underDevelopment": "This page is under development. Please check back later.",
     "comingSoonDescription": "We are working hard to bring you an amazing experience. Stay tuned for updates and new features coming soon!",
-    "expectedLaunch": "Soon"
+    "expectedLaunch": "Soon",
+    "ctaBanner": {
+    "title": "How can we help you today?",
+    "subtitle": "Our team is ready to answer your inquiries and provide the support you need, whether you're looking for consultation or manufacturing.",
+    "contactBtn": "Contact Us Now",
+    "exploreBtn": "Request Brand Manufacturing"
+  },
+  "newsletter": {
+    "title": "Subscribe to our Newsletter",
+    "placeholder": "Enter your email address",
+    "button": "Subscribe"
+  }
 }

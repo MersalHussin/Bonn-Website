@@ -1,8 +1,9 @@
-import { sheets } from "../../lib/googleSheets";
+import { getSheetsClient } from "../../lib/googleSheets";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
+    const sheets = getSheetsClient();
     const body = await req.json();
     const values = [
       [
@@ -51,7 +52,7 @@ export async function POST(req: Request) {
     ];
 
     await sheets.spreadsheets.values.append({
-      spreadsheetId: process.env.SPREADSHEET_ID!,
+      spreadsheetId: process.env.NEXT_PUBLIC_SPREADSHEET_ID,
       range: "Sheet1!A:AN",
       valueInputOption: "USER_ENTERED",
       requestBody: {

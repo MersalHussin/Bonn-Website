@@ -3,6 +3,7 @@
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import ContactUs from "../components/Contact";
 
 export default function RandDPage() {
   const { t, i18n } = useTranslation();
@@ -11,7 +12,7 @@ export default function RandDPage() {
   return (
     <main className="w-full text-[#0F2451]">
       {/* Hero */}
-      <section className="pt-10 relative overflow-hidden bg-gradient-to-r from-[#0B5BD3] to-[#1F7AF1] text-white">
+      <section className="pt-10 relative overflow-hidden bg-main text-white">
         <div className="mx-auto max-w-7xl px-6 py-20 md:px-10 text-center">
           <motion.h1
             className="text-4xl md:text-6xl font-extrabold leading-tight drop-shadow-lg"
@@ -38,7 +39,7 @@ export default function RandDPage() {
       <section id="qms" className="bg-gradient-to-b from-[#F0F6FF] to-white py-20">
         <div className="mx-auto max-w-7xl px-6 md:px-10">
           <motion.h2
-            className="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#0B5BD3] to-[#1F7AF1] mb-12 text-center"
+            className="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-main  mb-12 text-center"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
@@ -169,37 +170,7 @@ export default function RandDPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-20">
-        <div className="mx-auto max-w-4xl px-6 md:px-10 text-center">
-          <motion.div
-            className="rounded-3xl bg-gradient-to-r from-[#0B5BD3] to-[#1F7AF1] p-10 text-white shadow-lg"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            viewport={{ once: true }}
-          >
-            <h3 className="text-2xl md:text-3xl font-extrabold mb-3">
-              {t("rnd.cta.title")}
-            </h3>
-            <p className="mb-6 text-lg">{t("rnd.cta.subtitle")}</p>
-            <div className="flex justify-center gap-4 md:flex-row flex-col gap-y-3">
-              <Link
-                href="/#contact"
-                className="bg-white text-[rgb(11,91,211)] px-6 py-3 rounded-full font-semibold hover:bg-white/90 transition shadow-md"
-              >
-                {t("rnd.cta.primary")}
-              </Link>
-              <Link
-                href="/services"
-                className="bg-white/10 px-6 py-3 rounded-full font-semibold hover:bg-white/20 transition shadow-md"
-              >
-                {t("rnd.cta.secondary")}
-              </Link>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+    <ContactUs/>
     </main>
   );
 }
