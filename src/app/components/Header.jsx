@@ -444,7 +444,7 @@ useEffect(() => {
                         className={`flex items-center gap-1 font-bold text-[17px] transition ${
                           brandsOpen
                             ? "text-main cursor-pointer"
-                            : "text-[#1d358f] hover:text-main cursor-pointer"
+                            : "text-gray-800 hover:text-main cursor-pointer"
                         }`}
                       >
                         {mounted ? t("ourbrands") : "Our Brands"}
@@ -492,7 +492,7 @@ useEffect(() => {
                       className={`relative font-bold text-[17px] transition-colors ${
                         pathname === item.path
                           ? "text-main after:absolute after:left-0 after:-bottom-1 after:w-full after:h-[2px] after:bg-main"
-                          : "text-[#1d358f] hover:text-main"
+                          : "text-gray-800 hover:text-main"
                       } group`}
                     >
                       <span className="relative z-10">{mounted ? t(item.key) : item.key}</span>

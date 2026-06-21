@@ -191,3 +191,117 @@
 .textarea {
   @apply w-full border rounded-lg px-3 py-2 min-h-[110px] resize-none focus:outline-none focus:ring-2 focus:ring-blue-500;
 }
+
+/* ==========================================
+   Custom Video.js Premium Theme (Light & Simple)
+   ========================================== */
+
+/* Hide default Video.js big play button entirely (we use our React overlay) */
+.video-js .vjs-big-play-button {
+  display: none !important;
+}
+
+/* Floating Translucent Control Bar */
+.video-js .vjs-control-bar {
+  background-color: rgba(0, 0, 0, 0.45) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 12px !important;
+  width: calc(100% - 24px) !important;
+  height: 48px !important;
+  bottom: 12px !important;
+  left: 12px !important;
+  right: 12px !important;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25) !important;
+  padding: 0 4px !important;
+  display: flex !important;
+  align-items: center !important;
+  transition: opacity 0.3s ease, visibility 0.3s ease !important;
+}
+
+/* CSS rule to hide controls before first play or when paused */
+.hide-videojs-controls .vjs-control-bar {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Controls items alignment */
+.video-js .vjs-control {
+  height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Custom white icons */
+.video-js .vjs-button > .vjs-icon-placeholder:before {
+  font-size: 1.6em !important;
+  line-height: 1.6 !important;
+  color: #ffffff !important;
+}
+
+/* Timeline seek bar track */
+.video-js .vjs-progress-control {
+  height: auto !important;
+  flex: 1 1 auto !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 0 8px !important;
+}
+
+.video-js .vjs-progress-holder {
+  height: 5px !important;
+  margin: 0 !important;
+  border-radius: 3px !important;
+  background-color: rgba(255, 255, 255, 0.25) !important;
+}
+
+/* Play progress filled color bar (brand colors gradient) */
+.video-js .vjs-play-progress {
+  background: linear-gradient(90deg, #04349C 0%, #7BA7FF 100%) !important;
+  border-radius: 3px !important;
+}
+
+.video-js .vjs-play-progress:before {
+  display: none !important; /* Hide default round handle for a simpler bar look */
+}
+
+/* Time Counter formatting */
+.video-js .vjs-time-control {
+  display: block !important;
+  font-size: 0.8rem !important;
+  font-weight: 500 !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  min-width: auto !important;
+  padding: 0 2px !important;
+}
+
+.video-js .vjs-time-divider {
+  padding: 0 !important;
+  min-width: auto !important;
+}
+
+/* Volume panel adjustments */
+.video-js .vjs-volume-panel {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.video-js .vjs-volume-bar {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  height: 4px !important;
+  border-radius: 2px !important;
+}
+
+.video-js .vjs-volume-level {
+  background-color: #ffffff !important;
+  border-radius: 2px !important;
+}
+
+/* Align Fullscreen icon to the right */
+.video-js .vjs-fullscreen-control {
+  margin-left: auto !important;
+}
+

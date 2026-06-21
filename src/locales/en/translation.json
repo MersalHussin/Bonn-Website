@@ -681,5 +681,15 @@
     "title": "Subscribe to our Newsletter",
     "placeholder": "Enter your email address",
     "button": "Subscribe"
+  },
+  "videos": {
+    "section_title": "Success Stories & Insights",
+    "section_subtitle": "See how we support entrepreneurs from concept to market and learn how to launch your brand successfully.",
+    "badge_1": "Success Story",
+    "case_study_title": "Asma Al-Shahrani's Journey",
+    "case_study_desc": "From ambition to reality: watch how Asma Al-Shahrani overcame various challenges she faced when trying to launch her own product, and how Boon provided comprehensive support from ideation to production.",
+    "badge_2": "Brand Guide",
+    "awareness_title": "Planning a New Brand?",
+    "awareness_desc": "Planning to launch a new cosmetic or medical brand? Learn why choosing Boon as your manufacturing partner is your best decision for quality and efficiency."
   }
 }
