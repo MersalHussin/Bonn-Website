@@ -5,6 +5,7 @@ import i18n from "../i18n";
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { Toaster } from "sonner";
+import Script from "next/script";
 
 export const metadataBase = new URL("https://www.bonnmed.com");
 
@@ -220,11 +221,11 @@ export default function RootLayout({
             {children}
           </main>
           <Toaster position="top-right" richColors />
-          <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="bdeLFyyp29-wRbZv8YtfU";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();`,
-          }}
-        />
+     <Script>
+      {`
+        (function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="LDKbOrd4G4GdXQQku_1fx";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+      `}
+</Script>
           <Footer />
         </I18nProvider>
       </body>

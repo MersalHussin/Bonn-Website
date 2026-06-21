@@ -7,7 +7,7 @@ import StatsCarousel from './components/StatCards';
 import ClientsSection from './components/ClientsSection';
 import ArtVid from './components/ArtVid';
 import CTAButton from './components/CTAButton';
-import OurMap from './components/OurMap';
+import OurMap from './components/OurMap2';
 
 
 export default function Home() {
