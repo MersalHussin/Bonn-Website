@@ -1,11 +1,11 @@
 import I18nProvider from "./i18n-provider";
 import type { Metadata } from "next";
 import "./globals.css";
-import i18n from "../i18n";
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { Toaster } from "sonner";
 import Script from "next/script";
+import { cookies } from "next/headers";
 
 export const metadataBase = new URL("https://www.bonnmed.com");
 
@@ -123,14 +123,18 @@ export const viewport = {
   initialScale: 1
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const cookieStore = await cookies();
+  const langCookie = cookieStore.get("i18nextLng");
+  const lang = langCookie ? langCookie.value : "ar";
+  const dir = lang === "ar" ? "rtl" : "ltr";
 
   return (
-    <html lang={i18n.language} dir={i18n.language === "ar" ? "rtl" : "ltr"}>
+    <html lang={lang} dir={dir}>
       <body className="font-din antialiased overflow-x-hidden">
         <script
   type="application/ld+json"

@@ -8,17 +8,19 @@ import en from "./locales/en/translation.json";
 import ar from "./locales/ar/translation.json";
 
 i18n
-  .use(LanguageDetector) 
+  .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     resources: {
       en: { translation: en },
       ar: { translation: ar },
     },
-    fallbackLng: "ar",
+    fallbackLng: "ar", // Default to Arabic
     detection: {
-      order: ["localStorage", "navigator", "htmlTag"],
-      caches: ["localStorage"],
+      order: ["cookie", "localStorage"], // Exclude navigator to prevent hydration mismatches
+      lookupCookie: "i18nextLng",
+      lookupLocalStorage: "i18nextLng",
+      caches: ["cookie", "localStorage"],
     },
     interpolation: {
       escapeValue: false,

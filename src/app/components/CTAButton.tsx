@@ -5,11 +5,15 @@ import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { Pencil, ArrowLeft, ArrowRight } from "lucide-react";
 
+
+
 export default function FloatingCTA() {
   const [show, setShow] = useState(false);
+  const [mount , setMount] = useState(false);
   const { t, i18n } = useTranslation(); 
 
   useEffect(() => {
+    setMount(true);
     const handleScroll = () => {
       setShow(window.scrollY > 450);
     };
@@ -55,9 +59,11 @@ fixed bottom-6 left-1/2 -translate-x-1/2 z-[9999]
         >
           <Pencil size={16} className="max-[375px]:w-4 max-[375px]:h-4" />
 
-          <span className="max-[375px]:text-sm">
+          {mount && 
+          <span className='max-[375px]:text-sm'>
             {t("cta.startManufacturing")}
           </span>
+          }
 
           {i18n.language === "ar" ? (
             <ArrowLeft size={16} className="max-[375px]:w-4 max-[375px]:h-4" />

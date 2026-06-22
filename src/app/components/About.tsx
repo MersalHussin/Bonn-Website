@@ -48,7 +48,14 @@ export default function About() {
   //   t("bmiIsFuture"),
   // ]);
 
-  return (
+  const [mount , setMount] = useState(false);
+    useEffect(() => {
+    setMount(true);
+    return () => setMount(false);
+  }, []);
+
+  return mount ? (
+      <>
     <section 
       dir={i18n.language === "ar" ? "rtl" : "ltr"} 
       className="w-full bg-gradient-to-br from-white to-[#F1F6FD] py-16"
@@ -89,7 +96,8 @@ export default function About() {
 </div>
           </div>
         </div>
-      </Container>
-    </section>
-  );
+        </Container>
+        </section>
+        </>
+  ) : null;
 }

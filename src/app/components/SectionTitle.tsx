@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 type SectionTitleProps = {
@@ -35,49 +36,54 @@ export default function SectionTitle({
       ? "bg-gradient-to-r from-main to-main/60"
       : "bg-gradient-to-r from-white to-white/50";
 
-  return (
-    <div
-      className={`mb-10 md:mb-14 ${isCenter ? "text-center" : ""} ${className}`}
-      dir={align === "auto" ? (i18n.language === "ar" ? "rtl" : "ltr") : undefined}
-    >
-    
+        const [mount , setMount] = useState(false);
+            useEffect(() => {
+          setMount(true);
+        }, []);
+  return mount ? (
 
-      {/* Title */}
-      <motion.h2
-        initial={{ opacity: 0, y: 16 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: 0.1 }}
-        className={`text-3xl md:text-4xl font-extrabold leading-tight ${titleColor}`}
-      >
-        {title}
-      </motion.h2>
-
-      {/* Subtitle */}
-      {subtitle && (
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
+       <div
+       className={`mb-10 md:mb-14 ${isCenter ? "text-center" : ""} ${className}`}
+       dir={align === "auto" ? (i18n.language === "ar" ? "rtl" : "ltr") : undefined}
+       >
+       
+       
+       {/* Title */}
+       <motion.h2
+       initial={{ opacity: 0, y: 16 }}
+       whileInView={{ opacity: 1, y: 0 }}
+       viewport={{ once: true }}
+       transition={{ duration: 0.5, delay: 0.1 }}
+       className={`text-3xl md:text-4xl font-extrabold leading-tight ${titleColor}`}
+       >
+       {title}
+       </motion.h2>
+       
+       {/* Subtitle */}
+       {subtitle && (
+         <motion.p
+         initial={{ opacity: 0, y: 10 }}
+         whileInView={{ opacity: 1, y: 0 }}
+         viewport={{ once: true }}
+         transition={{ duration: 0.4, delay: 0.2 }}
+         className={`mt-3 text-base md:text-lg max-w-2xl ${subtitleColor} ${
+           isCenter ? "mx-auto" : ""
+           }`}
+           >
+           {subtitle}
+           </motion.p>
+          )}
+          
+          {/* Accent line */}
+          <motion.div
+          initial={{ scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.4, delay: 0.2 }}
-          className={`mt-3 text-base md:text-lg max-w-2xl ${subtitleColor} ${
-            isCenter ? "mx-auto" : ""
-          }`}
-        >
-          {subtitle}
-        </motion.p>
-      )}
-
-        {/* Accent line */}
-      <motion.div
-        initial={{ scaleX: 0 }}
-        whileInView={{ scaleX: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-        className={`h-1 w-14 rounded-full mt-2 ${accentBg} ${
-          isCenter ? "mx-auto origin-center" : "origin-left rtl:origin-right"
-        }`}
-      />
-    </div>
-  );
-}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className={`h-1 w-14 rounded-full mt-2 ${accentBg} ${
+            isCenter ? "mx-auto origin-center" : "origin-left rtl:origin-right"
+            }`}
+            />
+            </div>
+          ) : "Loading";
+        }

@@ -10,6 +10,7 @@
   "contact": "Contact",
   "operation": "Operations",
   "blog": "Blog",
+  "faq_nav": "FAQ",
   "language": "العربية",
   "searchProduct": "Search Product",
   "productNotFound": "Product not found",
@@ -691,5 +692,50 @@
     "badge_2": "Brand Guide",
     "awareness_title": "Planning a New Brand?",
     "awareness_desc": "Planning to launch a new cosmetic or medical brand? Learn why choosing Boon as your manufacturing partner is your best decision for quality and efficiency."
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Everything you need to know about our contract manufacturing services, quality standards, and processes.",
+    "searchPlaceholder": "Search questions...",
+    "noResults": "No questions match your search.",
+    "categories": {
+      "all": "All Questions",
+      "general": "General",
+      "services": "Services",
+      "quality": "Quality & SFDA",
+      "production": "Production & MOQ"
+    },
+    "items": [
+      {
+        "q": "What is Bonn Medical Industries?",
+        "a": "Bonn Medical Industries (BMI) is a Saudi factory specializing in contract manufacturing (OEM/Private Label) for cosmetics, skincare, haircare, and medical products. We are certified under Good Manufacturing Practices (GMP) and ISO standards.",
+        "category": "general"
+      },
+      {
+        "q": "Do you help with SFDA product registration?",
+        "a": "Yes, we have a specialized regulatory team that prepares the full technical files and registers your products and brands with the Saudi Food and Drug Authority (SFDA) for a compliant and legal market launch.",
+        "category": "quality"
+      },
+      {
+        "q": "What is the Minimum Order Quantity (MOQ)?",
+        "a": "Minimum order quantities vary depending on the product category, formulation, and type of packaging chosen. Please complete our registration form to receive a customized quote suited to your brand's requirements.",
+        "category": "production"
+      },
+      {
+        "q": "Can you develop custom formulations for my brand?",
+        "a": "Absolutely. Our expert R&D department can formulate custom, stable, and highly effective products tailored to your specific performance targets, preferred ingredients, and market positioning.",
+        "category": "services"
+      },
+      {
+        "q": "What certifications does your factory hold?",
+        "a": "We operate a state-of-the-art facility carrying certifications in ISO 9001 (Quality Management), ISO 13485 (Medical Devices Quality), ISO 22000 (Food Safety/Hygiene), HACCP compliance, and cGMP compliance under SFDA supervision.",
+        "category": "quality"
+      },
+      {
+        "q": "Can I choose my own packaging designs?",
+        "a": "Yes. We offer packaging design and sourcing support. We help you choose or design bottles, jars, tubes, and boxes that are compliant with local labeling regulations and match your aesthetic goals.",
+        "category": "services"
+      }
+    ]
   }
 }

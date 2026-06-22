@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import Container from "./Container";
 import SectionTitle from "./SectionTitle";
+import { useEffect, useState } from "react";
 
 const stats: { value: number; suffix: string; labelKey: string; icon: LucideIcon }[] = [
   { value: 7, suffix: "+", labelKey: "productionLines", icon: Factory },
@@ -26,57 +27,62 @@ const stats: { value: number; suffix: string; labelKey: string; icon: LucideIcon
 
 export default function StatsSection() {
   const { t, i18n } = useTranslation();
+ const [mount , setMount] = useState(false);
+    useEffect(() => {
+    setMount(true);
+    return () => setMount(false);
+  }, []);
 
-  return (
+  return mount ? (
     <>
     <section
-      dir='ltr'
-      className="relative w-full py-14 md:py-20 overflow-hidden bg-main"
-      >
+    dir='ltr'
+    className="relative w-full py-14 md:py-20 overflow-hidden bg-main"
+    >
     <SectionTitle title="الإحصائيات" theme="light" align="center"/>
-      {/* Background pattern */}
-      <div className="absolute inset-0 opacity-[0.04]" style={{
-        backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
-        backgroundSize: '40px 40px',
-      }} />
-      <div className="absolute -top-32 -right-32 w-[500px] h-[500px] bg-white/[0.03] rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-32 -left-32 w-[400px] h-[400px] bg-white/[0.03] rounded-full blur-3xl pointer-events-none" />
-
-      <Container>
+    {/* Background pattern */}
+    <div className="absolute inset-0 opacity-[0.04]" style={{
+      backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
+      backgroundSize: '40px 40px',
+    }} />
+    <div className="absolute -top-32 -right-32 w-[500px] h-[500px] bg-white/[0.03] rounded-full blur-3xl pointer-events-none" />
+    <div className="absolute -bottom-32 -left-32 w-[400px] h-[400px] bg-white/[0.03] rounded-full blur-3xl pointer-events-none" />
+    
+    <Container>
+    <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.6 }}
+    className="relative rounded-3xl bg-white/[0.05] backdrop-blur-sm border border-white/[0.08] p-6 md:p-10 lg:p-12"
+    >
+    {/* Grid with dividers */}
+    <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6">
+    {stats.map((stat, index) => {
+      const Icon = stat.icon;
+      const isLastInRow2 = index % 2 === 1;
+      const isLastInRow3 = index % 3 === 2;
+      const isLastCol6 = index === stats.length - 1;
+      
+      return (
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="relative rounded-3xl bg-white/[0.05] backdrop-blur-sm border border-white/[0.08] p-6 md:p-10 lg:p-12"
-        >
-          {/* Grid with dividers */}
-          <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6">
-            {stats.map((stat, index) => {
-              const Icon = stat.icon;
-              const isLastInRow2 = index % 2 === 1;
-              const isLastInRow3 = index % 3 === 2;
-              const isLastCol6 = index === stats.length - 1;
-
-              return (
-                <motion.div
-                  key={stat.labelKey}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true, margin: "-30px" }}
-                  transition={{
-                    duration: 0.5,
-                    delay: index * 0.08,
-                    ease: "easeOut",
-                  }}
-                  className={`group relative flex flex-col items-center text-center py-8 px-4 transition-all duration-300
-                    ${!isLastCol6 ? "xl:border-r xl:border-white/[0.08]" : ""}
-                    ${!isLastInRow3 ? "md:border-r md:max-xl:border-white/[0.08]" : "md:max-xl:border-r-0"}
-                    ${!isLastInRow2 ? "max-md:border-r max-md:border-white/[0.08]" : "max-md:border-r-0"}
-                    ${index < 4 ? "max-md:border-b max-md:border-white/[0.08]" : ""}
-                    ${index < 3 ? "md:max-xl:border-b md:max-xl:border-white/[0.08]" : ""}
-                  `}
-                >
+        key={stat.labelKey}
+        initial={{ opacity: 0, scale: 0.9 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true, margin: "-30px" }}
+        transition={{
+          duration: 0.5,
+          delay: index * 0.08,
+          ease: "easeOut",
+        }}
+        className={`group relative flex flex-col items-center text-center py-8 px-4 transition-all duration-300
+          ${!isLastCol6 ? "xl:border-r xl:border-white/[0.08]" : ""}
+          ${!isLastInRow3 ? "md:border-r md:max-xl:border-white/[0.08]" : "md:max-xl:border-r-0"}
+          ${!isLastInRow2 ? "max-md:border-r max-md:border-white/[0.08]" : "max-md:border-r-0"}
+          ${index < 4 ? "max-md:border-b max-md:border-white/[0.08]" : ""}
+          ${index < 3 ? "md:max-xl:border-b md:max-xl:border-white/[0.08]" : ""}
+          `}
+          >
                   {/* Icon with ring */}
                   <motion.div
                     initial={{ scale: 0, rotate: -30 }}
@@ -89,7 +95,7 @@ export default function StatsSection() {
                       damping: 14,
                     }}
                     className="relative w-16 h-16 mb-5"
-                  >
+                    >
                     {/* Gradient ring */}
                     <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/20 to-white/5 group-hover:from-white/30 group-hover:to-white/10 transition-all duration-300 rotate-3 group-hover:rotate-6" />
                     <div className="absolute inset-[2px] rounded-2xl bg-main/80 flex items-center justify-center">
@@ -97,7 +103,7 @@ export default function StatsSection() {
                         size={26}
                         className="text-white/80 group-hover:text-white group-hover:scale-110 transition-all duration-300"
                         strokeWidth={1.6}
-                      />
+                        />
                     </div>
                   </motion.div>
 
@@ -109,7 +115,7 @@ export default function StatsSection() {
                       suffix={stat.suffix}
                       enableScrollSpy
                       scrollSpyOnce
-                    />
+                      />
                   </h3>
 
                   {/* Label */}
@@ -119,11 +125,11 @@ export default function StatsSection() {
                 </motion.div>
               );
             })}
-          </div>
-        </motion.div>
-      </Container>
-    </section>
-          </>
-
-  );
-}
+            </div>
+            </motion.div>
+            </Container>
+            </section>
+            </>
+          ) : null;
+        }
+        

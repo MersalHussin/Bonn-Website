@@ -55,7 +55,7 @@ function highlightText(text, matches, key) {
 export default function FactoryHeader() {
   const [showIntro, setShowIntro] = useState(true);
   const [mounted, setMounted] = useState(false);
-  const { t } = useTranslation();
+  const { t ,i18n} = useTranslation();
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [brandsOpen, setBrandsOpen] = useState(false);
@@ -65,7 +65,8 @@ export default function FactoryHeader() {
   const [products, setProducts] = useState([]);
   const [langOpen, setLangOpen] = useState(false);
   const [searchPopupOpen, setSearchPopupOpen] = useState(false);
-  
+      const [mount , setMount] = useState(false);
+
   useEffect(() => {
   const fetchProducts = async () => {
     const { data, error } = await supabase
@@ -101,7 +102,8 @@ const navItems = [
   { key: "operation", path: "/Operations" },
   { key: "certifications", path: "/certifications" },
   { key: "blog", path: "/blog" },
-  { key: "contact", path: "/#contact" },
+  // { key: "contact", path: "/#contact" },
+  { key: "faq_nav", path: "/faq" },
 ];
 
 const brands = [
@@ -147,6 +149,9 @@ const brands = [
 
 
 
+    useEffect(() => {
+    setMount(true);
+  }, []);
 
 
   // ✅ Fuse Search Logic
@@ -206,7 +211,8 @@ useEffect(() => {
 }, [isOpen]);
 
 
-  return (
+return (
+    
     <>
     {/* Search Popup */}
     <AnimatePresence>
@@ -342,7 +348,7 @@ useEffect(() => {
             />
             
             <Image
-              src="./images/logo.svg"
+              src="images/Logo.svg"
               alt="Bonn Medical Logo"
               width="140"
               height="140"
@@ -357,7 +363,7 @@ useEffect(() => {
             transition={{ delay: 0.5, duration: 0.8 }}
             className="flex flex-col items-center mt-8"
           >
-            <h1 className="text-2xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#0b5bd3] to-[#1f7af1] tracking-wide mb-4">
+            <h1 className="text-2xl md:text-3xl font-extrabold text-transparent text-main tracking-wide mb-4">
               {mounted ? (i18n.language === "ar" ? "أحلامك، مهمتنا" : "Your Dreams, Our Mission") : "Your Dreams, Our Mission"}
             </h1>
             
@@ -426,8 +432,9 @@ useEffect(() => {
         </Link>
 
         {/* Desktop Navigation (Centered) */}
-        <div className="hidden min-[916px]:flex flex-1 justify-center">
-          <nav className="flex items-center lg:gap-6 md:gap-3">
+        <div className={`hidden min-[916px]:flex flex-1 justify-center`}                                   
+        dir={i18n.language === "ar" ? "ltr" : "rtl"}>
+          <nav className="flex items-center lg:gap-6 md:gap-3 ">
               {[...navItems].reverse().map((item, index) => (
                 <motion.div
                   key={item.key}
@@ -565,7 +572,7 @@ useEffect(() => {
           >
             {/* Header inside mobile menu to look consistent */}
             <div className="flex items-center justify-between h-20 py-4 border-b border-gray-100 bg-gray-50/50">
-              <Image src="/images/Logo.svg" alt="Bonn Medical Industries Logo" width={50} height={50} className="object-contain" />
+              <Image src="images/Logo.svg" alt="Bonn Medical Industries Logo" width={50} height={50} className="object-contain" />
               <div className="w-[44px]"></div> {/* Spacer to balance the close button */}
             </div>
 

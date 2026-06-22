@@ -4,12 +4,13 @@ import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import Container from "./Container";
 import { MyPlayer } from "./Player";
+import i18n from "@/i18n";
 
 export default function ServicesGallery() {
-  const { t } = useTranslation();
+  const { t , i18n } = useTranslation();
 
   return (
-    <section className="relative py-28 bg-[#F6F9FF] overflow-hidden">
+    <section className={`relative py-28 bg-[#F6F9FF] overflow-hidden`} dir={i18n.language === "ar" ? "rtl" : "ltr"} >
 
       {/* subtle background */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,#E2E8FF_0%,transparent_55%)] -z-10" />
@@ -49,7 +50,7 @@ export default function ServicesGallery() {
 
           {/* Video 1: Case Study */}
           <motion.div 
-            className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16"
+            className="flex flex-col-reverse lg:flex-row items-center gap-10 lg:gap-16"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -72,7 +73,7 @@ export default function ServicesGallery() {
 
           {/* Video 2: Awareness */}
           <motion.div 
-            className="flex flex-col lg:flex-row-reverse items-center gap-10 lg:gap-16"
+            className="flex flex-col-reverse lg:flex-row-reverse items-center gap-10 lg:gap-16"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}

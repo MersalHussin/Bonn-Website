@@ -81,6 +81,11 @@ export default function OurMap() {
   const { t, i18n } = useTranslation();
   const isAr = i18n.language === "ar";
 
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const [locations, setLocations] = useState<LocationData[]>(MOCK_LOCATIONS);
   const [active, setActive] = useState<LocationData | null>(null);
   const [center, setCenter] = useState<[number, number]>([24.7136, 46.6753]);
@@ -143,6 +148,7 @@ export default function OurMap() {
         >
           {/* Map */}
           <div className="h-[380px] sm:h-[480px] lg:h-[560px]">
+            {mounted ? (
             <Map
               center={center}
               zoom={zoom}
@@ -296,6 +302,11 @@ export default function OurMap() {
                 </Overlay>
               )}
             </Map>
+            ) : (
+              <div className="w-full h-full bg-[#001d4a]/20 animate-pulse flex items-center justify-center text-white/50">
+                {isAr ? "جاري تحميل الخريطة..." : "Loading Map..."}
+              </div>
+            )}
           </div>
         </motion.div>
       </Container>
