@@ -23,7 +23,7 @@ export default function Footer() {
         {/* Logo & About */}
         <div className="flex flex-col gap-6 lg:col-span-1">
           <div className="bg-white p-3 rounded-2xl w-fit">
-            <Image src="/images/logo.webp" alt="Bonn Medical Industries" width={100} height={100} className="object-contain" />
+            <Image src="/images/Logo.svg" alt="Bonn Medical Industries" width={100} height={100} className="object-contain" />
           </div>
           <p className="text-sm leading-relaxed text-white/70">
             {isAr 

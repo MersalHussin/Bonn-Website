@@ -447,7 +447,8 @@
     "inStock": "المتوفر",
     "products": "المنتجات",
     "tonsPerDay": "طن / يوم",
-    "countries": "الدول"
+    "countries": "الدول",
+    "statsTitle": "الإحصائيات"
   },
   "actions": {
     "edit": "تعديل",

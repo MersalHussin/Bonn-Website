@@ -363,9 +363,6 @@ return (
             transition={{ delay: 0.5, duration: 0.8 }}
             className="flex flex-col items-center mt-8"
           >
-            <h1 className="text-2xl md:text-3xl font-extrabold text-transparent text-main tracking-wide mb-4">
-              {mounted ? (i18n.language === "ar" ? "أحلامك، مهمتنا" : "Your Dreams, Our Mission") : "Your Dreams, Our Mission"}
-            </h1>
             
             {/* Loading Bar */}
             <div className="w-48 h-1 bg-gray-100 rounded-full overflow-hidden">

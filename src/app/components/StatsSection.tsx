@@ -39,7 +39,7 @@ export default function StatsSection() {
     dir='ltr'
     className="relative w-full py-14 md:py-20 overflow-hidden bg-main"
     >
-    <SectionTitle title="الإحصائيات" theme="light" align="center"/>
+    <SectionTitle title={`${t('stats.statsTitle')}`} theme="light" align="center"/>
     {/* Background pattern */}
     <div className="absolute inset-0 opacity-[0.04]" style={{
       backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,

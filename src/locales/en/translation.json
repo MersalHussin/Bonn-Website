@@ -445,7 +445,9 @@
     "inStock": "In Stock",
     "products": "Products",
     "tonsPerDay": "Tons/Day",
-    "countries": "Countries"
+    "countries": "Countries",
+    "statsTitle": "Statistics"
+
   },
   "actions": {
     "edit": "Edit",
