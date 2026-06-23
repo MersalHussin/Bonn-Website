@@ -48,35 +48,65 @@ export default function CertificatesPage() {
           {t("certifications") || "الشهادات"}
         </h2>
 
-        <div className="grid gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-          {certificates.map((cert) => (
+        <div className="grid gap-10 grid-cols-1 md:grid-cols-3 mb-10">
+          {certificates.slice(0, 3).map((cert) => (
             <div
               key={cert.id}
-              className="group bg-white border border-[#E0E7FF] rounded-xl shadow-md hover:shadow-xl transition-all hover:-translate-y-2 flex flex-col overflow-hidden"
+              className="group bg-white border border-[#E0E7FF] rounded-2xl shadow-sm hover:shadow-xl transition-all hover:-translate-y-2 flex flex-col overflow-hidden"
             >
+              <Link
+                href={cert.file}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 flex flex-col transition"
+              >
+                {/* Preview Image */}
+                <div className="relative w-full h-72 md:h-80 bg-[#FAFCFF] p-4 flex items-center justify-center overflow-hidden border-b border-[#E0E7FF]">
+                  <Image
+                    src={cert.preview}
+                    alt={cert.title}
+                    fill
+                    className="object-contain p-4 group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="p-6 flex-1 flex flex-col justify-center bg-white group-hover:bg-[#f4f8ff] transition-colors">
+                  <h3 className="font-bold text-lg md:text-xl text-[var(--second-color)] text-center">
+                    {cert.title}
+                  </h3>
+                </div>
+              </Link>
+            </div>
+          ))}
+        </div>
 
-                  <Link
-                    href={cert.file}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-3 text-white hover:bg-[#accdff] transition"
-                  >
-              {/* Preview Image */}
-              <div className="relative w-full h-60 overflow-hidden">
-                <Image
-                  src={cert.preview}
-                  alt={cert.title}
-                  fill
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                />
-              </div>
-              <div className="p-5 flex-1 flex flex-col">
-                <h3 className="font-semibold text-lg text-[var(--second-color)] mb-4 text-center">
-                  {cert.title}
-                </h3>
-</div>
-                  </Link>
-              </div>
+        <div className="grid gap-10 grid-cols-1 md:grid-cols-2 max-w-5xl mx-auto">
+          {certificates.slice(3).map((cert) => (
+            <div
+              key={cert.id}
+              className="group bg-white border border-[#E0E7FF] rounded-2xl shadow-sm hover:shadow-xl transition-all hover:-translate-y-2 flex flex-col overflow-hidden"
+            >
+              <Link
+                href={cert.file}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 flex flex-col transition"
+              >
+                {/* Preview Image */}
+                <div className="relative w-full h-64 md:h-72 bg-[#FAFCFF] p-4 flex items-center justify-center overflow-hidden border-b border-[#E0E7FF]">
+                  <Image
+                    src={cert.preview}
+                    alt={cert.title}
+                    fill
+                    className="object-contain p-4 group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="p-6 flex-1 flex flex-col justify-center bg-white group-hover:bg-[#f4f8ff] transition-colors">
+                  <h3 className="font-bold text-lg md:text-xl text-[var(--second-color)] text-center">
+                    {cert.title}
+                  </h3>
+                </div>
+              </Link>
+            </div>
           ))}
         </div>
       </section>

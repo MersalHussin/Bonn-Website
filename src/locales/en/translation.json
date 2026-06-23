@@ -302,6 +302,11 @@
     "form": {
     "title": "Registration Form",
     "subtitle": "Fill out the form below to start your private label / contract manufacturing journey with us.",
+    "step": "Step",
+    "of": "of",
+    "next": "Next",
+    "previous": "Previous",
+    "submitting": "Submitting...",
     "companyName": "Company / Individual Name",
     "contactPerson": "Contact Person",
     "email": "Business Email",

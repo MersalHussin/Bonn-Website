@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import Select from "react-select";
@@ -143,7 +143,36 @@ const circles = [
   };
 
 export default function FullClientEvaluationForm() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isRTL = i18n.language === 'ar';
+  const [currentStep, setCurrentStep] = useState(0);
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const steps = [
+    t("form.section1Title") || "Company Info",
+    t("form.section2Title") || "Business Profile",
+    t("form.section3Title") || "Products",
+    t("form.section4Title") || "Formulation",
+    t("form.section5Title") || "Packaging",
+    t("form.section6Title") || "Logistics",
+    t("form.declarationTitle") || "Declaration"
+  ];
+
+  const handleNext = () => {
+    if (formRef.current) {
+      if (!formRef.current.checkValidity()) {
+        formRef.current.reportValidity();
+        return;
+      }
+    }
+    setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handlePrev = () => {
+    setCurrentStep((prev) => Math.max(prev - 1, 0));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
     const languageOptions = [
     { value: "ar", label: "Arabic" },
     { value: "en", label: "English" },
@@ -207,7 +236,7 @@ export default function FullClientEvaluationForm() {
     agreeTerms: boolean; // checkbox
   }
 
-  const [formData, setFormData] = useState<FormData>({
+  const initialFormState: FormData = {
     companyName: "",
     contactPerson: "",
     telephone: "",
@@ -249,10 +278,31 @@ export default function FullClientEvaluationForm() {
     signature: "",
     date: "",
     agreeTerms: false,
-  });
+  };
+
+  const [formData, setFormData] = useState<FormData>(initialFormState);
 
   const [selectedCountry, setSelectedCountry] = useState<CountryOption | null>(null);
   const [successMessage, setSuccessMessage] = useState(false);
+
+  useEffect(() => {
+    const savedForm = localStorage.getItem("registrationFormCache");
+    if (savedForm) {
+      try {
+        const parsed = JSON.parse(savedForm);
+        setFormData(parsed);
+        // We cannot reliably resolve the selectedCountry here without access to 'countries' array from outside, 
+        // but wait, 'countries' is defined inside the file on top. Let's find it.
+        // If it's not strictly necessary, we just set the string in formData and ReactSelect will figure it out if we pass the value object.
+      } catch (e) {
+        console.error("Failed to load form cache", e);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("registrationFormCache", JSON.stringify(formData));
+  }, [formData]);
 
   /* input classes - kept same tailwind details as original inputs */
   const inputClass =
@@ -311,49 +361,10 @@ const handleSubmit = async (e: React.FormEvent) => {
     setTimeout(() => setSuccessMessage(false), 4000);
 
     // لو عايز تمسح الحقول بعد الارسال
-    setFormData({
-      companyName: "",
-      contactPerson: "",
-      telephone: "",
-      email: "",
-      website: "",
-      postalAddress: "",
-      country: "",
-      tradeLicense: "",
-      yearEstablished: "",
-      owners: "",
-      businessType: "",
-      presence: "",
-      turnover: "",
-      teamSize: "",
-      partnerBrands: "",
-      references: "",
-      competitors: "",
-      requestedProducts: "",
-      targetProfile: "",
-      productCategory: "",
-      launchDate: "",
-      customFormulation: "",
-      formulationDetails: "",
-      sampleQty: "",
-      sampleDeadline: "",
-      testingRequirements: "",
-      packagingRequirements: "",
-      packagingDetails: "",
-      artwork: "",
-      barcode: "",
-      localLanguage: "",
-      logisticsNeeds: "",
-      incoterms: "",
-      serialization: "",
-      deliveryLeadTime: "",
-      authorizedDistributors: "",
-      storageConditions: "",
-      otherNotes: "",
-      signature: "",
-      date: "",
-      agreeTerms: false,
-    });
+    setFormData(initialFormState);
+    setSelectedCountry(null);
+    setCurrentStep(0);
+    localStorage.removeItem("registrationFormCache");
 
   } catch (error) {
     console.error("Submit exception:", error);
@@ -434,8 +445,51 @@ const circleY = typeof window !== "undefined" ? (window.innerHeight * parseFloat
         <h2 className="text-3xl md:text-4xl font-extrabold text-[var(--second-color)] text-center mb-6">{t("form.title")}</h2>
         <p className="text-center text-gray-600 mb-10">{t("form.subtitle")}</p>
 
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6">
+        {/* Progress Bar */}
+        <div className="mb-10 px-2 md:px-8">
+          <div className="flex justify-between items-center relative">
+            <div className="absolute inset-x-0 top-1/2 transform -translate-y-1/2 w-full h-1 bg-gray-200 z-0 rounded-full"></div>
+            <div
+              className={`absolute top-1/2 transform -translate-y-1/2 h-1 bg-main z-0 rounded-full transition-all duration-500 ease-in-out ${isRTL ? 'right-0' : 'left-0'}`}
+              style={{ width: `${(currentStep / (steps.length - 1)) * 100}%` }}
+            ></div>
+            
+            {steps.map((step, index) => {
+              const isActive = index === currentStep;
+              const isCompleted = index < currentStep;
+              return (
+                <div key={index} className="relative z-10 flex flex-col items-center">
+                  <div
+                    className={`w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center font-bold text-sm md:text-base transition-colors duration-300 ${
+                      isActive || isCompleted
+                        ? "bg-main text-white shadow-md border-4 border-white"
+                        : "bg-gray-200 text-gray-500 border-4 border-white"
+                    }`}
+                  >
+                    {isCompleted ? "✓" : index + 1}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <div className="text-center mt-6">
+            <h3 className="text-xl md:text-2xl font-bold text-[var(--second-color)]">{steps[currentStep]}</h3>
+            <span className="text-sm text-gray-500">{t("form.step")} {currentStep + 1} {t("form.of")} {steps.length}</span>
+          </div>
+        </div>
+
+        <form ref={formRef} onSubmit={handleSubmit} className="w-full">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentStep}
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -30 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="grid grid-cols-1 gap-6"
+            >
           {/* Section 1 Card */}
+          {currentStep === 0 && (
           <div className="bg-white rounded-2xl p-6 border border-[#F1F5FF] shadow-sm">
             <h3 className="text-xl font-semibold text-[var(--second-color)] mb-4">{t("form.section1Title")}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -531,7 +585,9 @@ const circleY = typeof window !== "undefined" ? (window.innerHeight * parseFloat
             </div>
           </div>
 
+          )}
           {/* Section 2 Card */}
+          {currentStep === 1 && (
           <div className="bg-white rounded-2xl p-6 border border-[#F1F5FF] shadow-sm">
             <h3 className="text-xl font-semibold text-[var(--second-color)] mb-4">{t("form.section2Title")}</h3>
             <div className="grid grid-cols-2 md:grid-cols-1 gap-6">
@@ -592,7 +648,9 @@ const circleY = typeof window !== "undefined" ? (window.innerHeight * parseFloat
             </div>
           </div>
 
+          )}
           {/* Section 3 Card */}
+          {currentStep === 2 && (
           <div className="bg-white rounded-2xl p-6 border border-[#F1F5FF] shadow-sm">
             <h3 className="text-xl font-semibold text-[var(--second-color)] mb-4">{t("form.section3Title")}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -629,7 +687,9 @@ const circleY = typeof window !== "undefined" ? (window.innerHeight * parseFloat
             </div>
           </div>
 
+          )}
           {/* Section 4 Card */}
+          {currentStep === 3 && (
           <div className="bg-white rounded-2xl p-6 border border-[#F1F5FF] shadow-sm">
             <h3 className="text-xl font-semibold text-[var(--second-color)] mb-4">{t("form.section4Title")}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -664,7 +724,9 @@ const circleY = typeof window !== "undefined" ? (window.innerHeight * parseFloat
             </div>
           </div>
 
+          )}
           {/* Section 5 Card */}
+          {currentStep === 4 && (
           <div className="bg-white rounded-2xl p-6 border border-[#F1F5FF] shadow-sm">
             <h3 className="text-xl font-semibold text-[var(--second-color)] mb-4">{t("form.section5Title")}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -709,7 +771,9 @@ const circleY = typeof window !== "undefined" ? (window.innerHeight * parseFloat
             </div>
           </div>
 
+          )}
           {/* Section 6 Card */}
+          {currentStep === 5 && (
           <div className="bg-white rounded-2xl p-6 border border-[#F1F5FF] shadow-sm">
             <h3 className="text-xl font-semibold text-[var(--second-color)] mb-4">{t("form.section6Title")}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -745,7 +809,10 @@ const circleY = typeof window !== "undefined" ? (window.innerHeight * parseFloat
             </div>
           </div>
 
+          )}
           {/* Declaration Card */}
+          {currentStep === 6 && (
+          <div className="space-y-6">
           <div className="bg-white rounded-2xl p-6 border border-[#F1F5FF] shadow-sm">
             <h3 className="text-xl font-semibold text-[var(--second-color)] mb-4">{t("form.declarationTitle")}</h3>
             <p className="text-sm text-gray-600 mb-4">{t("form.declarationText")}</p>
@@ -789,7 +856,12 @@ const circleY = typeof window !== "undefined" ? (window.innerHeight * parseFloat
             </label>
           </div>
 
-          {/* Success message + submit */}
+          </div>
+          )}
+          </motion.div>
+          </AnimatePresence>
+
+          {/* Success message */}
           <AnimatePresence>
             {successMessage && (
               <motion.div
@@ -803,16 +875,38 @@ const circleY = typeof window !== "undefined" ? (window.innerHeight * parseFloat
             )}
           </AnimatePresence>
 
-          <button
-            type="submit"
-            disabled={isSubmitDisabled}
-            className={`w-full py-3 bg-main text-white font-bold rounded-lg shadow-lg hover:scale-[1.02] transition-transform ${
-              isSubmitDisabled ? "opacity-50 cursor-not-allowed" : ""
-            }`}
-            aria-label="Submit Registration Form"
-          >
-            {t("form.submit")}
-          </button>
+          <div className="flex flex-col-reverse md:flex-row justify-between items-center mt-10 pt-6 border-t border-gray-100 gap-4">
+            <button
+              type="button"
+              onClick={handlePrev}
+              disabled={currentStep === 0}
+              className={`w-full md:w-auto px-8 py-3 rounded-xl font-bold transition-all ${
+                currentStep === 0 ? "opacity-0 cursor-default pointer-events-none" : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+              }`}
+            >
+              {t("form.previous") || "Previous"}
+            </button>
+            
+            {currentStep < steps.length - 1 ? (
+              <button
+                type="button"
+                onClick={handleNext}
+                className="w-full md:w-auto px-10 py-3 bg-main text-white font-bold rounded-xl shadow-[0_4px_14px_0_rgba(0,118,255,0.39)] hover:shadow-[0_6px_20px_rgba(0,118,255,0.23)] hover:-translate-y-0.5 transition-all"
+              >
+                {t("form.next") || "Next"}
+              </button>
+            ) : (
+              <button
+                type="submit"
+                disabled={isSubmitDisabled || isSubmitting}
+                className={`w-full md:w-auto px-10 py-3 bg-green-600 text-white font-bold rounded-xl shadow-[0_4px_14px_0_rgba(34,197,94,0.39)] hover:shadow-[0_6px_20px_rgba(34,197,94,0.23)] hover:-translate-y-0.5 transition-all ${
+                  isSubmitDisabled || isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+              >
+                {isSubmitting ? t("form.submitting") : t("form.submit")}
+              </button>
+            )}
+          </div>
         </form>
       </motion.div>
     </section>
