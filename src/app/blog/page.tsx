@@ -28,7 +28,7 @@ export default async function BlogPage() {
     <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 ${isEn ? 'text-left' : 'text-right'}`} dir={dir}>
       <div className="text-center mb-16">
         <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 mb-6">
-          {isEn ? <><span className="text-blue-600">Bonn</span> Blog</> : <>مدونة <span className="text-blue-600">Bonn</span></>}
+          {isEn ? <><span className="text-main">Bonn</span> Blog</> : <>مدونة <span className="text-main">Bonn</span></>}
         </h1>
         <p className="text-lg text-slate-600 max-w-2xl mx-auto">
           {isEn 
@@ -58,7 +58,7 @@ export default async function BlogPage() {
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                       />
                       {artical.production_line && (
-                        <span className={`absolute top-4 ${isEn ? 'left-4' : 'right-4'} bg-white/90 backdrop-blur text-blue-700 text-xs px-3 py-1.5 rounded-full font-bold shadow-sm`}>
+                        <span className={`absolute top-4 ${isEn ? 'left-4' : 'right-4'} bg-white/90 backdrop-blur text-main-hover text-xs px-3 py-1.5 rounded-full font-bold shadow-sm`}>
                           {artical.production_line}
                         </span>
                       )}
@@ -67,7 +67,7 @@ export default async function BlogPage() {
                     <div className="h-52 bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center text-slate-400 font-medium relative">
                       {isEn ? 'No Image' : 'لا توجد صورة'}
                       {artical.production_line && (
-                        <span className={`absolute top-4 ${isEn ? 'left-4' : 'right-4'} bg-white/90 backdrop-blur text-blue-700 text-xs px-3 py-1.5 rounded-full font-bold shadow-sm`}>
+                        <span className={`absolute top-4 ${isEn ? 'left-4' : 'right-4'} bg-white/90 backdrop-blur text-main-hover text-xs px-3 py-1.5 rounded-full font-bold shadow-sm`}>
                           {artical.production_line}
                         </span>
                       )}
@@ -80,14 +80,14 @@ export default async function BlogPage() {
                         {new Date(artical.created_at).toLocaleDateString(isEn ? 'en-US' : 'ar-EG', { year: 'numeric', month: 'long', day: 'numeric' })}
                       </time>
                     </div>
-                    <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors line-clamp-2">
+                    <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-main transition-colors line-clamp-2">
                       {displayTitle}
                     </h3>
                     <p className="text-slate-600 text-sm line-clamp-3 mb-6 flex-1">
                       {displaySummary}
                     </p>
                     
-                    <div className="mt-auto flex items-center text-blue-600 font-medium text-sm gap-1 group-hover:gap-2 transition-all">
+                    <div className="mt-auto flex items-center text-main font-medium text-sm gap-1 group-hover:gap-2 transition-all">
                       <span>{isEn ? 'Read More' : 'اقرأ المزيد'}</span>
                       <span className={`transform transition-transform ${isEn ? 'ml-1' : 'mr-1 rotate-180'}`}>→</span>
                     </div>

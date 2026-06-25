@@ -1,34 +1,26 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import i18n from '../i18n';
 
-export default function I18nProvider({ children }: { children: React.ReactNode }) {
+export default function I18nProvider({ children, lang }: { children: React.ReactNode, lang: string }) {
+  // Synchronously ensure the client i18n matches the server-determined lang
+  // This prevents hydration errors caused by localStorage/cookie mismatches
+  if (i18n.language !== lang) {
+    i18n.changeLanguage(lang);
+  }
+
   useEffect(() => {
-    let savedLang = null;
+    // Keep html tag attributes in sync and sync cookie to localStorage
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.lang = lang;
     try {
-      savedLang = localStorage.getItem('i18nextLng');
+      localStorage.setItem('i18nextLng', lang);
+      document.cookie = `i18nextLng=${lang}; path=/; max-age=31536000`;
     } catch (e) {
       // Ignore
     }
-
-    if (!savedLang) {
-      // First visit: check browser language
-      const browserLang = typeof navigator !== 'undefined' ? (navigator.language || (navigator as any).userLanguage) : 'ar';
-      const detected = browserLang.startsWith('ar') ? 'ar' : 'en';
-      
-      // If browser prefers English, switch to English post-mount to avoid hydration mismatch
-      if (detected === 'en') {
-        i18n.changeLanguage('en');
-        document.documentElement.dir = 'ltr';
-        document.documentElement.lang = 'en';
-      }
-    } else {
-      // Not first visit: enforce the saved language's layout dir and lang on the html element
-      document.documentElement.dir = savedLang === 'ar' ? 'rtl' : 'ltr';
-      document.documentElement.lang = savedLang;
-    }
-  }, []);
+  }, [lang]);
 
   return <>{children}</>;
 }

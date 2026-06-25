@@ -6,7 +6,13 @@ import Footer from './components/Footer';
 import { Toaster } from "sonner";
 import Script from "next/script";
 import { cookies } from "next/headers";
+import { Rubik } from "next/font/google";
 
+// const rubik = Rubik({
+//   subsets: ["latin", "arabic"],
+//   weight: ["300", "400", "500", "600", "700", "800", "900"],
+//   display: "swap",
+// });
 export const metadataBase = new URL("https://www.bonnmed.com");
 
 export const metadata: Metadata = {
@@ -219,7 +225,7 @@ export default async function RootLayout({
     }),
   }}
 />
-        <I18nProvider>
+        <I18nProvider lang={lang}>
           <Header />
           <main className=" mx-auto mt-22">
             {children}

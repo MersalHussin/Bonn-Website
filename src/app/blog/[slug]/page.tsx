@@ -71,7 +71,7 @@ export default async function BlogPostPage({ params }: PageProps) {
       <div className="max-w-3xl mx-auto px-4 py-32 text-center" dir={dir}>
         <h1 className="text-3xl font-bold text-slate-900 mb-4">{isEn ? 'Article Not Found' : 'المقالة غير موجودة'}</h1>
         <p className="text-slate-600 mb-8">{isEn ? 'Sorry, this article could not be found or has been deleted.' : 'عذراً، يبدو أن هذه المقالة غير موجودة أو تم حذفها.'}</p>
-        <Link href="/blog" className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700 transition">
+        <Link href="/blog" className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-main text-white font-semibold hover:bg-main-hover transition">
           {isEn ? 'Back to Blog' : 'العودة للمدونة'}
         </Link>
       </div>
@@ -86,21 +86,21 @@ export default async function BlogPostPage({ params }: PageProps) {
   const displayContent = cleanContent((isEn && artical.content_en) ? artical.content_en : artical.content);
 
   return (
-    <>
-    <article className={`max-w-4xl mx-auto px-4 sm:px-6 py-8 ${isEn ? 'text-left' : 'text-right'}`} dir={dir}>
-      {/* رأس الصفحة: اللوجو وزر العودة */}
+    <div className="-mt-22 pt-8">
+      <article className={`max-w-4xl mx-auto px-4 sm:px-6 ${isEn ? 'text-left' : 'text-right'}`} dir={dir}>
+        {/* رأس الصفحة: اللوجو وزر العودة */}
       <div className={`flex items-center justify-between mb-10 pb-6 border-b border-gray-100 ${isEn ? 'flex-row' : ''}`}>
         <Link href="/">
           <Image src="/images/Logo.svg" alt="Bonn Medical" width={70} height={70} className="object-contain" />
         </Link>
-        <Link href="/blog" className="inline-flex items-center gap-2 text-slate-500 hover:text-blue-600 transition-colors font-semibold text-sm bg-gray-50 hover:bg-blue-50 px-4 py-2 rounded-xl">
-          {isEn ? <span>Back to Blog ←</span> : <span>→ العودة للمدونة</span>}
+        <Link href="/blog" className="inline-flex items-center gap-2 text-slate-500 hover:text-main transition-colors font-semibold text-sm bg-gray-50 hover:bg-main/5 px-4 py-2 rounded-xl">
+          {isEn ? <span>Back to Blog ←</span> : <span>العودة للمدونة ←</span>}
         </Link>
       </div>
 
       {/* خط الإنتاج */}
       {artical.production_line && (
-        <span className="inline-block bg-blue-50 text-blue-700 text-sm px-3 py-1.5 rounded-full font-bold mb-4">
+        <span className="inline-block bg-main/5 text-main-hover text-sm px-3 py-1.5 rounded-full font-bold mb-4">
           {artical.production_line}
         </span>
       )}
@@ -134,7 +134,7 @@ export default async function BlogPostPage({ params }: PageProps) {
 
       {/* الملخص */}
       {displaySummary && (
-        <p className={`text-xl text-slate-700 font-medium leading-relaxed border-blue-500 mb-10 ${isEn ? 'border-l-4 pl-4' : 'border-r-4 pr-4'}`}>
+        <p className={`text-xl text-slate-700 font-medium leading-relaxed border-main-light mb-10 ${isEn ? 'border-l-4 pl-4' : 'border-r-4 pr-4'}`}>
           {displaySummary}
         </p>
       )}
@@ -201,8 +201,8 @@ export default async function BlogPostPage({ params }: PageProps) {
         }
       `}</style>
     </article>
-    <RelatedArticles currentSlug={decodedSlug} isEn={isEn} dir={dir} />
-    </>
+      <RelatedArticles currentSlug={decodedSlug} isEn={isEn} dir={dir} />
+    </div>
   );
 }
 
@@ -218,7 +218,7 @@ async function RelatedArticles({ currentSlug, isEn, dir }: { currentSlug: string
   if (!relatedArticals || relatedArticals.length === 0) return null;
 
   return (
-    <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-slate-200 mt-12 ${isEn ? 'text-left' : 'text-right'}`} dir={dir}>
+    <div className={`max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-slate-200 mt-12 ${isEn ? 'text-left' : 'text-right'}`} dir={dir}>
       <h2 className="text-3xl font-bold text-slate-900 mb-8">
         {isEn ? 'Articles You Might Like' : 'مقالات قد تعجبك'}
       </h2>
@@ -238,7 +238,7 @@ async function RelatedArticles({ currentSlug, isEn, dir }: { currentSlug: string
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                     />
                     {artical.production_line && (
-                      <span className={`absolute top-4 ${isEn ? 'left-4' : 'right-4'} bg-white/90 backdrop-blur text-blue-700 text-xs px-3 py-1.5 rounded-full font-bold shadow-sm`}>
+                      <span className={`absolute top-4 ${isEn ? 'left-4' : 'right-4'} bg-white/90 backdrop-blur text-main-hover text-xs px-3 py-1.5 rounded-full font-bold shadow-sm`}>
                         {artical.production_line}
                       </span>
                     )}
@@ -247,7 +247,7 @@ async function RelatedArticles({ currentSlug, isEn, dir }: { currentSlug: string
                   <div className="h-48 bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center text-slate-400 font-medium relative">
                     {isEn ? 'No Image' : 'لا توجد صورة'}
                     {artical.production_line && (
-                      <span className={`absolute top-4 ${isEn ? 'left-4' : 'right-4'} bg-white/90 backdrop-blur text-blue-700 text-xs px-3 py-1.5 rounded-full font-bold shadow-sm`}>
+                      <span className={`absolute top-4 ${isEn ? 'left-4' : 'right-4'} bg-white/90 backdrop-blur text-main-hover text-xs px-3 py-1.5 rounded-full font-bold shadow-sm`}>
                         {artical.production_line}
                       </span>
                     )}
@@ -260,14 +260,14 @@ async function RelatedArticles({ currentSlug, isEn, dir }: { currentSlug: string
                       {new Date(artical.created_at).toLocaleDateString(isEn ? 'en-US' : 'ar-EG', { year: 'numeric', month: 'long', day: 'numeric' })}
                     </time>
                   </div>
-                  <h3 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors line-clamp-2">
+                  <h3 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-main transition-colors line-clamp-2">
                     {displayTitle}
                   </h3>
                   <p className="text-slate-600 text-sm line-clamp-2 mb-4 flex-1">
                     {displaySummary}
                   </p>
                   
-                  <div className="mt-auto flex items-center text-blue-600 font-medium text-sm gap-1 group-hover:gap-2 transition-all">
+                  <div className="mt-auto flex items-center text-main font-medium text-sm gap-1 group-hover:gap-2 transition-all">
                     <span>{isEn ? 'Read More' : 'اقرأ المزيد'}</span>
                     <span className={`transform transition-transform ${isEn ? 'ml-1' : 'mr-1 rotate-180'}`}>→</span>
                   </div>

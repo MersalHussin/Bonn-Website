@@ -171,7 +171,7 @@ export default function BlogAdminPage() {
       
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-3">
-          <FileText className="text-blue-600 w-8 h-8" />
+          <FileText className="text-main w-8 h-8" />
           إدارة المدونة
         </h1>
         <p className="text-gray-500 mt-2">قم بإضافة وتعديل وحذف المقالات الخاصة بموقعك من هنا.</p>
@@ -182,10 +182,10 @@ export default function BlogAdminPage() {
         {/* Form Section */}
         <div className="xl:col-span-2 xl:order-1 order-1">
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden sticky top-8">
-            <div className="bg-blue-50/50 border-b border-gray-100 px-6 py-4 flex flex-col gap-4">
+            <div className="bg-main/5/50 border-b border-gray-100 px-6 py-4 flex flex-col gap-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  {editingId ? <Edit2 className="text-blue-600 w-5 h-5" /> : <PlusCircle className="text-blue-600 w-5 h-5" />}
+                  {editingId ? <Edit2 className="text-main w-5 h-5" /> : <PlusCircle className="text-main w-5 h-5" />}
                   <h2 className="text-lg font-semibold text-gray-800">{editingId ? 'تعديل المقالة' : 'إضافة مقالة جديدة'}</h2>
                 </div>
                 {editingId && (
@@ -196,18 +196,18 @@ export default function BlogAdminPage() {
               </div>
               
               {/* Language Switcher */}
-              <div className="flex bg-white rounded-lg p-1 border border-blue-100/50 w-full sm:w-fit">
+              <div className="flex bg-white rounded-lg p-1 border border-main/10/50 w-full sm:w-fit">
                 <button
                   type="button"
                   onClick={() => setActiveTab('ar')}
-                  className={`flex-1 sm:px-6 py-1.5 text-sm font-medium rounded-md transition-all flex items-center justify-center gap-2 ${activeTab === 'ar' ? 'bg-blue-100 text-blue-700 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+                  className={`flex-1 sm:px-6 py-1.5 text-sm font-medium rounded-md transition-all flex items-center justify-center gap-2 ${activeTab === 'ar' ? 'bg-main/10 text-main-hover shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
                 >
                   عربي
                 </button>
                 <button
                   type="button"
                   onClick={() => setActiveTab('en')}
-                  className={`flex-1 sm:px-6 py-1.5 text-sm font-medium rounded-md transition-all flex items-center justify-center gap-2 ${activeTab === 'en' ? 'bg-blue-100 text-blue-700 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+                  className={`flex-1 sm:px-6 py-1.5 text-sm font-medium rounded-md transition-all flex items-center justify-center gap-2 ${activeTab === 'en' ? 'bg-main/10 text-main-hover shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
                   dir="ltr"
                 >
                   English
@@ -229,7 +229,7 @@ export default function BlogAdminPage() {
                     onChange={(e) => setTitle(e.target.value)}
                     required={activeTab === 'ar'}
                     placeholder="مثال: معايير الجودة الألمانية"
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-sm"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-main-light/20 focus:border-main-light transition-all text-sm"
                   />
                 </div>
                 
@@ -243,7 +243,7 @@ export default function BlogAdminPage() {
                     required={activeTab === 'ar'}
                     rows={2}
                     placeholder="وصف مختصر للمقالة..."
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-sm resize-none"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-main-light/20 focus:border-main-light transition-all text-sm resize-none"
                   />
                 </div>
 
@@ -283,7 +283,7 @@ export default function BlogAdminPage() {
                     value={titleEn}
                     onChange={(e) => setTitleEn(e.target.value)}
                     placeholder="e.g. German Quality Standards"
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-sm"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-main-light/20 focus:border-main-light transition-all text-sm"
                   />
                 </div>
                 
@@ -296,7 +296,7 @@ export default function BlogAdminPage() {
                     onChange={(e) => setSummaryEn(e.target.value)}
                     rows={2}
                     placeholder="Brief description of the article..."
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-sm resize-none"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-main-light/20 focus:border-main-light transition-all text-sm resize-none"
                   />
                 </div>
 
@@ -338,7 +338,7 @@ export default function BlogAdminPage() {
                   onChange={(e) => setSlug(e.target.value)}
                   required
                   placeholder="مثال: bonn-quality (بدون مسافات)"
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-sm text-left"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-main-light/20 focus:border-main-light transition-all text-sm text-left"
                   dir="ltr"
                 />
               </div>
@@ -350,7 +350,7 @@ export default function BlogAdminPage() {
                 <select
                   value={productionLine}
                   onChange={(e) => setProductionLine(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-sm"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-main-light/20 focus:border-main-light transition-all text-sm"
                 >
                   <option value="Cosmetics">Cosmetics (مستحضرات التجميل)</option>
                   <option value="Healthcare">Healthcare Products</option>
@@ -368,7 +368,7 @@ export default function BlogAdminPage() {
                   value={imageUrl}
                   onChange={(e) => setImageUrl(e.target.value)}
                   placeholder="https://example.com/image.jpg"
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-sm text-left"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-main-light/20 focus:border-main-light transition-all text-sm text-left"
                   dir="ltr"
                 />
               </div>
@@ -378,7 +378,7 @@ export default function BlogAdminPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3 mt-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-all shadow-sm hover:shadow focus:ring-4 focus:ring-blue-500/20 disabled:bg-gray-400 flex justify-center items-center gap-2 cursor-pointer"
+                className="w-full py-3 mt-2 bg-main hover:bg-main-hover text-white font-semibold rounded-xl transition-all shadow-sm hover:shadow focus:ring-4 focus:ring-main-light/20 disabled:bg-gray-400 flex justify-center items-center gap-2 cursor-pointer"
               >
                 {loading ? (
                   <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
@@ -413,7 +413,7 @@ export default function BlogAdminPage() {
             <div className="p-0">
               {fetching ? (
                 <div className="flex justify-center items-center py-20">
-                  <span className="w-8 h-8 border-4 border-gray-200 border-t-blue-600 rounded-full animate-spin"></span>
+                  <span className="w-8 h-8 border-4 border-gray-200 border-t-main rounded-full animate-spin"></span>
                 </div>
               ) : articals.length === 0 ? (
                 <div className="text-center py-16 px-4">
@@ -439,7 +439,7 @@ export default function BlogAdminPage() {
                       
                       <div className="flex-1 w-full min-w-0">
                         <div className="flex items-center justify-between gap-2 mb-1.5">
-                          <span className="bg-blue-50 text-blue-700 text-xs px-2.5 py-0.5 rounded font-medium">
+                          <span className="bg-main/5 text-main-hover text-xs px-2.5 py-0.5 rounded font-medium">
                             {artical.production_line}
                           </span>
                           <span className="flex items-center gap-1 text-xs text-gray-500">
@@ -459,13 +459,13 @@ export default function BlogAdminPage() {
                         <Link 
                           href={`/blog/${artical.slug}`} 
                           target="_blank"
-                          className="flex justify-center flex-1 items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 hover:text-blue-600 rounded-lg text-sm font-medium transition-colors shadow-sm"
+                          className="flex justify-center flex-1 items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 hover:text-main rounded-lg text-sm font-medium transition-colors shadow-sm"
                         >
                           <ExternalLink className="w-4 h-4" /> عرض
                         </Link>
                         <button 
                           onClick={() => handleEdit(artical)}
-                          className="flex justify-center flex-1 items-center gap-1.5 px-3 py-2 bg-white border border-blue-100 text-blue-600 hover:bg-blue-50 rounded-lg cursor-pointer text-sm font-medium transition-colors shadow-sm"
+                          className="flex justify-center flex-1 items-center gap-1.5 px-3 py-2 bg-white border border-main/10 text-main hover:bg-main/5 rounded-lg cursor-pointer text-sm font-medium transition-colors shadow-sm"
                         >
                           <Edit2 className="w-4 h-4" /> تعديل
                         </button>

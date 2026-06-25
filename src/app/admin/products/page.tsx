@@ -569,7 +569,7 @@ if (!slugValue) {
               <label
                 key={option}
                 className={`px-3 py-1 rounded-full border cursor-pointer text-sm
-                ${checked ? "bg-blue-600 text-white" : "bg-white hover:bg-gray-50"}`}
+                ${checked ? "bg-main text-white" : "bg-white hover:bg-gray-50"}`}
               >
                 <input
                   type="checkbox"
@@ -912,7 +912,7 @@ if (!slugValue) {
     <button
       type="submit"
       disabled={uploadingImage}
-      className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400"
+      className="px-6 py-2 bg-main text-white rounded-lg hover:bg-main-hover disabled:bg-gray-400"
     >
       {isEditing ? t("update") : t("add")}
     </button>
@@ -962,12 +962,12 @@ if (!slugValue) {
 
       {/* Brand Filter */}
       <div className="flex gap-2 flex-wrap">
-        <button onClick={() => setSelectedBrand("all")} className={`px-4 py-1 rounded hover:cursor-pointer ${selectedBrand === "all" ? "bg-blue-600 text-white" : "bg-gray-200"}`}>
+        <button onClick={() => setSelectedBrand("all")} className={`px-4 py-1 rounded hover:cursor-pointer ${selectedBrand === "all" ? "bg-main text-white" : "bg-gray-200"}`}>
           All
         </button>
 
         {BRAND_NAMES.map((brand) => (
-          <button key={brand} onClick={() => setSelectedBrand(brand)} className={`px-4 py-1 rounded hover:cursor-pointer ${selectedBrand === brand ? "bg-blue-600 text-white" : "bg-gray-200"}`}>
+          <button key={brand} onClick={() => setSelectedBrand(brand)} className={`px-4 py-1 rounded hover:cursor-pointer ${selectedBrand === brand ? "bg-main text-white" : "bg-gray-200"}`}>
             {brand}
           </button>
         ))}

@@ -70,7 +70,7 @@ export default function AdminPDFsPage() {
           >
             {/* Header */}
             <div className="mb-3 flex flex-col gap-1">
-              <h2 className="font-semibold text-lg text-blue-800">{pdf.name}</h2>
+              <h2 className="font-semibold text-lg text-main-hover">{pdf.name}</h2>
               <span className="text-sm text-gray-500">{pdf.company}</span>
             </div>
 
@@ -96,7 +96,7 @@ export default function AdminPDFsPage() {
               <Link
                 href={pdf.url}
                 download={`${pdf.name}-${pdf.company}-Report.pdf`}
-                className="flex-1 text-center bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors duration-300 flex items-center justify-center gap-2"
+                className="flex-1 text-center bg-main hover:bg-main-hover text-white px-4 py-2 rounded-lg transition-colors duration-300 flex items-center justify-center gap-2"
               >
                 <Download size={16} /> {t("pdfs.download")}
               </Link>

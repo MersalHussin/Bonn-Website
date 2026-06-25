@@ -5,6 +5,7 @@
   --color-second: #16478d;
   --color-main-light: #05419e;
   --color-main-hover: #032a7a;
+  --font-din: 'DINArabic', sans-serif;
 }
 
 :root {
@@ -16,49 +17,49 @@
 
 @font-face {
   font-family: 'DINArabic';
-  src: url('/fonts/DIN Arabic Regular.otf') format('opentype');
+  src: url('/fonts/din-arabic-regular.otf') format('opentype');
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'DINArabic';
-  src: url('/fonts/DIN Arabic Bold.otf') format('opentype');
+  src: url('/fonts/din-arabic-bold.otf') format('opentype');
   font-weight: 700;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'DINArabic';
-  src: url('/fonts/DIN Arabic Medium.otf') format('opentype');
+  src: url('/fonts/din-arabic-medium.otf') format('opentype');
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'DINArabic';
-  src: url('/fonts/DIN Arabic Light.otf') format('opentype');
+  src: url('/fonts/din-arabic-light.otf') format('opentype');
   font-weight: 300;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'DINArabic';
-  src: url('/fonts/DIN Arabic Black.otf') format('opentype');
+  src: url('/fonts/din-arabic-black.otf') format('opentype');
   font-weight: 900;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'DINArabic';
-  src: url('/fonts/DIN Arabic ExtraBold.otf') format('opentype');
+  src: url('/fonts/din-arabic-heavy.otf') format('opentype');
   font-weight: 800;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'DINArabic';
-  src: url('/fonts/DIN Arabic UltraLight.otf') format('opentype');
+  src: url('/fonts/din-arabic-ultralight.otf') format('opentype');
   font-weight: 200;
   font-style: normal;
 }

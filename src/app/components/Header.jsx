@@ -4,7 +4,7 @@
 import Fuse from "fuse.js";
 import { useTranslation } from "react-i18next";
 import i18n from "../../i18n";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
@@ -55,6 +55,20 @@ function highlightText(text, matches, key) {
 export default function FactoryHeader() {
   const [showIntro, setShowIntro] = useState(true);
   const [mounted, setMounted] = useState(false);
+  const [isPending, startTransition] = useTransition();
+
+  const handleLanguageChange = (lang, dir) => {
+    setLangOpen(false);
+    i18n.changeLanguage(lang);
+    document.documentElement.dir = dir;
+    try {
+      localStorage.setItem('i18nextLng', lang);
+      document.cookie = `i18nextLng=${lang}; path=/; max-age=31536000`;
+    } catch (e) {}
+    startTransition(() => {
+      router.refresh();
+    });
+  };
   const { t ,i18n} = useTranslation();
   const pathname = usePathname();
   const router = useRouter();
@@ -218,6 +232,19 @@ useEffect(() => {
   return (
     
     <>
+      <AnimatePresence>
+        {isPending && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[9999] bg-white/80 backdrop-blur-sm flex flex-col items-center justify-center"
+          >
+            <div className="w-16 h-16 border-4 border-gray-200 border-t-main rounded-full animate-spin mb-4"></div>
+            <p className="text-main font-semibold text-lg">{i18n.language === "ar" ? "جاري التحديث..." : "Updating..."}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
     {/* Search Popup */}
     <AnimatePresence>
       {searchPopupOpen && (
@@ -541,14 +568,14 @@ useEffect(() => {
                       className="absolute right-0 mt-4 bg-white rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.1)] w-40 overflow-hidden z-50 border border-gray-100"
                     >
                       <button
-                        onClick={() => { i18n.changeLanguage("ar"); document.documentElement.dir = "rtl"; setLangOpen(false); router.refresh(); }}
+                        onClick={() => handleLanguageChange("ar", "rtl")}
                         className="flex items-center gap-3 px-5 py-3 hover:bg-main/5 w-full text-sm hover:cursor-pointer text-gray-700 hover:text-main transition font-medium border-b border-gray-50"
                       >
                         <Image src="/images/sa.svg" alt="Arabic" width={20} height={14} className="rounded-sm shadow-sm" />
                         العربية
                       </button>
                       <button
-                        onClick={() => { i18n.changeLanguage("en"); document.documentElement.dir = "ltr"; setLangOpen(false); router.refresh(); }}
+                        onClick={() => handleLanguageChange("en", "ltr")}
                         className="flex items-center gap-3 px-5 py-3 hover:bg-main/5 w-full text-sm hover:cursor-pointer text-gray-700 hover:text-main transition font-medium"
                       >
                         <Image src="/images/gb.svg" alt="English" width={20} height={14} className="rounded-sm shadow-sm" />
@@ -595,10 +622,10 @@ useEffect(() => {
                         initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -5 }}
                         className="absolute left-0 right-0 mt-2 bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden z-50"
                       >
-                        <button onClick={() => { i18n.changeLanguage("ar"); document.documentElement.dir = "rtl"; setLangOpen(false); router.refresh(); }} className="flex items-center justify-center gap-3 py-3 hover:bg-gray-50 w-full text-sm border-b border-gray-50 font-medium">
+                        <button onClick={() => handleLanguageChange("ar", "rtl")} className="flex items-center justify-center gap-3 py-3 hover:bg-gray-50 w-full text-sm border-b border-gray-50 font-medium">
                           <Image src="/images/sa.svg" alt="" width={18} height={12} /> العربية
                         </button>
-                        <button onClick={() => { i18n.changeLanguage("en"); document.documentElement.dir = "ltr"; setLangOpen(false); router.refresh(); }} className="flex items-center justify-center gap-3 py-3 hover:bg-gray-50 w-full text-sm font-medium">
+                        <button onClick={() => handleLanguageChange("en", "ltr")} className="flex items-center justify-center gap-3 py-3 hover:bg-gray-50 w-full text-sm font-medium">
 
                           <Image src="/images/gb.svg" alt="" width={18} height={12} /> English
                         </button>

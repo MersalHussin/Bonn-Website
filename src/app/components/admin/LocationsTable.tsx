@@ -82,7 +82,7 @@ export default function LocationsTable({ locations, onEdit, onRefresh }: Props) 
                 <div className="flex justify-end gap-3">
                   <button
                     onClick={() => onEdit(loc)}
-                    className="text-blue-600 hover:text-blue-800 transition"
+                    className="text-main hover:text-main-hover transition"
                     title={t("edit")}
                   >
                     <Pencil size={16} />
