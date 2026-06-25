@@ -35,7 +35,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
   if (loading) return null;
   return (
-    <div className="flex m-0 p-0 h-screen overflow-hidden"   dir="ltr">
+    <div className="flex m-0 p-0 fixed inset-0 z-[100] bg-white h-screen overflow-hidden" dir="ltr">
       <Sidebar />
       <div className="flex-1 flex flex-col">
         <main className=" bg-gray-100 flex-1 overflow-auto">

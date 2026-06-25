@@ -49,10 +49,10 @@ const safe = (value?: string | null) => {
 
 /* ================= SEO ================= */
 export async function generateMetadata(
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ): Promise<Metadata> {
 
-  const slug = params.slug;
+  const { slug } = await params;
 
   const { data } = await supabaseServer
     .from("products")

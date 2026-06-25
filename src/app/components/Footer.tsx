@@ -6,10 +6,14 @@ import Link from "next/link";
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube } from "react-icons/fa";
 import { MapPin, Mail, Phone } from "lucide-react";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
   const { t, i18n } = useTranslation();
   const isAr = i18n.language === "ar";
+  const pathname = usePathname();
+
+  if (pathname?.startsWith('/admin')) return null;
 
   return (
     <footer className="bg-main text-white/80 border-t border-white/10 mt-0" dir={isAr ? "rtl" : "ltr"}>

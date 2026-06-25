@@ -62,7 +62,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ success: true, message: "تم حفظ البيانات في Google Sheets" });
   } catch (error) {
-    console.error("Error saving to Google Sheets:", error);
+    console.error("Error saving to Google Sheets:", error instanceof Error ? error.message : String(error));
     return NextResponse.json({ success: false, message: "فشل الحفظ في Google Sheets" }, { status: 500 });
   }
 }

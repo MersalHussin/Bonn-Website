@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ message: 'Product added successfully!' }, { status: 200 });
   } catch (error) {
-    console.error('Error adding product:', error);
+    console.error('Error adding product:', error instanceof Error ? error.message : String(error));
     return NextResponse.json({ message: 'Failed to add product' }, { status: 500 });
   }
 }

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { signOut } from "firebase/auth";
 import { auth } from "../../lib/firebaseConfig";
-import { LogOut, Home } from "lucide-react";
+import { LogOut, Home, FileText } from "lucide-react";
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -40,6 +40,19 @@ export default function Sidebar() {
           >
             <Home size={18} />
             Dashboard
+          </Link>
+
+          {/* Blog */}
+          <Link
+            href="/admin/blog"
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-200 ${
+              pathname === "/admin/blog"
+                ? "bg-gray-700 font-semibold"
+                : "hover:bg-gray-800"
+            }`}
+          >
+            <FileText size={18} />
+            Blog
           </Link>
         </nav>
       </div>

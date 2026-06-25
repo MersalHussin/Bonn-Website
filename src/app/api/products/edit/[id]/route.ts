@@ -16,7 +16,7 @@ export async function PUT(req: NextRequest) {
 
     return NextResponse.json({ message: "Product updated successfully" }, { status: 200 });
   } catch (error) {
-    console.error(error);
+    console.error("Error updating product:", error instanceof Error ? error.message : String(error));
     return NextResponse.json({ message: "Error updating product" }, { status: 500 });
   }
 }

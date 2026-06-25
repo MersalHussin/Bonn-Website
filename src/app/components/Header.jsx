@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import i18n from "../../i18n";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { IoCloseSharp } from "react-icons/io5";
@@ -57,6 +57,7 @@ export default function FactoryHeader() {
   const [mounted, setMounted] = useState(false);
   const { t ,i18n} = useTranslation();
   const pathname = usePathname();
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [brandsOpen, setBrandsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -211,7 +212,10 @@ useEffect(() => {
 }, [isOpen]);
 
 
-return (
+  const isBlogPost = pathname?.startsWith('/blog/') && pathname.length > 6;
+  if (pathname?.startsWith('/admin') || isBlogPost) return null;
+
+  return (
     
     <>
     {/* Search Popup */}
@@ -348,7 +352,7 @@ return (
             />
             
             <Image
-              src="images/Logo.svg"
+              src="/images/Logo.svg"
               alt="Bonn Medical Logo"
               width="140"
               height="140"
@@ -537,14 +541,14 @@ return (
                       className="absolute right-0 mt-4 bg-white rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.1)] w-40 overflow-hidden z-50 border border-gray-100"
                     >
                       <button
-                        onClick={() => { i18n.changeLanguage("ar"); document.documentElement.dir = "rtl"; setLangOpen(false); }}
+                        onClick={() => { i18n.changeLanguage("ar"); document.documentElement.dir = "rtl"; setLangOpen(false); router.refresh(); }}
                         className="flex items-center gap-3 px-5 py-3 hover:bg-main/5 w-full text-sm hover:cursor-pointer text-gray-700 hover:text-main transition font-medium border-b border-gray-50"
                       >
                         <Image src="/images/sa.svg" alt="Arabic" width={20} height={14} className="rounded-sm shadow-sm" />
                         العربية
                       </button>
                       <button
-                        onClick={() => { i18n.changeLanguage("en"); document.documentElement.dir = "ltr"; setLangOpen(false); }}
+                        onClick={() => { i18n.changeLanguage("en"); document.documentElement.dir = "ltr"; setLangOpen(false); router.refresh(); }}
                         className="flex items-center gap-3 px-5 py-3 hover:bg-main/5 w-full text-sm hover:cursor-pointer text-gray-700 hover:text-main transition font-medium"
                       >
                         <Image src="/images/gb.svg" alt="English" width={20} height={14} className="rounded-sm shadow-sm" />
@@ -569,7 +573,7 @@ return (
           >
             {/* Header inside mobile menu to look consistent */}
             <div className="flex items-center justify-between h-20 py-4 border-b border-gray-100 bg-gray-50/50">
-              <Image src="images/Logo.svg" alt="Bonn Medical Industries Logo" width={50} height={50} className="object-contain" />
+              <Image src="/images/Logo.svg" alt="Bonn Medical Industries Logo" width={50} height={50} className="object-contain" />
               <div className="w-[44px]"></div> {/* Spacer to balance the close button */}
             </div>
 
@@ -591,10 +595,11 @@ return (
                         initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -5 }}
                         className="absolute left-0 right-0 mt-2 bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden z-50"
                       >
-                        <button onClick={() => { i18n.changeLanguage("ar"); document.documentElement.dir = "rtl"; setLangOpen(false); }} className="flex items-center justify-center gap-3 py-3 hover:bg-gray-50 w-full text-sm border-b border-gray-50 font-medium">
+                        <button onClick={() => { i18n.changeLanguage("ar"); document.documentElement.dir = "rtl"; setLangOpen(false); router.refresh(); }} className="flex items-center justify-center gap-3 py-3 hover:bg-gray-50 w-full text-sm border-b border-gray-50 font-medium">
                           <Image src="/images/sa.svg" alt="" width={18} height={12} /> العربية
                         </button>
-                        <button onClick={() => { i18n.changeLanguage("en"); document.documentElement.dir = "ltr"; setLangOpen(false); }} className="flex items-center justify-center gap-3 py-3 hover:bg-gray-50 w-full text-sm font-medium">
+                        <button onClick={() => { i18n.changeLanguage("en"); document.documentElement.dir = "ltr"; setLangOpen(false); router.refresh(); }} className="flex items-center justify-center gap-3 py-3 hover:bg-gray-50 w-full text-sm font-medium">
+
                           <Image src="/images/gb.svg" alt="" width={18} height={12} /> English
                         </button>
                       </motion.div>
