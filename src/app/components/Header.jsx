@@ -113,7 +113,7 @@ const navItems = [
   { key: "home", path: "/" },
   { key: "about", path: "/about" },
   { key: "services.title", path: "/services" },
-  { key: "brands", type: "dropdown" }, 
+  { key: "brands", type: "dropdown" },
   { key: "operation", path: "/Operations" },
   { key: "certifications", path: "/certifications" },
   { key: "blog", path: "/blog" },

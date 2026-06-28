@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, ChevronDown, HelpCircle, MessageSquare } from "lucide-react";
+import { Search, ChevronDown, HelpCircle, MessageSquare, Mail, X } from "lucide-react";
 import Container from "./Container";
 
 interface FAQItem {
@@ -19,6 +19,31 @@ export default function FAQComponent() {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("all");
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    subject: t("options.general") || "عام",
+    message: "",
+  });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSubmitted(true);
+    setTimeout(() => {
+      setSubmitted(false);
+      setIsModalOpen(false);
+      setFormData({ name: "", email: "", phone: "", subject: t("options.general") || "عام", message: "" });
+    }, 2000);
+  };
 
   // Safely retrieve items from i18n
   const faqItems = useMemo<FAQItem[]>(() => {
@@ -225,14 +250,99 @@ export default function FAQComponent() {
               ? "إذا لم تجد الإجابة التي تبحث عنها، يمكنك الاتصال بنا مباشرة وسيسعد فريقنا بمساعدتك."
               : "If you cannot find the answer to your question in our FAQ, you can contact us directly."}
           </p>
-          <a
-            href="/#contact"
-            className="inline-block px-8 py-3 bg-white text-main font-bold rounded-xl hover:scale-[1.03] transition-all duration-300 shadow-md"
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="inline-block px-8 py-3 bg-white text-main font-bold rounded-xl hover:scale-[1.03] transition-all duration-300 shadow-md cursor-pointer"
           >
-            {t("contact", "Contact Us")}
-          </a>
+            {isAr ? "لم أجد سؤالي!" : "I didn't find my question!"}
+          </button>
         </motion.div>
       </Container>
+
+      {/* Popup Form Modal */}
+      <AnimatePresence>
+        {isModalOpen && (
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
+            {/* Backdrop */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsModalOpen(false)}
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm cursor-pointer"
+            />
+
+            {/* Modal Content */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl p-6 md:p-8 overflow-hidden"
+              dir={isAr ? "rtl" : "ltr"}
+            >
+              {/* Decorative top bar */}
+              <div className="absolute top-0 inset-x-0 h-1.5 bg-main" />
+
+              {/* Close Button */}
+              <button 
+                onClick={() => setIsModalOpen(false)}
+                className={`absolute top-6 ${isAr ? 'left-6' : 'right-6'} w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition text-gray-500 cursor-pointer z-10`}
+              >
+                <X size={18} />
+              </button>
+
+              {/* Mail Icon/Header */}
+              <div className="flex flex-col items-center text-center mt-4 mb-6">
+                <div className="w-16 h-16 bg-main/5 rounded-full flex items-center justify-center mb-3 border border-main/10">
+                  <Mail className="text-2xl text-main" />
+                </div>
+                <h3 className="text-2xl font-bold text-main">
+                  {isAr ? "طرح سؤال جديد" : "Ask a New Question"}
+                </h3>
+                <p className="text-sm text-gray-500 mt-1">
+                  {isAr ? "أرسل لنا سؤالك وسنقوم بالرد عليك على بريدك الإلكتروني بالسرعة الممكنة." : "Send us your question and we will reply to your email as soon as possible."}
+                </p>
+              </div>
+
+              <form onSubmit={handleSubmit} className="space-y-4 text-start">
+                <input
+                  type="email"
+                  name="email"
+                  placeholder={isAr ? "بريدك الإلكتروني" : "Your email"}
+                  required
+                  onChange={handleChange}
+                  className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-main/20 focus:border-main transition text-gray-800"
+                />
+                <textarea
+                  name="message"
+                  placeholder={isAr ? "اكتب السؤال الذي تبحث عن إجابته هنا..." : "Write the question you need an answer for here..."}
+                  rows={5}
+                  required
+                  onChange={handleChange}
+                  className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-main/20 focus:border-main transition resize-none text-gray-800"
+                ></textarea>
+                
+                <button
+                  type="submit"
+                  className="w-full bg-main text-white font-bold py-3.5 px-4 rounded-xl hover:bg-blue-700 transition cursor-pointer"
+                >
+                  {isAr ? "إرسال السؤال" : "Send Question"}
+                </button>
+
+                {submitted && (
+                  <motion.p 
+                    initial={{ opacity: 0, y: 10 }} 
+                    animate={{ opacity: 1, y: 0 }} 
+                    className="text-green-600 text-center font-medium pt-2"
+                  >
+                    {isAr ? "تم إرسال سؤالك بنجاح!" : "Your question has been sent successfully!"}
+                  </motion.p>
+                )}
+              </form>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

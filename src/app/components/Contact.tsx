@@ -187,20 +187,32 @@ export default function ContactUs() {
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl p-6 md:p-8"
+            className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl p-6 md:p-8 overflow-hidden"
             dir={isRTL ? "rtl" : "ltr"}
           >
+            {/* Decorative top bar */}
+            <div className="absolute top-0 inset-x-0 h-1.5 bg-main" />
+
             {/* Close Button */}
             <button 
               onClick={() => setIsModalOpen(false)}
-              className={`absolute top-4 ${isRTL ? 'left-4' : 'right-4'} w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition text-gray-500`}
+              className={`absolute top-6 ${isRTL ? 'left-6' : 'right-6'} w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition text-gray-500 cursor-pointer z-10`}
             >
               ✕
             </button>
 
-            <h3 className="text-2xl font-bold text-main mb-6">
-              {t("ctaBanner.contactBtn")}
-            </h3>
+            {/* Mail Icon/Header */}
+            <div className="flex flex-col items-center text-center mt-4 mb-6">
+              <div className="w-16 h-16 bg-main/5 rounded-full flex items-center justify-center mb-3 border border-main/10">
+                <FaEnvelope className="text-2xl text-main" />
+              </div>
+              <h3 className="text-2xl font-bold text-main">
+                {t("ctaBanner.contactBtn")}
+              </h3>
+              <p className="text-sm text-gray-500 mt-1">
+                {isRTL ? "يسعدنا تواصلك معنا، وسنقوم بالرد عليك في أقرب وقت." : "We'd love to hear from you. We'll get back to you shortly."}
+              </p>
+            </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <input
