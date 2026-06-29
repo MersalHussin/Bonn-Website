@@ -114,7 +114,7 @@ const navItems = [
   { key: "about", path: "/about" },
   { key: "services.title", path: "/services" },
   { key: "brands", type: "dropdown" },
-  { key: "operation", path: "/Operations" },
+  { key: "news", path: "/news" },
   { key: "certifications", path: "/certifications" },
   { key: "blog", path: "/blog" },
   // { key: "contact", path: "/#contact" },
@@ -227,7 +227,8 @@ useEffect(() => {
 
 
   const isBlogPost = pathname?.startsWith('/blog/') && pathname.length > 6;
-  if (pathname?.startsWith('/admin') || isBlogPost) return null;
+  const isNewsPost = pathname?.startsWith('/news/') && pathname.length > 6;
+  if (pathname?.startsWith('/admin') || isBlogPost || isNewsPost) return null;
 
   return (
     

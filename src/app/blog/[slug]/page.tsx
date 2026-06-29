@@ -3,12 +3,18 @@ import Link from 'next/link';
 import Image from 'next/image';
 import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
+import { notFound } from 'next/navigation';
 
 export const revalidate = 60;
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+  {
+    global: {
+      fetch: (url, options) => fetch(url, { ...options, next: { revalidate: 60 } }),
+    },
+  }
 );
 
 type PageProps = {

@@ -54,6 +54,19 @@ export default function Sidebar() {
             <FileText size={18} />
             Blog
           </Link>
+
+          {/* News */}
+          <Link
+            href="/admin/news"
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-200 ${
+              pathname === "/admin/news"
+                ? "bg-gray-700 font-semibold"
+                : "hover:bg-gray-800"
+            }`}
+          >
+            <FileText size={18} />
+            News
+          </Link>
         </nav>
       </div>
 
