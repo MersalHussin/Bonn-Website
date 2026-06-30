@@ -47,26 +47,29 @@ export default function AdminLocationsPage() {
   }, []);
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="admin-page space-y-6" dir="rtl">
       {/* ===== Header ===== */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <h1 className="text-3xl font-bold text-gray-900">Locations</h1>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
+        <div className="admin-page-header" style={{ marginBottom: 0 }}>
+          <h1>الفروع</h1>
+          <p>إدارة المواقع والفروع</p>
+        </div>
         <button
           onClick={() => {
             setEditing(null);
             setShowForm(true);
           }}
-          className="flex items-center gap-2 bg-black text-white px-5 py-2 rounded-2xl hover:bg-gray-800 transition-colors"
+          className="admin-btn admin-btn-primary"
         >
           <Plus size={18} />
-          Add Location
+          إضافة فرع
         </button>
       </div>
 
       {/* ===== Locations Table ===== */}
-      <div className="bg-white rounded-2xl shadow p-4">
+      <div className="admin-content-card" style={{ padding: 16 }}>
         {loading ? (
-          <p className="text-gray-500">Loading locations...</p>
+          <p style={{ color: "#64748b", padding: 20 }}>جارِ التحميل...</p>
         ) : (
           <LocationsTable
             locations={locations}

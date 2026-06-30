@@ -4,6 +4,7 @@ import { cookies } from 'next/headers';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Metadata } from 'next';
+import Breadcrumb from '../../components/Breadcrumb';
 
 export const revalidate = 60;
 
@@ -36,12 +37,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     .eq('slug', decodedSlug)
     .maybeSingle();
 
-  const title = (isEn && newsItem?.title_en) ? newsItem.title_en : (newsItem?.title_ar || 'أخبار بون');
-  const description = (isEn && newsItem?.summary_en) ? newsItem.summary_en : (newsItem?.summary_ar || 'أحدث الأخبار من بون');
+  const title = (isEn && newsItem?.title_en) ? newsItem.title_en : (newsItem?.title_ar || 'أخبار بون الطبية');
+  const description = (isEn && newsItem?.summary_en) ? newsItem.summary_en : (newsItem?.summary_ar || 'أحدث الأخبار من بون الطبية');
   const image = newsItem?.image_url || 'https://www.bonnmed.com/cover.png';
 
   return {
-    title: `${title} | ${isEn ? 'Bonn News' : 'أخبار بون'}`,
+    title: `${title} | Bonn Medical`,
     description,
     openGraph: {
       title,
@@ -68,15 +69,11 @@ export default async function NewsPostPage({ params }: PageProps) {
     .eq('slug', decodedSlug)
     .maybeSingle();
 
-  if (error) {
-    console.error('Supabase Error:', error.message);
-  }
-
-  if (!newsItem) {
+  if (error || !newsItem) {
     return (
-      <div className="max-w-3xl mx-auto px-4 py-32 text-center" dir={dir}>
-        <h1 className="text-4xl font-black text-slate-900 mb-4 uppercase">{isEn ? 'News Not Found' : 'الخبر غير موجود'}</h1>
-        <p className="text-slate-600 mb-8 text-lg">{isEn ? 'Sorry, this news article could not be found or has been removed.' : 'عذراً، يبدو أن هذا الخبر غير موجود أو تم حذفه.'}</p>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 text-center px-4">
+        <div className="text-[120px] font-black text-slate-200 leading-none mb-4">404</div>
+        <h1 className="text-3xl font-bold text-slate-900 mb-6">{isEn ? 'News Not Found' : 'الخبر غير موجود'}</h1>
         <Link href="/news" className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-main text-white font-bold tracking-wide hover:bg-main-hover transition shadow-lg hover:shadow-xl hover:-translate-y-1">
           {isEn ? 'Back to News' : 'العودة للأخبار'}
         </Link>
@@ -91,23 +88,24 @@ export default async function NewsPostPage({ params }: PageProps) {
   const displayContent = cleanContent((isEn && newsItem.content_en) ? newsItem.content_en : newsItem.content_ar);
 
   return (
-    <div className="-mt-22 pt-8">
-      <article className={`max-w-4xl mx-auto px-4 sm:px-6 ${isEn ? 'text-left' : 'text-right'}`} dir={dir}>
-        {/* Header */}
-        <div className={`flex items-center justify-between mb-12 pb-6 border-b border-slate-100 ${isEn ? 'flex-row' : ''}`}>
-          <Link href="/">
-            <Image src="/images/Logo.svg" alt="Bonn Medical" width={80} height={80} className="object-contain" />
-          </Link>
-          <Link href="/news" className="inline-flex items-center gap-2 text-slate-500 hover:text-main transition-all font-bold tracking-wide text-sm bg-slate-50 hover:bg-main/5 px-5 py-2.5 rounded-full uppercase">
-            {isEn ? <span>Back to News ←</span> : <span>العودة للأخبار ←</span>}
-          </Link>
-        </div>
-
-        {/* Date & Category */}
-        <div className="flex items-center gap-4 mb-6">
-          <div className="bg-main/10 text-main font-bold px-4 py-1.5 rounded-full text-xs uppercase tracking-wider">
-            {isEn ? 'News' : 'أخبار'}
+    <main className="mt-[65px]">
+      <div className="pt-8">
+        <article className={`max-w-4xl mx-auto px-4 sm:px-6 ${isEn ? 'text-left' : 'text-right'}`} dir={dir}>
+          {/* Header */}
+          <div className={`flex items-center justify-between mb-12 pb-6 border-b border-slate-100 ${isEn ? 'flex-row' : ''}`}>
+            <Link href="/">
+              <Image src="/images/Logo.svg" alt="Bonn Medical" width={80} height={80} className="object-contain" />
+            </Link>
+            <Link href="/news" className="inline-flex items-center gap-2 text-slate-500 hover:text-main transition-all font-bold tracking-wide text-sm bg-slate-50 hover:bg-main/5 px-5 py-2.5 rounded-full uppercase">
+              {isEn ? <span>Back to News ←</span> : <span>العودة للأخبار ←</span>}
+            </Link>
           </div>
+
+          {/* Date & Category */}
+          <div className="flex items-center gap-4 mb-6">
+            <div className="bg-main/10 text-main font-bold px-4 py-1.5 rounded-full text-xs uppercase tracking-wider">
+              {isEn ? 'News' : 'أخبار'}
+            </div>
           <time dateTime={newsItem.created_at} className="text-slate-500 text-sm font-medium uppercase tracking-wide">
             {new Date(newsItem.created_at).toLocaleDateString(isEn ? 'en-US' : 'ar-EG', {
               year: 'numeric',
@@ -121,6 +119,13 @@ export default async function NewsPostPage({ params }: PageProps) {
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-slate-900 leading-[1.1] mb-8 group">
           {displayTitle}
         </h1>
+
+        <div className="mb-8">
+          <Breadcrumb items={[
+            { label: isEn ? 'News' : 'الأخبار', href: '/news' },
+            { label: displayTitle }
+          ]} />
+        </div>
 
         {/* Main Image */}
         {newsItem.image_url && (
@@ -220,7 +225,8 @@ export default async function NewsPostPage({ params }: PageProps) {
         `}</style>
       </article>
       <RelatedNews currentSlug={decodedSlug} isEn={isEn} dir={dir} />
-    </div>
+      </div>
+    </main>
   );
 }
 
@@ -281,6 +287,6 @@ async function RelatedNews({ currentSlug, isEn, dir }: { currentSlug: string, is
           );
         })}
       </div>
-    </div>
+      </div>
   );
 }

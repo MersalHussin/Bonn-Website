@@ -4,6 +4,7 @@ import Image from 'next/image';
 import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
+import Breadcrumb from '../../components/Breadcrumb';
 
 export const revalidate = 60;
 
@@ -38,25 +39,23 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const title = (isEn && artical?.title_en) ? artical.title_en : (artical?.title || 'مقالة في مدونة بون');
   const description = (isEn && artical?.summary_en) ? artical.summary_en : (artical?.summary || 'اكتشف أحدث المقالات من صناعات بون الطبية');
-  const image = artical?.image_url || 'https://www.bonnmed.com/cover.png';
 
   return {
-    title: `${title} | ${isEn ? 'Bonn Blog' : 'مدونة بون'}`,
+    title: `${title} | Bonn Medical`,
     description,
     openGraph: {
       title,
       description,
-      type: 'article',
-      images: [{ url: image }],
+      images: artical?.image_url ? [{ url: artical.image_url }] : [],
     },
   };
 }
 
 /* ================= PAGE ================= */
-export default async function BlogPostPage({ params }: PageProps) {
+export default async function BlogArticle({ params }: PageProps) {
   const { slug } = await params;
   const decodedSlug = decodeURIComponent(slug);
-
+  
   const cookieStore = await cookies();
   const lang = cookieStore.get('i18nextLng')?.value || 'ar';
   const isEn = lang.startsWith('en');
@@ -68,15 +67,13 @@ export default async function BlogPostPage({ params }: PageProps) {
     .eq('slug', decodedSlug)
     .maybeSingle();
 
-  if (error) {
-    console.error('Supabase Error:', error.message);
-  }
-
-  if (!artical) {
+  if (error || !artical) {
     return (
-      <div className="max-w-3xl mx-auto px-4 py-32 text-center" dir={dir}>
-        <h1 className="text-3xl font-bold text-slate-900 mb-4">{isEn ? 'Article Not Found' : 'المقالة غير موجودة'}</h1>
-        <p className="text-slate-600 mb-8">{isEn ? 'Sorry, this article could not be found or has been deleted.' : 'عذراً، يبدو أن هذه المقالة غير موجودة أو تم حذفها.'}</p>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 text-center px-4">
+        <div className="text-[120px] font-black text-slate-200 leading-none mb-4">404</div>
+        <h1 className="text-3xl font-bold text-slate-800 mb-6">
+          {isEn ? 'Article not found' : 'المقالة غير موجودة'}
+        </h1>
         <Link href="/blog" className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-main text-white font-semibold hover:bg-main-hover transition">
           {isEn ? 'Back to Blog' : 'العودة للمدونة'}
         </Link>
@@ -92,7 +89,8 @@ export default async function BlogPostPage({ params }: PageProps) {
   const displayContent = cleanContent((isEn && artical.content_en) ? artical.content_en : artical.content);
 
   return (
-    <div className="-mt-22 pt-8">
+    <main className="mt-[65px]">
+      <div className="pt-8">
       <article className={`max-w-4xl mx-auto px-4 sm:px-6 ${isEn ? 'text-left' : 'text-right'}`} dir={dir}>
         {/* رأس الصفحة: اللوجو وزر العودة */}
       <div className={`flex items-center justify-between mb-10 pb-6 border-b border-gray-100 ${isEn ? 'flex-row' : ''}`}>
@@ -115,6 +113,13 @@ export default async function BlogPostPage({ params }: PageProps) {
       <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 leading-tight mb-6">
         {displayTitle}
       </h1>
+
+      <div className="mb-6">
+        <Breadcrumb items={[
+          { label: isEn ? 'Blog' : 'المقالات', href: '/blog' },
+          { label: displayTitle }
+        ]} />
+      </div>
 
       {/* التاريخ */}
       <div className="text-slate-500 text-sm mb-8 flex items-center gap-2">
@@ -208,10 +213,10 @@ export default async function BlogPostPage({ params }: PageProps) {
       `}</style>
     </article>
       <RelatedArticles currentSlug={decodedSlug} isEn={isEn} dir={dir} />
-    </div>
+      </div>
+    </main>
   );
 }
-
 // 💡 إضافة المكون الخاص بالمقالات ذات الصلة هنا حتى نتمكن من استدعائه بالأسفل
 async function RelatedArticles({ currentSlug, isEn, dir }: { currentSlug: string, isEn: boolean, dir: string }) {
   const { data: relatedArticals } = await supabase
@@ -283,6 +288,6 @@ async function RelatedArticles({ currentSlug, isEn, dir }: { currentSlug: string
           );
         })}
       </div>
-    </div>
+      </div>
   );
 }

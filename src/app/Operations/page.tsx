@@ -4,13 +4,15 @@ import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import ContactUs from "../components/Contact";
+import Breadcrumb from "../components/Breadcrumb";
 
 export default function RandDPage() {
   const { t, i18n } = useTranslation();
   const isAr = i18n.language === "ar";
 
   return (
-    <main className="w-full text-[#0F2451]">
+    <main className="w-full text-[#0F2451] mt-[65px]">
+      <Breadcrumb items={[{ label: t("operations.title", isAr ? "العمليات" : "Operations") }]} />
       {/* Hero */}
       <section className="pt-10 relative overflow-hidden bg-main text-white">
         <div className="mx-auto max-w-7xl px-6 py-20 md:px-10 text-center">

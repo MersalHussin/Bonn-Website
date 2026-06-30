@@ -16,7 +16,19 @@ export async function generateClientPDF(clientData) {
   // --- Logo ---
   const logoUrl = 'https://res.cloudinary.com/dbgdvnkev/image/upload/v1758742395/logo_v8yfcx.png';
   const logoBytes = await fetch(logoUrl).then(res => res.arrayBuffer());
-  const logoImage = await pdfDoc.embedPng(logoBytes);
+  
+  let logoImage;
+  try {
+    logoImage = await pdfDoc.embedPng(logoBytes);
+  } catch (e) {
+    try {
+      logoImage = await pdfDoc.embedJpg(logoBytes);
+    } catch (jpgError) {
+      console.error("Failed to embed logo as PNG or JPG:", jpgError);
+      // Fallback: create a blank document or handle error gracefully
+      throw new Error("Logo image is neither a valid PNG nor a valid JPG file.");
+    }
+  }
   const logoDims = logoImage.scale(0.17); // Adjust scale if needed
 
   // ---- HEADER ----

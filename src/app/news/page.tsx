@@ -1,7 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
 import Link from 'next/link';
 import { cookies } from 'next/headers';
-import Image from 'next/image';
+import { Suspense } from 'react';
+import Breadcrumb from '../components/Breadcrumb';
 
 export const revalidate = 60;
 
@@ -32,18 +33,19 @@ export default async function NewsPage() {
 
   const featuredNews = newsItems && newsItems.length > 0 ? newsItems[0] : null;
   const regularNews = newsItems && newsItems.length > 1 ? newsItems.slice(1) : [];
-
   return (
-    <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 ${isEn ? 'text-left' : 'text-right'}`} dir={dir}>
-      <div className="text-center mb-16 relative">
-        <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
-          <h1 className="text-[8rem] font-black uppercase whitespace-nowrap overflow-hidden">
-            {isEn ? 'Global News' : 'آخر الأخبار'}
+    <main className="mt-[65px]">
+      <Breadcrumb items={[{ label: isEn ? 'News' : 'الأخبار' }]} />
+      <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 ${isEn ? 'text-left' : 'text-right'}`} dir={dir}>
+        <div className="text-center mb-16 relative">
+          <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
+            <h1 className="text-[8rem] font-black uppercase whitespace-nowrap overflow-hidden">
+              {isEn ? 'Global News' : 'آخر الأخبار'}
+            </h1>
+          </div>
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 mb-6 relative z-10">
+            {isEn ? <><span className="text-main">Bonn</span> News Hub</> : <>مركز أخبار <span className="text-main">Bonn</span></>}
           </h1>
-        </div>
-        <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 mb-6 relative z-10">
-          {isEn ? <><span className="text-main">Bonn</span> News Hub</> : <>مركز أخبار <span className="text-main">Bonn</span></>}
-        </h1>
         <p className="text-lg text-slate-600 max-w-2xl mx-auto relative z-10">
           {isEn 
             ? 'Stay updated with the latest headlines, breakthroughs, and corporate announcements.' 
@@ -139,6 +141,7 @@ export default async function NewsPage() {
           )}
         </div>
       )}
-    </div>
+      </div>
+    </main>
   );
 }

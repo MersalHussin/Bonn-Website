@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { toast } from 'sonner';
 import dynamic from 'next/dynamic';
 import 'react-quill-new/dist/quill.snow.css';
+import ImageUploader from '../../components/admin/ImageUploader';
 
 const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false, loading: () => <p className="text-gray-500 text-sm p-4">جاري تحميل المحرر...</p> });
 
@@ -359,19 +360,12 @@ export default function BlogAdminPage() {
                 </select>
               </div>
 
-              <div className="space-y-1.5">
-                <label className="text-gray-700 text-sm font-medium flex items-center gap-2">
-                  <ImageIcon className="w-4 h-4 text-gray-400" /> رابط الصورة
-                </label>
-                <input
-                  type="url"
-                  value={imageUrl}
-                  onChange={(e) => setImageUrl(e.target.value)}
-                  placeholder="https://example.com/image.jpg"
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-main-light/20 focus:border-main-light transition-all text-sm text-left"
-                  dir="ltr"
-                />
-              </div>
+              <ImageUploader
+                value={imageUrl}
+                onChange={setImageUrl}
+                label="صورة المقال"
+                folder="Blog"
+              />
 
 
 

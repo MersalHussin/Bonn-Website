@@ -3,6 +3,7 @@
 import { useTranslation } from "react-i18next";
 import Image from "next/image";
 import Link from "next/link";
+import Breadcrumb from "../components/Breadcrumb";
 
 export default function CertificatesPage() {
   const { t } = useTranslation();
@@ -41,7 +42,8 @@ export default function CertificatesPage() {
   ];
 
   return (
-    <div className="w-full">
+    <div className="w-full mt-[65px]">
+      <Breadcrumb items={[{ label: t("certifications") || "الشهادات والاعتمادات" }]} className="mb-0 !bg-transparent !border-none" />
       {/* 2. Certificates Grid */}
       <section className="py-20 px-6 md:px-12 bg-[#F4F8FF]">
         <h2 className="text-4xl font-bold text-main mb-14 text-center">

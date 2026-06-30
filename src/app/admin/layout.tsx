@@ -26,19 +26,25 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
   const { user, loading } = useAuth();
   const router = useRouter();
 
-
   useEffect(() => {
     if (!loading && !user) {
       router.replace("/login");
     }
   }, [user, loading, router]);
 
-  if (loading) return null;
+  if (loading) {
+    return (
+      <div className="admin-loading">
+        <div className="admin-spinner" />
+      </div>
+    );
+  }
+
   return (
-    <div className="flex m-0 p-0 fixed inset-0 z-[100] bg-white h-screen overflow-hidden" dir="ltr">
+    <div className="admin-shell" dir="rtl">
       <Sidebar />
-      <div className="flex-1 flex flex-col">
-        <main className=" bg-gray-100 flex-1 overflow-auto">
+      <div className="admin-content-area">
+        <main className="admin-main">
           {children}
         </main>
       </div>

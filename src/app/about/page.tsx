@@ -1,6 +1,7 @@
 "use client";
 
 import AnimatedBackground from "../components/AnimatedBackground";
+import Breadcrumb from "../components/Breadcrumb";
 import ContactUs from "../components/Contact";
 import Lottie from "lottie-react";
 import innovationAnimation from "../../animations/Innovation.json";
@@ -107,6 +108,7 @@ export default function AboutUsPage() {
       </Head>
 
       <main dir={isRTL ? "rtl" : "ltr"} className="w-full bg-[#FCFDFF] text-[#1A3351] overflow-hidden">
+        <Breadcrumb items={[{ label: t("about") || (isRTL ? "من نحن" : "About Us") }]} />
         <AnimatedBackground />
 
         {/* ================= HERO SECTION ================= */}

@@ -306,3 +306,456 @@
   margin-left: auto !important;
 }
 
+/* ==========================================
+   Admin Panel Styles
+   ========================================== */
+
+/* Shell */
+.admin-shell {
+  display: flex;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  height: 100vh;
+  overflow: hidden;
+  background: #f4f6fa;
+  font-family: 'DINArabic', system-ui, sans-serif;
+  color: #1e293b;
+}
+
+/* Loading */
+.admin-loading {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f4f6fa;
+}
+
+.admin-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #e2e8f0;
+  border-top-color: #04349C;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Content area */
+.admin-content-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.admin-main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 32px 40px;
+}
+
+@media (max-width: 768px) {
+  .admin-main {
+    padding: 20px 16px;
+  }
+}
+
+/* ---- Sidebar ---- */
+.admin-sidebar {
+  width: 260px;
+  min-width: 260px;
+  background: #04349C;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  color: #fff;
+  overflow-y: auto;
+}
+
+.admin-sidebar-header {
+  padding: 28px 24px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.admin-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 20px 14px;
+  flex: 1;
+}
+
+.admin-sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.admin-sidebar-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.admin-sidebar-link.active {
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  font-weight: 700;
+}
+
+.admin-sidebar-footer {
+  padding: 16px 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.admin-sidebar-logout {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.admin-sidebar-logout:hover {
+  background: rgba(239, 68, 68, 0.8);
+  border-color: rgba(239, 68, 68, 0.6);
+  color: #fff;
+}
+
+/* ---- Pages ---- */
+.admin-page {
+  max-width: 1200px;
+}
+
+.admin-page-header {
+  margin-bottom: 28px;
+}
+
+.admin-page-header h1 {
+  font-size: 26px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 6px;
+  letter-spacing: -0.3px;
+}
+
+.admin-page-header p {
+  font-size: 15px;
+  color: #64748b;
+  margin: 0;
+}
+
+/* ---- Dashboard Cards ---- */
+.admin-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 18px;
+}
+
+.admin-card {
+  display: flex;
+  flex-direction: column;
+  padding: 22px 20px;
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid #e8ecf2;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.admin-card:hover {
+  border-color: #04349C;
+  box-shadow: 0 4px 20px rgba(4, 52, 156, 0.08);
+  transform: translateY(-2px);
+}
+
+.admin-card-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: #04349C;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.admin-card h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 4px;
+}
+
+.admin-card p {
+  font-size: 13px;
+  color: #94a3b8;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.admin-card-arrow {
+  position: absolute;
+  top: 22px;
+  left: 20px;
+  color: #cbd5e1;
+  font-size: 18px;
+  transition: all 0.2s ease;
+}
+
+[dir="ltr"] .admin-card-arrow {
+  left: auto;
+  right: 20px;
+}
+
+.admin-card:hover .admin-card-arrow {
+  color: #04349C;
+  transform: translateX(-4px);
+}
+
+/* ---- Content cards used by sub-pages ---- */
+.admin-content-card {
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid #e8ecf2;
+  padding: 28px;
+}
+
+/* ---- Table base styles ---- */
+.admin-table-wrapper {
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid #e8ecf2;
+  overflow: hidden;
+}
+
+.admin-table-wrapper table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-table-wrapper th {
+  background: #f8fafc;
+  padding: 12px 16px;
+  text-align: right;
+  font-size: 12px;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #e8ecf2;
+}
+
+.admin-table-wrapper td {
+  padding: 14px 16px;
+  font-size: 14px;
+  color: #334155;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.admin-table-wrapper tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-table-wrapper tr:hover td {
+  background: #f8fafc;
+}
+
+/* ---- Buttons ---- */
+.admin-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.admin-btn-primary {
+  background: #04349C;
+  color: #fff;
+}
+
+.admin-btn-primary:hover {
+  background: #032a7a;
+}
+
+.admin-btn-secondary {
+  background: #f1f5f9;
+  color: #334155;
+  border: 1px solid #e2e8f0;
+}
+
+.admin-btn-secondary:hover {
+  background: #e2e8f0;
+}
+
+/* ---- Search ---- */
+.admin-search {
+  position: relative;
+  max-width: 360px;
+}
+
+.admin-search input {
+  width: 100%;
+  padding: 10px 14px 10px 40px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  font-size: 14px;
+  background: #fff;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+[dir="rtl"] .admin-search input {
+  padding: 10px 40px 10px 14px;
+}
+
+.admin-search input:focus {
+  border-color: #04349C;
+  box-shadow: 0 0 0 3px rgba(4, 52, 156, 0.08);
+}
+
+.admin-search svg {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+}
+
+[dir="rtl"] .admin-search svg {
+  left: auto;
+  right: 12px;
+}
+
+/* ---- Stats Row ---- */
+.admin-stats-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.admin-stat-card {
+  flex: 1;
+  min-width: 150px;
+  background: #fff;
+  border: 1px solid #e8ecf2;
+  border-radius: 12px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.admin-stat-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.admin-stat-icon.blue {
+  background: rgba(4, 52, 156, 0.08);
+  color: #04349C;
+}
+
+.admin-stat-icon.green {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.admin-stat-icon.red {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.admin-stat-value {
+  font-size: 22px;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1;
+}
+
+.admin-stat-label {
+  font-size: 12px;
+  color: #94a3b8;
+  margin-top: 2px;
+}
+
+/* ---- Form Sections (Products etc.) ---- */
+.admin-form-section {
+  background: #fff;
+  border: 1px solid #e8ecf2;
+  border-radius: 14px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+
+.admin-form-section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 14px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 15px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+/* ---- Badge ---- */
+.admin-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.admin-badge.success {
+  background: rgba(16, 185, 129, 0.1);
+  color: #059669;
+}
+
+.admin-badge.danger {
+  background: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
+}
+
+.admin-badge.info {
+  background: rgba(4, 52, 156, 0.08);
+  color: #04349C;
+}

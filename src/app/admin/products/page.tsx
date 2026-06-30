@@ -357,11 +357,14 @@ if (!slugValue) {
   };
 
   // ---- UI ----
-  if (loading) return <div className="p-6">Loading products...</div>;
+  if (loading) return <div className="p-6">جارِ التحميل...</div>;
 
   return (
-    <div className="p-6 space-y-6 mt-16" dir={i18n.language === "ar" ? "rtl" : "ltr"}>
-      <h1 className="text-3xl font-bold">{t("products.title")}</h1>
+    <div className="admin-page space-y-6" dir={i18n.language === "ar" ? "rtl" : "ltr"}>
+      <div className="admin-page-header">
+        <h1>{t("products.title")}</h1>
+        <p>إدارة المنتجات والكتالوج</p>
+      </div>
 
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div className="relative w-full md:w-1/3">

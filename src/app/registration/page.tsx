@@ -8,6 +8,7 @@ import type { OptionProps, SingleValueProps } from "react-select";
 import ReactCountryFlag from "react-country-flag";
 import { components } from "react-select";
 import Link from "next/link";
+import Breadcrumb from "../components/Breadcrumb";
 
 const countries = [
   { value: "AF", label: "Afghanistan (أفغانستان)", code: "AF" },
@@ -511,8 +512,9 @@ export default function FullClientEvaluationForm() {
   const isSubmitDisabled = !formData.companyName || !formData.email || !formData.agreeTerms;
 
   return (
-    <section className="relative min-h-screen flex justify-center items-center overflow-hidden bg-gradient-to-b from-[#F8FBFF] to-white py-10">
-      
+    <main className="min-h-screen bg-gradient-to-b from-[#F8FBFF] to-white pt-[65px]">
+      <Breadcrumb items={[{ label: t("form.title", "Registration Form") }]} />
+      <section className="relative flex justify-center items-center overflow-hidden py-10">
       {/* Form Card */}
       <motion.div
         className="mt-14 relative w-full max-w-5xl bg-white/95 backdrop-blur-lg rounded-2xl py-6 px-4 md:px-8 md:py-8 border border-[#E0E7FF] shadow-[0_8px_40px_rgba(0,0,0,0.06)] mx-4"
@@ -1348,6 +1350,7 @@ export default function FullClientEvaluationForm() {
         )}
       </AnimatePresence>
     </section>
+    </main>
   );
 }
 

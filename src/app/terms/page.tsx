@@ -2,13 +2,15 @@
 
 import { useTranslation } from "react-i18next";
 import Container from "../components/Container";
+import Breadcrumb from "../components/Breadcrumb";
 
 export default function TermsAndConditions() {
   const { t, i18n } = useTranslation();
   const isAr = i18n.language === "ar";
 
   return (
-    <div className="pt-32 pb-24 bg-gray-50 min-h-screen" dir={isAr ? "rtl" : "ltr"}>
+    <div className="pt-[85px] pb-24 bg-gray-50 min-h-screen" dir={isAr ? "rtl" : "ltr"}>
+      <Breadcrumb items={[{ label: isAr ? "الشروط والأحكام" : "Terms & Conditions" }]} className="mb-8 !bg-transparent !border-none" />
       <Container>
         <div className="bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100 max-w-4xl mx-auto">
           <h1 className="text-3xl md:text-4xl font-bold text-main mb-8">

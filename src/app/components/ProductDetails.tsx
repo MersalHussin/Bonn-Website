@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import Breadcrumb from "./Breadcrumb";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import {
@@ -251,7 +252,14 @@ const [openAccordion, setOpenAccordion] = useState<
 });
 
   return (
-    <main className="bg-[#F8FAFF] py-20" dir={isAr ? "rtl" : "ltr"}>
+    <main className="bg-[#F8FAFF] pt-[85px] pb-20" dir={isAr ? "rtl" : "ltr"}>
+      <Breadcrumb
+        items={[
+          { label: isAr ? "المنتجات" : "Products" }, // No href since products index was removed
+          { label: t.name },
+        ]}
+        className="mb-8 !bg-transparent !border-none"
+      />
       {/* ================= HERO ================= */}
 <section className="px-4 sm:px-6 lg:px-20 mx-auto grid lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-20">
 {/* ===== Gallery ===== */}

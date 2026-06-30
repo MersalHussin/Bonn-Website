@@ -3,15 +3,17 @@
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import ContactUs from "../components/Contact";
+import Breadcrumb from "../components/Breadcrumb";
 
 export default function ProductionLinesPage() {
   const { i18n } = useTranslation();
   const isAr = i18n.language === "ar";
 
   return (
-    <main className="w-full text-[#0F2451] pt-24" dir={isAr ? "rtl" : "ltr"}>
+    <main className="w-full text-[#0F2451] pt-[65px]" dir={isAr ? "rtl" : "ltr"}>
+      <Breadcrumb items={[{ label: isAr ? "خطوط الإنتاج" : "Production Lines" }]} className="!bg-transparent !border-none mb-0" />
       {/* Hero */}
-      <section className="pt-10 relative overflow-hidden bg-main text-white">
+      <section className="relative overflow-hidden bg-main text-white">
         <div className="mx-auto max-w-7xl px-6 py-20 md:px-10 text-center">
           <motion.h1
             className="text-4xl md:text-6xl font-extrabold leading-tight drop-shadow-lg"
