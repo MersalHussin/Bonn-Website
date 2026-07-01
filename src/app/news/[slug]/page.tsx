@@ -74,7 +74,7 @@ export default async function NewsPostPage({ params }: PageProps) {
       <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 text-center px-4">
         <div className="text-[120px] font-black text-slate-200 leading-none mb-4">404</div>
         <h1 className="text-3xl font-bold text-slate-900 mb-6">{isEn ? 'News Not Found' : 'الخبر غير موجود'}</h1>
-        <Link href="/news" className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-main text-white font-bold tracking-wide hover:bg-main-hover transition shadow-lg hover:shadow-xl hover:-translate-y-1">
+        <Link href="/events?tab=news" className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-main text-white font-bold tracking-wide hover:bg-main-hover transition shadow-lg hover:shadow-xl hover:-translate-y-1">
           {isEn ? 'Back to News' : 'العودة للأخبار'}
         </Link>
       </div>
@@ -96,7 +96,7 @@ export default async function NewsPostPage({ params }: PageProps) {
             <Link href="/">
               <Image src="/images/Logo.svg" alt="Bonn Medical" width={80} height={80} className="object-contain" />
             </Link>
-            <Link href="/news" className="inline-flex items-center gap-2 text-slate-500 hover:text-main transition-all font-bold tracking-wide text-sm bg-slate-50 hover:bg-main/5 px-5 py-2.5 rounded-full uppercase">
+            <Link href="/events?tab=news" className="inline-flex items-center gap-2 text-slate-500 hover:text-main transition-all font-bold tracking-wide text-sm bg-slate-50 hover:bg-main/5 px-5 py-2.5 rounded-full uppercase">
               {isEn ? <span>Back to News ←</span> : <span>العودة للأخبار ←</span>}
             </Link>
           </div>
@@ -122,7 +122,8 @@ export default async function NewsPostPage({ params }: PageProps) {
 
         <div className="mb-8">
           <Breadcrumb items={[
-            { label: isEn ? 'News' : 'الأخبار', href: '/news' },
+            { label: isEn ? 'Media Center' : 'المركز الإعلامي', href: '/events' },
+            { label: isEn ? 'News' : 'الأخبار', href: '/events?tab=news' },
             { label: displayTitle }
           ]} />
         </div>

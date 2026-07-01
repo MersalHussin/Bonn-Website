@@ -10,9 +10,15 @@ import { usePathname, useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { IoCloseSharp } from "react-icons/io5";
-import { FaSearch } from "react-icons/fa";
+import { FaSearch, FaUsers, FaFlask, FaIndustry, FaInfoCircle, FaHome, FaHandshake, FaTags, FaCalendarAlt, FaCertificate, FaQuestionCircle, FaNewspaper, FaBlog, FaBuilding, FaBullhorn, FaStar, FaHeadset, FaGlobe } from "react-icons/fa";
 import Image from "next/image";
 import { supabase } from "../lib/supabaseClient";
+
+import AboutMenu from "./Navbar/AboutMenu";
+import EventsMenu from "./Navbar/EventsMenu";
+import BrandsMenu from "./Navbar/BrandsMenu";
+import ServicesMenu from "./Navbar/ServicesMenu";
+import { aboutMenuLinks, eventsMenuLinks, servicesMenuLinks, brands } from "./Navbar/navData";
 
 
 function highlightText(text, matches, key) {
@@ -74,13 +80,24 @@ export default function FactoryHeader() {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [brandsOpen, setBrandsOpen] = useState(false);
+  const [aboutOpen, setAboutOpen] = useState(false);
+  const [eventsOpen, setEventsOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [searchError, setSearchError] = useState("");
   const [products, setProducts] = useState([]);
   const [langOpen, setLangOpen] = useState(false);
   const [searchPopupOpen, setSearchPopupOpen] = useState(false);
-      const [mount , setMount] = useState(false);
+  const [mount , setMount] = useState(false);
+
+  const closeMenus = () => {
+    setAboutOpen(false);
+    setEventsOpen(false);
+    setBrandsOpen(false);
+    setServicesOpen(false);
+    setIsOpen(false);
+  };
 
   useEffect(() => {
   const fetchProducts = async () => {
@@ -110,54 +127,13 @@ export default function FactoryHeader() {
 
 
 const navItems = [
-  { key: "home", path: "/" },
-  { key: "about", path: "/about" },
-  { key: "services.title", path: "/services" },
-  { key: "brands", type: "dropdown" },
-  { key: "news", path: "/news" },
-  { key: "certifications", path: "/certifications" },
-  { key: "blog", path: "/blog" },
-  // { key: "contact", path: "/#contact" },
-  { key: "faq_nav", path: "/faq" },
-];
-
-const brands = [
-  {
-    name_en: "Covix Care",
-    name_ar: "كوفيكس كير",
-    slug: "covix-care",
-    logo: "/images/covix.png",
-  },
-  {
-    name_en: "Le Visage Plus",
-    name_ar: "لو فيزاج بلس",
-    slug: "leVisagePlus",
-    logo: "/images/Visage.png",
-  },
-  {
-    name_en: "B1Care",
-    name_ar: "بي 1 كير",
-    slug: "b1care",
-    logo: "/images/B1.png",
-  },
-  {
-    name_en: "PuCare",
-    name_ar: "بو كير",
-    slug: "pucare",
-    logo: "/images/PUCare.png",
-  },
-  {
-    name_en: "Vert",
-    name_ar: "فيرت",
-    slug: "vert",
-    logo: "/images/Vert.png",
-  },
-  {
-    name_en: "Rubin",
-    name_ar: "روبين",
-    slug: "rubin",
-    logo: "/images/Rubin.png",
-  }
+  { key: "home", path: "/", icon: FaHome },
+  { key: "about_boon", type: "dropdown_about", icon: FaBuilding },
+  { key: "services.title", type: "dropdown_services", icon: FaHandshake },
+  { key: "brands", type: "dropdown", icon: FaStar },
+  { key: "events", type: "dropdown_events", icon: FaBullhorn },
+  { key: "certifications", path: "/certifications", icon: FaCertificate },
+  { key: "faq_nav", path: "/faq", icon: FaQuestionCircle },
 ];
 
 
@@ -211,9 +187,11 @@ const brands = [
   };
 useEffect(() => {
   const handleScroll = () => {
-    if (isOpen) {
+    if (isOpen || brandsOpen || aboutOpen || eventsOpen || langOpen) {
       setIsOpen(false);
       setBrandsOpen(false);
+      setAboutOpen(false);
+      setEventsOpen(false);
       setLangOpen(false);
     }
   };
@@ -255,98 +233,118 @@ useEffect(() => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSearchPopupOpen(false)}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[9998]"
+            className="fixed inset-0 bg-slate-900/40 backdrop-blur-md z-[9998]"
           />
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: -20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: -20 }}
-            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-2xl w-[90%] max-w-2xl max-h-[80vh] z-[9999] overflow-hidden"
+            className="fixed top-[10%] left-1/2 -translate-x-1/2 bg-white rounded-3xl shadow-2xl w-[95%] max-w-3xl max-h-[80vh] z-[9999] overflow-hidden flex flex-col  top-[50%] translate-y-[-50%] "
           >
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-2xl font-bold text-main">{mounted ? t("searchProduct") : "Search Product"}</h2>
+            <div className="p-6 md:p-8 border-b border-slate-100">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl md:text-3xl font-black text-slate-800">{mounted ? t("searchProduct") : "Search Product"}</h2>
                 <button
                   onClick={() => setSearchPopupOpen(false)}
-                  className="text-gray-400 hover:text-gray-600 transition"
+                  className="w-10 h-10 flex items-center justify-center bg-slate-50 text-slate-500 rounded-full hover:bg-slate-200 hover:text-slate-800 transition-colors"
                 >
-                  <IoCloseSharp size={28} />
+                  <IoCloseSharp size={24} />
                 </button>
               </div>
               
-              <div className="relative mb-4">
-                <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-main" />
+              <div className="relative">
+                <div className="absolute top-1/2 -translate-y-1/2 text-slate-400 ltr:left-5 rtl:right-5">
+                  <FaSearch size={20} />
+                </div>
                 <input
                   type="text"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSearchAction()}
-                  placeholder={mounted ? t("searchProduct") : "Search Product"}
-                  className="w-full pl-10 pr-4 py-3 border-2 border-main/20 rounded-xl outline-none focus:border-main transition text-lg"
+                  placeholder={mounted ? (i18n.language === "ar" ? "ابحث عن منتجات، مقالات، خدمات..." : "Search products, articles, services...") : "Search..."}
+                  className="w-full ltr:pl-14 rtl:pr-14 ltr:pr-6 rtl:pl-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl outline-none focus:bg-white focus:ring-4 focus:ring-main/10 focus:border-main/30 transition-all text-lg font-medium text-slate-800 placeholder-slate-400 shadow-inner"
                   autoFocus
                 />
               </div>
-              
-              <div className="overflow-y-auto max-h-[50vh]">
-                {searchTerm && (
-                  <>
-                    {searchResults.length > 0 ? (
-                      <div className="space-y-2">
-                        {searchResults.map((res) => {
-                          const product = res?.item || res;
-                          const matches = res?.matches || [];
-                          if (!product) return null;
-                          
-                          const highlightText = (text, key) => {
-                            if (!text || !matches.length) return text;
-                            const match = matches.find((m) => m.key === key);
-                            if (!match) return text;
-                            let parts = [];
-                            let lastIndex = 0;
-                            match.indices.forEach(([start, end], i) => {
-                              if (start > lastIndex) parts.push(text.slice(lastIndex, start));
-                              parts.push(<mark key={i} className="bg-yellow-200 text-black px-[1px] rounded">{text.slice(start, end + 1)}</mark>);
-                              lastIndex = end + 1;
-                            });
-                            if (lastIndex < text.length) parts.push(text.slice(lastIndex));
-                            return parts;
-                          };
+            </div>
+            
+            <div className="flex-1 overflow-y-auto p-6 md:p-8 bg-slate-50/50">
+              {searchTerm && (
+                <>
+                  {searchResults.length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {searchResults.map((res) => {
+                        const product = res?.item || res;
+                        const matches = res?.matches || [];
+                        if (!product) return null;
+                        
+                        const highlightText = (text, key) => {
+                          if (!text || !matches.length) return text;
+                          const match = matches.find((m) => m.key === key);
+                          if (!match) return text;
+                          let parts = [];
+                          let lastIndex = 0;
+                          match.indices.forEach(([start, end], i) => {
+                            if (start > lastIndex) parts.push(text.slice(lastIndex, start));
+                            parts.push(<mark key={i} className="bg-main/20 text-main font-bold px-1 rounded">{text.slice(start, end + 1)}</mark>);
+                            lastIndex = end + 1;
+                          });
+                          if (lastIndex < text.length) parts.push(text.slice(lastIndex));
+                          return parts;
+                        };
 
-                          const nameKey = i18n.language === "ar" ? "name_ar" : "name_en";
-                          const descKey = i18n.language === "ar" ? "description_ar" : "description_en";
-                          const nameText = i18n.language === "ar" ? product?.name_ar || "" : product?.name_en || "";
-                          const descText = i18n.language === "ar" ? product?.description_ar || "" : product?.description_en || "";
+                        const nameKey = i18n.language === "ar" ? "name_ar" : "name_en";
+                        const descKey = i18n.language === "ar" ? "description_ar" : "description_en";
+                        const nameText = i18n.language === "ar" ? product?.name_ar || "" : product?.name_en || "";
+                        const descText = i18n.language === "ar" ? product?.description_ar || "" : product?.description_en || "";
 
-                          return (
-                            <Link
-                              key={product.id}
-                              href={`/products/${product.slug}`}
-                              dir={i18n.language === "ar" ? "rtl" : "ltr"}
-                              className="flex items-center gap-4 p-4 hover:bg-gray-50 transition rounded-xl border border-gray-100"
-                              onClick={() => {
-                                setSearchTerm("");
-                                setSearchResults([]);
-                                setSearchPopupOpen(false);
-                              }}
-                            >
-                              <Image src={product?.images?.[0] || "/placeholder.png"} alt={nameText} className="rounded-lg object-cover" width={80} height={80} />
-                              <div className="flex-1">
-                                <div className="font-semibold text-gray-900 text-lg mb-1">{highlightText(nameText, nameKey)}</div>
-                                <div className="text-gray-500 text-sm line-clamp-2">{highlightText(descText, descKey)}</div>
-                              </div>
-                            </Link>
-                          );
-                        })}
+                        return (
+                          <Link
+                            key={product.id}
+                            href={`/products/${product.slug}`}
+                            dir={i18n.language === "ar" ? "rtl" : "ltr"}
+                            className="flex items-start gap-4 p-4 bg-white hover:bg-slate-50 hover:shadow-md hover:-translate-y-1 transition-all rounded-2xl border border-slate-100 group"
+                            onClick={() => {
+                              setSearchTerm("");
+                              setSearchResults([]);
+                              setSearchPopupOpen(false);
+                            }}
+                          >
+                            <div className="w-20 h-20 flex-shrink-0 bg-slate-50 rounded-xl p-2 border border-slate-100 flex items-center justify-center">
+                              <Image src={product?.images?.[0] || "/placeholder.png"} alt={nameText} className="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-500" width={80} height={80} />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <h3 className="font-bold text-slate-800 text-[16px] mb-1.5 truncate group-hover:text-main transition-colors">{highlightText(nameText, nameKey)}</h3>
+                              <p className="text-slate-500 text-[13px] line-clamp-2 leading-relaxed">{highlightText(descText, descKey)}</p>
+                            </div>
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center py-12 text-center">
+                      <div className="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mb-4">
+                        <FaSearch className="text-3xl text-slate-300" />
                       </div>
-                    ) : (
-                      <div className="p-8 text-center text-gray-500">{searchError}</div>
-                    )}
-                  </>
-                )}
-                {!searchTerm && (
-                  <div className="p-8 text-center text-gray-400">{mounted ? (i18n.language === "ar" ? "ابدأ الكتابة للبحث..." : "Start typing to search...") : "Start typing to search..."}</div>
-                )}
-              </div>
+                      <p className="text-lg font-bold text-slate-700 mb-1">{searchError || (mounted && i18n.language === "ar" ? "لا توجد نتائج" : "No results found")}</p>
+                      <p className="text-slate-500">{mounted && i18n.language === "ar" ? "حاول البحث بكلمات مختلفة" : "Try searching with different keywords"}</p>
+                    </div>
+                  )}
+                </>
+              )}
+              {!searchTerm && (
+                <div className="flex flex-col items-center justify-center py-16 text-center opacity-60">
+                  <div className="w-24 h-24 bg-slate-100 rounded-full flex items-center justify-center mb-6">
+                    <FaSearch className="text-4xl text-slate-300" />
+                  </div>
+                  <p className="text-xl font-bold text-slate-700 mb-2">
+                    {mounted ? (i18n.language === "ar" ? "ما الذي تبحث عنه؟" : "What are you looking for?") : "Search..."}
+                  </p>
+                  <p className="text-slate-500 max-w-sm">
+                    {mounted ? (i18n.language === "ar" ? "اكتب اسم المنتج، الخدمة، أو الكلمة المفتاحية للبدء في البحث" : "Type a product name, service, or keyword to start searching") : ""}
+                  </p>
+                </div>
+              )}
             </div>
           </motion.div>
         </>
@@ -470,68 +468,97 @@ useEffect(() => {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 + index * 0.15, duration: 0.4 }}
-                  className="relative"
+                  className="relative group/navitem"
+                  onMouseEnter={() => {
+                    if (item.type === "dropdown_about") { setAboutOpen(true); setBrandsOpen(false); setEventsOpen(false); setServicesOpen(false); }
+                    else if (item.type === "dropdown_events") { setEventsOpen(true); setBrandsOpen(false); setAboutOpen(false); setServicesOpen(false); }
+                    else if (item.type === "dropdown") { setBrandsOpen(true); setAboutOpen(false); setEventsOpen(false); setServicesOpen(false); }
+                    else if (item.type === "dropdown_services") { setServicesOpen(true); setAboutOpen(false); setBrandsOpen(false); setEventsOpen(false); }
+                  }}
+                  onMouseLeave={() => {
+                    if (item.type === "dropdown_about") setAboutOpen(false);
+                    else if (item.type === "dropdown_events") setEventsOpen(false);
+                    else if (item.type === "dropdown") setBrandsOpen(false);
+                    else if (item.type === "dropdown_services") setServicesOpen(false);
+                  }}
                 >
-                  {item.type === "dropdown" ? (
+                  {item.type === "dropdown_about" ? (
+                    <>
+                      <button
+                        onClick={() => { setAboutOpen(!aboutOpen); setBrandsOpen(false); setEventsOpen(false); }}
+                        className={`relative flex items-center gap-1 font-bold text-[17px] transition group ${
+                          aboutOpen || pathname.startsWith("/about")
+                            ? "text-main after:absolute after:left-0 after:-bottom-1 after:w-full after:h-[2px] after:bg-main cursor-pointer"
+                            : "text-gray-800 hover:text-main cursor-pointer"
+                        }`}
+                      >
+                        {mounted ? t(item.key) : "About Us"}
+                        {item.icon && <item.icon size={13} className={`transition-colors ${aboutOpen || pathname.startsWith("/about") ? "text-main" : "text-gray-400 group-hover:text-main"}`} />}
+                      </button>
+
+                      <AboutMenu isOpen={aboutOpen} closeMenus={closeMenus} mounted={mounted} t={t} i18n={i18n} />
+                    </>
+                  ) : item.type === "dropdown_events" ? (
+                    <>
+                      <button
+                        onClick={() => { setEventsOpen(!eventsOpen); setBrandsOpen(false); setAboutOpen(false); }}
+                        className={`relative flex items-center gap-1 font-bold text-[17px] transition group ${
+                          eventsOpen || pathname.startsWith("/events") || pathname.startsWith("/news") || pathname.startsWith("/blog")
+                            ? "text-main after:absolute after:left-0 after:-bottom-1 after:w-full after:h-[2px] after:bg-main cursor-pointer"
+                            : "text-gray-800 hover:text-main cursor-pointer"
+                        }`}
+                      >
+                        {mounted ? t("events") : "Events"}
+                        {item.icon && <item.icon size={13} className={`transition-colors ${eventsOpen || pathname.startsWith("/events") || pathname.startsWith("/news") || pathname.startsWith("/blog") ? "text-main" : "text-gray-400 group-hover:text-main"}`} />}
+                      </button>
+
+                      <EventsMenu isOpen={eventsOpen} closeMenus={closeMenus} mounted={mounted} t={t} i18n={i18n} />
+                    </>
+                  ) : item.type === "dropdown_services" ? (
+                    <>
+                      <button
+                        onClick={() => { setServicesOpen(!servicesOpen); setBrandsOpen(false); setAboutOpen(false); setEventsOpen(false); }}
+                        className={`relative flex items-center gap-1 font-bold text-[17px] transition group ${
+                          servicesOpen || pathname.startsWith("/services")
+                            ? "text-main after:absolute after:left-0 after:-bottom-1 after:w-full after:h-[2px] after:bg-main cursor-pointer"
+                            : "text-gray-800 hover:text-main cursor-pointer"
+                        }`}
+                      >
+                        {mounted ? t(item.key) : "Services"}
+                        {item.icon && <item.icon size={13} className={`transition-colors ${servicesOpen || pathname.startsWith("/services") ? "text-main" : "text-gray-400 group-hover:text-main"}`} />}
+                      </button>
+                      <ServicesMenu isOpen={servicesOpen} closeMenus={closeMenus} mounted={mounted} t={t} i18n={i18n} />
+                    </>
+                  ) : item.type === "dropdown" ? (
                     <>
                       {/* Brands Button */}
                       <button
-                        onClick={() => setBrandsOpen(!brandsOpen)}
-                        className={`flex items-center gap-1 font-bold text-[17px] transition ${
-                          brandsOpen
-                            ? "text-main cursor-pointer"
+                        onClick={() => { setBrandsOpen(!brandsOpen); setAboutOpen(false); setEventsOpen(false); }}
+                        className={`relative flex items-center gap-1 font-bold text-[17px] transition group ${
+                          brandsOpen || pathname.startsWith("/brands")
+                            ? "text-main after:absolute after:left-0 after:-bottom-1 after:w-full after:h-[2px] after:bg-main cursor-pointer"
                             : "text-gray-800 hover:text-main cursor-pointer"
                         }`}
                       >
                         {mounted ? t("ourbrands") : "Our Brands"}
+                        {item.icon && <item.icon size={13} className={`transition-colors ${brandsOpen || pathname.startsWith("/brands") ? "text-main" : "text-gray-400 group-hover:text-main"}`} />}
                       </button>
 
                       {/* Dropdown */}
-                      <AnimatePresence>
-                      {brandsOpen && (
-                        <motion.div
-                          initial={{ opacity: 0, y: -20, scale: 0.98, filter: "blur(6px)" }}
-                          animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-                          exit={{ opacity: 0, y: -15, scale: 0.985, filter: "blur(4px)" }}
-                          transition={{ type: "spring", stiffness: 260, damping: 22, mass: 0.6 }}
-                          style={{ originY: 0, transform: "translateZ(0)" }}
-                          className="fixed left-0 top-[100%] w-screen bg-white shadow-xl border-t border-main/10 z-20 will-change-transform"
-                        >
-                          <div className="max-w-7xl mx-auto px-6 py-2 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-2">
-                            {brands.map((brand) => {
-                              const brandName = i18n.language === "ar" ? brand.name_ar : brand.name_en;
-                              return (
-                                <Link
-                                  key={brand.slug}
-                                  href={`/brands/${brand.slug}`}
-                                  dir={i18n.language === "ar" ? "rtl" : "ltr"}
-                                  onClick={() => { setBrandsOpen(false); setIsOpen(false); }}
-                                  className="flex items-center gap-4 p-4 rounded-xl hover:bg-main/5 transition group"
-                                >
-                                  <Image src={brand.logo} alt={brandName} width={60} height={40} className="object-contain" />
-                                  <div>
-                                    <h3 className="font-semibold text-gray-800 group-hover:text-main transition">{brandName}</h3>
-                                    <p className="text-sm text-gray-500">{t("viewBrandProducts")}</p>
-                                  </div>
-                                </Link>
-                              );
-                            })}
-                          </div>
-                        </motion.div>
-                      )}
-                      </AnimatePresence>
+                      <BrandsMenu isOpen={brandsOpen} closeMenus={closeMenus} mounted={mounted} t={t} i18n={i18n} />
                     </>
                   ) : (
                     <Link
                       href={item.path}
                       onClick={() => { setIsOpen(false); setBrandsOpen(false); }}
-                      className={`relative font-bold text-[17px] transition-colors ${
+                      className={`relative font-bold text-[17px] transition-colors flex items-center gap-1 ${
                         pathname === item.path
                           ? "text-main after:absolute after:left-0 after:-bottom-1 after:w-full after:h-[2px] after:bg-main"
                           : "text-gray-800 hover:text-main"
                       } group`}
                     >
                       <span className="relative z-10">{mounted ? t(item.key) : item.key}</span>
+                      {item.icon && <item.icon size={13} className={`group-hover:text-main transition-colors ${pathname === item.path ? "text-main" : "text-gray-400"}`} />}
                       <span className="absolute bottom-[-4px] left-0 w-0 h-[2px] bg-main group-hover:w-full transition-all duration-300"></span>
                     </Link>
                   )}
@@ -541,24 +568,24 @@ useEffect(() => {
         </div>
 
         {/* Desktop Action Icons (Search & Lang) */}
-        <div className="hidden min-[916px]:flex items-center gap-6">
+        <div className="hidden min-[916px]:flex items-center gap-3">
               <button
                 onClick={() => setSearchPopupOpen(true)}
-                className="flex flex-col items-center justify-center text-[#1d358f] hover:text-main transition-colors group cursor-pointer"
+                className="flex items-center justify-center gap-2 bg-slate-50 text-slate-700 hover:bg-main hover:text-white transition-all px-4 py-2.5 rounded-full font-bold text-sm shadow-sm hover:shadow-md cursor-pointer border border-slate-100 group"
               >
-                <FaSearch className="text-3xl mb-1 stroke-current stroke-2" />
-                <span className="text-[16px] font-bold leading-none">{mounted ? (i18n.language === "ar" ? "ابحث" : "Search") : "Search"}</span>
+                <FaSearch size={16} className="group-hover:scale-110 transition-transform" />
+                <span>{mounted ? (i18n.language === "ar" ? "ابحث" : "Search") : "Search"}</span>
               </button>
 
               <div className="relative">
                 <button
                   onClick={() => setLangOpen(!langOpen)}
-                  className="flex flex-col items-center justify-center text-[#1d358f] hover:text-main transition-colors group cursor-pointer"
+                  className="flex items-center justify-center gap-2 bg-slate-50 text-slate-700 hover:bg-main hover:text-white transition-all px-4 py-2.5 rounded-full font-bold text-sm shadow-sm hover:shadow-md cursor-pointer border border-slate-100 group"
                 >
-                  <svg className="w-8 h-8 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <svg className="w-4 h-4 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
                   </svg>
-                  <span className="text-[16px] font-bold leading-none">{mounted ? (i18n.language === "ar" ? "العربية" : "English") : "English"}</span>
+                  <span>{mounted ? (i18n.language === "ar" ? "العربية" : "English") : "English"}</span>
                 </button>
                 <AnimatePresence>
                   {langOpen && (
@@ -667,10 +694,112 @@ useEffect(() => {
               <div className="flex flex-col mt-4">
               {navItems.map((item, index) => (
                 <motion.div key={item.key} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 + index * 0.05 }} className="border-b border-gray-100 last:border-0">
-                  {item.type === "dropdown" ? (
+                  {item.type === "dropdown_about" ? (
+                    <div className="flex flex-col">
+                      <button onClick={() => setAboutOpen(!aboutOpen)} className="flex items-center justify-between w-full py-4 text-left font-bold text-gray-800 hover:text-main transition">
+                        <div className="flex items-center gap-2">
+                          <span className="text-lg">{mounted ? t("about") : "About Us"}</span>
+                          {item.icon && <item.icon size={18} className="text-gray-400" />}
+                        </div>
+                        <motion.span animate={{ rotate: aboutOpen ? 180 : 0 }} className="text-gray-400">▼</motion.span>
+                      </button>
+                      <AnimatePresence>
+                        {aboutOpen && (
+                          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
+                            <div className="flex flex-col gap-3 pb-4 pt-2">
+                              {aboutMenuLinks.map((link) => {
+                                const Icon = link.icon;
+                                const desc = mounted && i18n.language === "ar" ? link.descAr : link.descEn;
+                                return (
+                                  <Link key={link.key} href={link.path} dir={i18n.language === "ar" ? "rtl" : "ltr"} onClick={() => { setAboutOpen(false); setIsOpen(false); }} className="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 hover:bg-main/5 transition border border-transparent hover:border-main/10 shadow-sm">
+                                    <div className="min-w-[48px] h-[48px] flex justify-center items-center text-main bg-white rounded-xl shadow-sm border border-gray-100">
+                                      <Icon size={20} />
+                                    </div>
+                                    <div className="flex flex-col">
+                                      <span className="text-[15px] font-bold text-gray-800 mb-1">{mounted ? t(link.key) : link.key}</span>
+                                      <span className="text-[13px] text-gray-500 leading-snug">{desc}</span>
+                                    </div>
+                                  </Link>
+                                );
+                              })}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  ) : item.type === "dropdown_events" ? (
+                    <div className="flex flex-col">
+                      <button onClick={() => setEventsOpen(!eventsOpen)} className="flex items-center justify-between w-full py-4 text-left font-bold text-gray-800 hover:text-main transition">
+                        <div className="flex items-center gap-2">
+                          <span className="text-lg">{mounted ? t("events") : "Events"}</span>
+                          {item.icon && <item.icon size={18} className="text-gray-400" />}
+                        </div>
+                        <motion.span animate={{ rotate: eventsOpen ? 180 : 0 }} className="text-gray-400">▼</motion.span>
+                      </button>
+                      <AnimatePresence>
+                        {eventsOpen && (
+                          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
+                            <div className="flex flex-col gap-3 pb-4 pt-2">
+                              {eventsMenuLinks.map((link) => {
+                                const Icon = link.icon;
+                                const desc = mounted && i18n.language === "ar" ? link.descAr : link.descEn;
+                                return (
+                                  <Link key={link.key} href={link.path} dir={i18n.language === "ar" ? "rtl" : "ltr"} onClick={() => { setEventsOpen(false); setIsOpen(false); }} className="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 hover:bg-main/5 transition border border-transparent hover:border-main/10 shadow-sm">
+                                    <div className="min-w-[48px] h-[48px] flex justify-center items-center text-main bg-white rounded-xl shadow-sm border border-gray-100">
+                                      <Icon size={20} />
+                                    </div>
+                                    <div className="flex flex-col">
+                                      <span className="text-[15px] font-bold text-gray-800 mb-1">{mounted ? t(link.key) : link.key}</span>
+                                      <span className="text-[13px] text-gray-500 leading-snug">{desc}</span>
+                                    </div>
+                                  </Link>
+                                );
+                              })}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  ) : item.type === "dropdown_services" ? (
+                    <div className="flex flex-col">
+                      <button onClick={() => setServicesOpen(!servicesOpen)} className="flex items-center justify-between w-full py-4 text-left font-bold text-gray-800 hover:text-main transition">
+                        <div className="flex items-center gap-2">
+                          <span className="text-lg">{mounted ? t(item.key) : item.key}</span>
+                          {item.icon && <item.icon size={18} className="text-gray-400" />}
+                        </div>
+                        <motion.span animate={{ rotate: servicesOpen ? 180 : 0 }} className="text-gray-400">▼</motion.span>
+                      </button>
+                      <AnimatePresence>
+                        {servicesOpen && (
+                          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
+                            <div className="flex flex-col gap-3 pb-4 pt-2">
+                              {servicesMenuLinks.map((link) => {
+                                const Icon = link.icon;
+                                const desc = mounted && i18n.language === "ar" ? link.descAr : link.descEn;
+                                return (
+                                  <Link key={link.key} href={link.path} dir={i18n.language === "ar" ? "rtl" : "ltr"} onClick={() => { setServicesOpen(false); setIsOpen(false); }} className="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 hover:bg-main/5 transition border border-transparent hover:border-main/10 shadow-sm">
+                                    <div className="min-w-[48px] h-[48px] flex justify-center items-center text-main bg-white rounded-xl shadow-sm border border-gray-100">
+                                      <Icon size={20} />
+                                    </div>
+                                    <div className="flex flex-col">
+                                      <span className="text-[15px] font-bold text-gray-800 mb-1">{mounted ? t(link.key) : link.key}</span>
+                                      <span className="text-[13px] text-gray-500 leading-snug">{desc}</span>
+                                    </div>
+                                  </Link>
+                                );
+                              })}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  ) : item.type === "dropdown" ? (
                     <div className="flex flex-col">
                       <button onClick={() => setBrandsOpen(!brandsOpen)} className="flex items-center justify-between w-full py-4 text-left font-bold text-gray-800 hover:text-main transition">
-                        <span className="text-lg">{mounted ? t("ourbrands") : "Our Brands"}</span>
+                        <div className="flex items-center gap-2">
+                          <span className="text-lg">{mounted ? t("ourbrands") : "Our Brands"}</span>
+                          {item.icon && <item.icon size={18} className="text-gray-400" />}
+                        </div>
                         <motion.span animate={{ rotate: brandsOpen ? 180 : 0 }} className="text-gray-400">▼</motion.span>
                       </button>
                       <AnimatePresence>
@@ -694,8 +823,9 @@ useEffect(() => {
                       </AnimatePresence>
                     </div>
                   ) : (
-                    <Link onClick={() => setIsOpen(false)} href={item.path} className={`block py-4 text-lg font-bold transition-colors ${pathname === item.path ? "text-main" : "text-gray-800 hover:text-main"}`}>
+                    <Link onClick={() => setIsOpen(false)} href={item.path} className={`flex items-center gap-2 py-4 text-lg font-bold transition-colors ${pathname === item.path ? "text-main" : "text-gray-800 hover:text-main"}`}>
                       {mounted ? t(item.key) : item.key}
+                      {item.icon && <item.icon size={18} className={pathname === item.path ? "text-main" : "text-gray-400"} />}
                     </Link>
                   )}
                 </motion.div>

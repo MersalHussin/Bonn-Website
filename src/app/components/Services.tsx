@@ -3,16 +3,8 @@
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import Link from "next/link";
-import {
-  Brain,
-  FlaskConical,
-  PackageCheck,
-  Palette,
-  Factory,
-  FileCheck2,
-  ArrowRight,
-  ArrowLeft,
-} from "lucide-react";
+import { ArrowRight, ArrowLeft } from "lucide-react";
+import { FaFlask, FaMicroscope, FaVials, FaTags, FaIndustry, FaFileContract } from "react-icons/fa";
 import Container from "./Container";
 import SectionTitle from "./SectionTitle";
 
@@ -20,32 +12,32 @@ const services = [
   {
     key: "ideation",
     slug: "product-ideation",
-    icon: <Brain size={80} className="text-white" />,
+    icon: <FaFlask size={80} className="text-white" />,
   },
   {
     key: "formulation",
     slug: "custom-formulation",
-    icon: <FlaskConical size={80} className="text-white" />,
+    icon: <FaMicroscope size={80} className="text-white" />,
   },
   {
     key: "ready",
     slug: "ready-formulas",
-    icon: <PackageCheck size={80} className="text-white" />,
+    icon: <FaVials size={80} className="text-white" />,
   },
   {
     key: "packaging",
     slug: "packaging-design",
-    icon: <Palette size={80} className="text-white" />,
+    icon: <FaTags size={80} className="text-white" />,
   },
   {
     key: "production",
     slug: "production",
-    icon: <Factory size={80} className="text-white" />,
+    icon: <FaIndustry size={80} className="text-white" />,
   },
   {
     key: "registration",
     slug: "registration",
-    icon: <FileCheck2 size={80} className="text-white" />,
+    icon: <FaFileContract size={80} className="text-white" />,
   },
 ];
 

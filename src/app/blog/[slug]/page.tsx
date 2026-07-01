@@ -74,7 +74,7 @@ export default async function BlogArticle({ params }: PageProps) {
         <h1 className="text-3xl font-bold text-slate-800 mb-6">
           {isEn ? 'Article not found' : 'المقالة غير موجودة'}
         </h1>
-        <Link href="/blog" className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-main text-white font-semibold hover:bg-main-hover transition">
+        <Link href="/events?tab=blog" className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-main text-white font-semibold hover:bg-main-hover transition">
           {isEn ? 'Back to Blog' : 'العودة للمدونة'}
         </Link>
       </div>
@@ -97,7 +97,7 @@ export default async function BlogArticle({ params }: PageProps) {
         <Link href="/">
           <Image src="/images/Logo.svg" alt="Bonn Medical" width={70} height={70} className="object-contain" />
         </Link>
-        <Link href="/blog" className="inline-flex items-center gap-2 text-slate-500 hover:text-main transition-colors font-semibold text-sm bg-gray-50 hover:bg-main/5 px-4 py-2 rounded-xl">
+        <Link href="/events?tab=blog" className="inline-flex items-center gap-2 text-slate-500 hover:text-main transition-colors font-semibold text-sm bg-gray-50 hover:bg-main/5 px-4 py-2 rounded-xl">
           {isEn ? <span>Back to Blog ←</span> : <span>العودة للمدونة ←</span>}
         </Link>
       </div>
@@ -116,7 +116,8 @@ export default async function BlogArticle({ params }: PageProps) {
 
       <div className="mb-6">
         <Breadcrumb items={[
-          { label: isEn ? 'Blog' : 'المقالات', href: '/blog' },
+          { label: isEn ? 'Media Center' : 'المركز الإعلامي', href: '/events' },
+          { label: isEn ? 'Blog' : 'المقالات', href: '/events?tab=blog' },
           { label: displayTitle }
         ]} />
       </div>

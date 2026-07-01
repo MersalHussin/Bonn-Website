@@ -25,9 +25,36 @@ export default function Hero() {
       <div className="absolute inset-0 z-10 bg-gradient-to-b bg-main opacity-10 bg-center  bg-[url('/images/bonnHero.jpeg')]  bg-blend-luminosity bg-cover  from-[#0033a0]/90 via-[#0033a0]/70 to-[#07327b]/95" />
 
       {/* Content */}
-      <Container className="relative z-20 h-full mx-auto px-0 flex  items-center justify-center xl :justify-between gap-2">
-        <Image src={'/images/bonnHero.jpeg'} alt="Bonn Industry" width={650} height={650} className="rounded-2xl hidden xl:flex p-2"/>
-        <div className="max-w-3xl min-w-lg sm:min-w-xl   flex flex-col items-center md:flex text-center text-white scale-70  md:scale-100 ">
+      <Container className="relative z-20 h-full mx-auto px-4 sm:px-6 flex items-center justify-center xl:justify-between gap-8 lg:gap-12">
+        
+        {/* Hero Image - Simple & Non-traditional */}
+        <motion.div 
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="hidden xl:flex relative w-[600px] h-[400px] xl:w-[650px] xl:h-[450px] group mt-8"
+        >
+          {/* Minimalist offset outline */}
+          <div className="absolute -top-3 -bottom-3 -left-3 -right-3 border-[1.5px] border-white/30 rounded-tl-[120px] rounded-br-[120px] rounded-tr-3xl rounded-bl-3xl z-0 transition-transform duration-700 group-hover:-rotate-2 group-hover:scale-[1.02]"></div>
+          
+          {/* Main Image */}
+          <div className="relative z-10 w-full h-full overflow-hidden rounded-tl-[110px] rounded-br-[110px] rounded-tr-2xl rounded-bl-2xl shadow-2xl">
+            <Image 
+              src={'/images/bonnHero.jpeg'} 
+              alt="Bonn Industry" 
+              fill
+              priority
+              className="object-cover transform transition-transform duration-700 group-hover:scale-110"
+            />
+            {/* Subtle Overlay */}
+            <div className="absolute inset-0 bg-black/10 pointer-events-none transition-opacity duration-700 group-hover:opacity-0"></div>
+          </div>
+          
+          {/* Simple floating dot accent */}
+          <div className="absolute top-10 -right-5 w-4 h-4 bg-white rounded-full shadow-[0_0_15px_rgba(255,255,255,0.8)] z-20 animate-pulse"></div>
+        </motion.div>
+
+        <div className="max-w-3xl min-w-lg sm:min-w-xl flex flex-col items-center text-center text-white scale-70 md:scale-100 z-20">
           {/* Headline */}
 
           <motion.h1
