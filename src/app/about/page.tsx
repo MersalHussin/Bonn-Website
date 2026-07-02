@@ -30,6 +30,7 @@ import {
   FaLandmark,
   FaBookOpen,
 } from "react-icons/fa";
+import Image from "next/image";
 
 // Typing Effect for Story
 function TypingStory({ text }: { text: string }) {
@@ -140,8 +141,10 @@ export default function AboutUsPage() {
               transition={{ duration: 0.8 }}
               className="relative w-full h-[250px] sm:h-[400px] md:h-[550px] rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,118,255,0.1)] border-4 border-white mt-12"
             >
-              <img
+              <Image
                 src="/images/Team-images/وزير_الصناعة.JPG"
+                width={800}
+                height={800}
                 alt="Visit of H.E. the Minister of Industry to Bonn Factory"
                 className="w-full h-full object-cover"
               />
@@ -175,9 +178,11 @@ export default function AboutUsPage() {
             {/* Left: Factory Image */}
             <div className="lg:col-span-5 order-2 lg:order-1">
               <div className="relative rounded-3xl overflow-hidden shadow-lg border border-gray-100 group">
-                <img
+                <Image
                   src="/images/Team-images/مصنع.jpg"
                   alt="Bonn Manufacturing Facility"
+                  width={500}
+                  height={500}
                   className="w-full h-auto object-cover group-hover:scale-103 transition-transform duration-500"
                 />
               </div>
@@ -429,9 +434,11 @@ export default function AboutUsPage() {
                   >
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent to-main/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     <div className="w-full h-32 md:h-40 flex items-center justify-center relative z-10">
-                      <img 
+                      <Image 
                         src={`/certificates/${cert.img}`} 
                         alt={cert.title} 
+                        width={200}
+                        height={200}
                         className="max-w-full max-h-full object-contain filter drop-shadow-sm group-hover:scale-110 transition-transform duration-500"
                       />
                     </div>

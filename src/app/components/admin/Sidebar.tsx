@@ -14,10 +14,12 @@ import {
   LayoutDashboard,
   Newspaper,
 } from "lucide-react";
+import { useAdminAuth } from "../../context/AdminAuthContext";
 
 export default function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
+  const { user ,role } = useAdminAuth();
 
   const handleLogout = async () => {
     try {
@@ -45,6 +47,7 @@ export default function Sidebar() {
     >
       {/* Logo */}
       <div className="admin-sidebar-header">
+        <Link href="/">
         <Image
           src="/images/Logo.svg"
           alt="Boon"
@@ -52,7 +55,8 @@ export default function Sidebar() {
           height={36}
           className="bg-white rounded-xl"
           priority
-        />
+          />
+          </Link>
       </div>
 
       {/* Navigation */}
@@ -74,8 +78,20 @@ export default function Sidebar() {
         })}
       </nav>
 
-      {/* Logout */}
-      <div className="admin-sidebar-footer">
+      {/* Footer (User Info & Logout) */}
+      <div className="admin-sidebar-footer space-y-4">
+        {user?.email && (
+          <div className="text-center">
+            <p className="text-xs text-white/60">تسجيل الدخول كـ</p>
+            <p className="text-sm font-medium text-white/90 truncate px-2" title={user.email}>
+              {user.email}
+            </p>
+            <p className="text-xs text-white/60">الصلاحية</p>
+            <p className="text-sm font-medium text-white/90 truncate px-2">
+              {role}
+            </p>
+          </div>
+        )}
         <button onClick={handleLogout} className="admin-sidebar-logout">
           <LogOut size={18} />
           <span>تسجيل الخروج</span>

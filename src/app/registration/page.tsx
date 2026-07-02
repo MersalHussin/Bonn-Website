@@ -512,7 +512,7 @@ export default function FullClientEvaluationForm() {
   const isSubmitDisabled = !formData.companyName || !formData.email || !formData.agreeTerms;
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-[#F8FBFF] to-white pt-[65px]">
+    <main className="min-h-screen bg-gradient-to-b from-[#F8FBFF] to-white">
       <Breadcrumb items={[{ label: t("form.title", "Registration Form") }]} />
       <section className="relative flex justify-center items-center overflow-hidden py-10">
       {/* Form Card */}

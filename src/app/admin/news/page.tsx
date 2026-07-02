@@ -8,6 +8,7 @@ import { toast } from 'sonner';
 import dynamic from 'next/dynamic';
 import 'react-quill-new/dist/quill.snow.css';
 import ImageUploader from '../../components/admin/ImageUploader';
+import { useAdminAuth } from '../../context/AdminAuthContext';
 
 const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false, loading: () => <p className="text-gray-500 text-sm p-4">جاري تحميل المحرر...</p> });
 
@@ -43,6 +44,7 @@ export default function NewsAdminPage() {
   const [contentEn, setContentEn] = useState('');
   
   const [activeTab, setActiveTab] = useState<'ar' | 'en'>('ar');
+  const { isSuperUser } = useAdminAuth();
   
   const [news, setNews] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState(false);
@@ -444,12 +446,14 @@ export default function NewsAdminPage() {
                         >
                           <Edit2 className="w-4 h-4" /> تعديل
                         </button>
-                        <button 
-                          onClick={() => handleDelete(newsItem.id)}
-                          className="flex justify-center flex-1 items-center gap-1.5 px-3 py-2 bg-white border border-red-100 text-red-600 hover:bg-red-50 rounded-lg cursor-pointer text-sm font-medium transition-colors shadow-sm"
-                        >
-                          <Trash2 className="w-4 h-4" /> حذف
-                        </button>
+                        {isSuperUser && (
+                          <button 
+                            onClick={() => handleDelete(newsItem.id)}
+                            className="flex justify-center flex-1 items-center gap-1.5 px-3 py-2 bg-white border border-red-100 text-red-600 hover:bg-red-50 rounded-lg cursor-pointer text-sm font-medium transition-colors shadow-sm"
+                          >
+                            <Trash2 className="w-4 h-4" /> حذف
+                          </button>
+                        )}
                       </div>
                     </div>
                   ))}
