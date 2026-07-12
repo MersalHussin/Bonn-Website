@@ -133,7 +133,7 @@ export async function POST(req: Request) {
 
     await sheets.spreadsheets.values.append({
       spreadsheetId: process.env.NEXT_PUBLIC_SPREADSHEET_ID,
-      range: "'Bonn Profiles'!A:AP",
+      range: "Sheet1!A:AP",
       valueInputOption: "USER_ENTERED",
       requestBody: {
         values,
