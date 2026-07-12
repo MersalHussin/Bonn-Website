@@ -5,9 +5,13 @@ export const getSheetsClient = () => {
     throw new Error("Missing GOOGLE_REGISTRATION_KEY_BASE64 environment variable");
   }
 
+  let base64Key = process.env.GOOGLE_REGISTRATION_KEY_BASE64.trim();
+  if (base64Key.startsWith('"') && base64Key.endsWith('"')) base64Key = base64Key.slice(1, -1);
+  if (base64Key.startsWith("'") && base64Key.endsWith("'")) base64Key = base64Key.slice(1, -1);
+
   const auth = new google.auth.GoogleAuth({
     credentials: JSON.parse(
-      Buffer.from(process.env.GOOGLE_REGISTRATION_KEY_BASE64, "base64").toString("utf8")
+      Buffer.from(base64Key, "base64").toString("utf8")
     ),
     scopes: ["https://www.googleapis.com/auth/spreadsheets"],
   });

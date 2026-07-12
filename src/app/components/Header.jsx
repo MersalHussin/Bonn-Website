@@ -691,12 +691,12 @@ useEffect(() => {
               </div>
 
               {/* Navigation Links */}
-              <div className="flex flex-col mt-4">
+              <div className="flex flex-col mt-4" dir={i18n.language === "ar" ? "rtl" : "ltr"}>
               {navItems.map((item, index) => (
-                <motion.div key={item.key} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 + index * 0.05 }} className="border-b border-gray-100 last:border-0">
+                <motion.div key={item.key} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 + index * 0.05 }} className={`border-b border-gray-100 last:border-0 flex flex-col w-full ${i18n.language === "ar" ? "rtl" : "ltr"}`}>
                   {item.type === "dropdown_about" ? (
                     <div className="flex flex-col">
-                      <button onClick={() => setAboutOpen(!aboutOpen)} className="flex items-center justify-between w-full py-4 text-left font-bold text-gray-800 hover:text-main transition">
+                      <button onClick={() => setAboutOpen(!aboutOpen)} className="flex items-center justify-between w-full py-4 text-start font-bold text-gray-800 hover:text-main transition">
                         <div className="flex items-center gap-2">
                           <span className="text-lg">{mounted ? t("about") : "About Us"}</span>
                           {item.icon && <item.icon size={18} className="text-gray-400" />}
@@ -713,7 +713,7 @@ useEffect(() => {
                                 return (
                                   <Link key={link.key} href={link.path} dir={i18n.language === "ar" ? "rtl" : "ltr"} onClick={() => { setAboutOpen(false); setIsOpen(false); }} className="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 hover:bg-main/5 transition border border-transparent hover:border-main/10 shadow-sm">
                                     <div className="min-w-[48px] h-[48px] flex justify-center items-center text-main bg-white rounded-xl shadow-sm border border-gray-100">
-                                      <Icon size={20} />
+                                      <Icon size={14} />
                                     </div>
                                     <div className="flex flex-col">
                                       <span className="text-[15px] font-bold text-gray-800 mb-1">{mounted ? t(link.key) : link.key}</span>
@@ -729,7 +729,7 @@ useEffect(() => {
                     </div>
                   ) : item.type === "dropdown_events" ? (
                     <div className="flex flex-col">
-                      <button onClick={() => setEventsOpen(!eventsOpen)} className="flex items-center justify-between w-full py-4 text-left font-bold text-gray-800 hover:text-main transition">
+                      <button onClick={() => setEventsOpen(!eventsOpen)} className="flex items-center justify-between w-full py-4 text-start font-bold text-gray-800 hover:text-main transition">
                         <div className="flex items-center gap-2">
                           <span className="text-lg">{mounted ? t("events") : "Events"}</span>
                           {item.icon && <item.icon size={18} className="text-gray-400" />}
@@ -746,7 +746,7 @@ useEffect(() => {
                                 return (
                                   <Link key={link.key} href={link.path} dir={i18n.language === "ar" ? "rtl" : "ltr"} onClick={() => { setEventsOpen(false); setIsOpen(false); }} className="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 hover:bg-main/5 transition border border-transparent hover:border-main/10 shadow-sm">
                                     <div className="min-w-[48px] h-[48px] flex justify-center items-center text-main bg-white rounded-xl shadow-sm border border-gray-100">
-                                      <Icon size={20} />
+                                      <Icon size={14} />
                                     </div>
                                     <div className="flex flex-col">
                                       <span className="text-[15px] font-bold text-gray-800 mb-1">{mounted ? t(link.key) : link.key}</span>
@@ -762,7 +762,7 @@ useEffect(() => {
                     </div>
                   ) : item.type === "dropdown_services" ? (
                     <div className="flex flex-col">
-                      <button onClick={() => setServicesOpen(!servicesOpen)} className="flex items-center justify-between w-full py-4 text-left font-bold text-gray-800 hover:text-main transition">
+                      <button onClick={() => setServicesOpen(!servicesOpen)} className="flex items-center justify-between w-full py-4 text-start font-bold text-gray-800 hover:text-main transition">
                         <div className="flex items-center gap-2">
                           <span className="text-lg">{mounted ? t(item.key) : item.key}</span>
                           {item.icon && <item.icon size={18} className="text-gray-400" />}
@@ -779,7 +779,7 @@ useEffect(() => {
                                 return (
                                   <Link key={link.key} href={link.path} dir={i18n.language === "ar" ? "rtl" : "ltr"} onClick={() => { setServicesOpen(false); setIsOpen(false); }} className="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 hover:bg-main/5 transition border border-transparent hover:border-main/10 shadow-sm">
                                     <div className="min-w-[48px] h-[48px] flex justify-center items-center text-main bg-white rounded-xl shadow-sm border border-gray-100">
-                                      <Icon size={20} />
+                                      <Icon size={14} />
                                     </div>
                                     <div className="flex flex-col">
                                       <span className="text-[15px] font-bold text-gray-800 mb-1">{mounted ? t(link.key) : link.key}</span>
@@ -795,7 +795,7 @@ useEffect(() => {
                     </div>
                   ) : item.type === "dropdown" ? (
                     <div className="flex flex-col">
-                      <button onClick={() => setBrandsOpen(!brandsOpen)} className="flex items-center justify-between w-full py-4 text-left font-bold text-gray-800 hover:text-main transition">
+                      <button onClick={() => setBrandsOpen(!brandsOpen)} className="flex items-center justify-between w-full py-4 text-start font-bold text-gray-800 hover:text-main transition">
                         <div className="flex items-center gap-2">
                           <span className="text-lg">{mounted ? t("ourbrands") : "Our Brands"}</span>
                           {item.icon && <item.icon size={18} className="text-gray-400" />}
@@ -823,7 +823,7 @@ useEffect(() => {
                       </AnimatePresence>
                     </div>
                   ) : (
-                    <Link onClick={() => setIsOpen(false)} href={item.path} className={`flex items-center gap-2 py-4 text-lg font-bold transition-colors ${pathname === item.path ? "text-main" : "text-gray-800 hover:text-main"}`}>
+                    <Link onClick={() => setIsOpen(false)} href={item.path} className={`flex items-center gap-2 py-4 text-lg font-bold transition-colors w-full justify-start ${pathname === item.path ? "text-main" : "text-gray-800 hover:text-main"}`}>
                       {mounted ? t(item.key) : item.key}
                       {item.icon && <item.icon size={18} className={pathname === item.path ? "text-main" : "text-gray-400"} />}
                     </Link>
