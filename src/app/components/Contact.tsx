@@ -2,8 +2,9 @@
 
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
-import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaYoutube, FaLinkedin, FaTiktok } from "react-icons/fa";
-import { motion } from "framer-motion";
+import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaYoutube, FaLinkedin, FaTiktok, FaCheckCircle } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
+import { toast } from "sonner";
 import Container from "./Container";
 import SectionTitle from "./SectionTitle";
 
@@ -18,6 +19,42 @@ export default function ContactUs() {
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [isSubscribing, setIsSubscribing] = useState(false);
+  const [isNewsletterModalOpen, setIsNewsletterModalOpen] = useState(false);
+  const [newsletterError, setNewsletterError] = useState("");
+
+  const handleNewsletterSubmit = async () => {
+    setNewsletterError("");
+    
+    if (!newsletterEmail || !newsletterEmail.includes("@")) {
+      setNewsletterError(i18n.language === "ar" ? "يرجى إدخال بريد إلكتروني صحيح" : "Please enter a valid email");
+      return;
+    }
+    
+    setIsSubscribing(true);
+    
+    try {
+      const res = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: newsletterEmail }),
+      });
+      
+      const data = await res.json();
+      
+      if (!res.ok) {
+        throw new Error(data.error || "Subscription failed");
+      }
+      
+      setIsNewsletterModalOpen(true);
+      setNewsletterEmail("");
+    } catch (error: any) {
+      setNewsletterError(error.message || (i18n.language === "ar" ? "حدث خطأ ما، يرجى المحاولة لاحقاً" : "An error occurred, please try again"));
+    } finally {
+      setIsSubscribing(false);
+    }
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -144,16 +181,30 @@ export default function ContactUs() {
             <div className="relative">
               <input
                 type="email"
+                value={newsletterEmail}
+                onChange={(e) => {
+                  setNewsletterEmail(e.target.value);
+                  if (newsletterError) setNewsletterError("");
+                }}
+                onKeyDown={(e) => e.key === "Enter" && handleNewsletterSubmit()}
                 placeholder={t("newsletter.placeholder")}
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-main/20 focus:border-main transition"
+                disabled={isSubscribing}
+                className={`w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-main/20 transition disabled:opacity-50 ${newsletterError ? "border-red-400 focus:border-red-500" : "border-gray-200 focus:border-main"}`}
               />
               <button
                 type="button"
-                className={`absolute top-1 bottom-1 ${isRTL ? 'left-1' : 'right-1'} px-6 bg-main text-white font-medium rounded-lg hover:bg-blue-700 transition`}
+                onClick={handleNewsletterSubmit}
+                disabled={isSubscribing}
+                className={`absolute top-1 bottom-1 ${isRTL ? 'left-1' : 'right-1'} px-6 bg-main text-white font-medium rounded-lg hover:bg-blue-700 transition disabled:opacity-70`}
               >
-                {t("newsletter.button")}
+                {isSubscribing ? (i18n.language === "ar" ? "جاري الاشتراك..." : "Subscribing...") : t("newsletter.button")}
               </button>
             </div>
+            {newsletterError && (
+              <motion.p initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} className="text-red-500 text-sm mt-2 font-medium px-1">
+                {newsletterError}
+              </motion.p>
+            )}
           </div>
         </div>
 
@@ -279,6 +330,48 @@ export default function ContactUs() {
           </motion.div>
         </div>
       )}
+
+      {/* 4. Newsletter Success Modal */}
+      <AnimatePresence>
+        {isNewsletterModalOpen && (
+          <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsNewsletterModalOpen(false)}
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative w-full max-w-sm bg-white rounded-3xl shadow-2xl p-6 md:p-8 overflow-hidden text-center"
+              dir={isRTL ? "rtl" : "ltr"}
+            >
+              <div className="flex justify-center mb-4">
+                <div className="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center border border-green-100">
+                  <FaCheckCircle className="text-4xl text-green-500" />
+                </div>
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                {isRTL ? "تم بنجاح!" : "Success!"}
+              </h3>
+              <p className="text-gray-600 mb-6 leading-relaxed">
+                {isRTL 
+                  ? "لقد تم اشتراكك في النشرة الإخبارية بنجاح. سنبقيك على إطلاع بكل جديد!" 
+                  : "You have successfully subscribed to our newsletter. We'll keep you updated!"}
+              </p>
+              <button
+                onClick={() => setIsNewsletterModalOpen(false)}
+                className="w-full bg-main text-white font-bold py-3 px-4 rounded-xl hover:bg-blue-700 transition"
+              >
+                {isRTL ? "حسناً" : "OK"}
+              </button>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </Container>
   );
 }

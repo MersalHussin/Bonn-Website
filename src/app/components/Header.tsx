@@ -10,7 +10,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { IoCloseSharp } from "react-icons/io5";
-import { FaSearch, FaUsers, FaFlask, FaIndustry, FaInfoCircle, FaHome, FaHandshake, FaTags, FaCalendarAlt, FaCertificate, FaQuestionCircle, FaNewspaper, FaBlog, FaBuilding, FaBullhorn, FaStar, FaHeadset, FaGlobe } from "react-icons/fa";
+import { FaSearch, FaHome, FaHandshake, FaCertificate, FaQuestionCircle, FaBuilding, FaBullhorn, FaStar } from "react-icons/fa";
 import Image from "next/image";
 import { supabase } from "../lib/supabaseClient";
 
@@ -21,41 +21,7 @@ import ServicesMenu from "./Navbar/ServicesMenu";
 import { aboutMenuLinks, eventsMenuLinks, servicesMenuLinks, brands } from "./Navbar/navData";
 
 
-function highlightText(text, matches, key) {
-  if (!matches) return text;
 
-  const match = matches.find((m) => m.key === key);
-  if (!match) return text;
-
-  let result = [];
-  let lastIndex = 0;
-
-  match.indices.forEach(([start, end], i) => {
-    // normal text
-    if (start > lastIndex) {
-      result.push(text.slice(lastIndex, start));
-    }
-
-    // highlighted text
-    result.push(
-      <mark
-        key={i}
-        className="bg-yellow-200 text-black px-[1px] rounded"
-      >
-        {text.slice(start, end + 1)}
-      </mark>
-    );
-
-    lastIndex = end + 1;
-  });
-
-  // remaining text
-  if (lastIndex < text.length) {
-    result.push(text.slice(lastIndex));
-  }
-
-  return result;
-}
 
 
 export default function FactoryHeader() {
@@ -63,7 +29,7 @@ export default function FactoryHeader() {
   const [mounted, setMounted] = useState(false);
   const [isPending, startTransition] = useTransition();
 
-  const handleLanguageChange = (lang, dir) => {
+  const handleLanguageChange = (lang: string, dir: string) => {
     setLangOpen(false);
     i18n.changeLanguage(lang);
     document.documentElement.dir = dir;
@@ -84,9 +50,9 @@ export default function FactoryHeader() {
   const [eventsOpen, setEventsOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState<any[]>([]);
   const [searchError, setSearchError] = useState("");
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<any[]>([]);
   const [langOpen, setLangOpen] = useState(false);
   const [searchPopupOpen, setSearchPopupOpen] = useState(false);
   const [mount , setMount] = useState(false);
@@ -273,18 +239,18 @@ useEffect(() => {
                 <>
                   {searchResults.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {searchResults.map((res) => {
+                      {searchResults.map((res: any) => {
                         const product = res?.item || res;
                         const matches = res?.matches || [];
                         if (!product) return null;
                         
-                        const highlightText = (text, key) => {
+                        const highlightText = (text: string, key: string) => {
                           if (!text || !matches.length) return text;
-                          const match = matches.find((m) => m.key === key);
+                          const match = matches.find((m: any) => m.key === key);
                           if (!match) return text;
-                          let parts = [];
+                          let parts: any[] = [];
                           let lastIndex = 0;
-                          match.indices.forEach(([start, end], i) => {
+                          match.indices.forEach(([start, end]: [number, number], i: number) => {
                             if (start > lastIndex) parts.push(text.slice(lastIndex, start));
                             parts.push(<mark key={i} className="bg-main/20 text-main font-bold px-1 rounded">{text.slice(start, end + 1)}</mark>);
                             lastIndex = end + 1;
@@ -549,7 +515,7 @@ useEffect(() => {
                     </>
                   ) : (
                     <Link
-                      href={item.path}
+                      href={item.path || "/"}
                       onClick={() => { setIsOpen(false); setBrandsOpen(false); }}
                       className={`relative font-bold text-[17px] transition-colors flex items-center gap-1 ${
                         pathname === item.path
@@ -674,7 +640,7 @@ useEffect(() => {
                   />
                   {searchTerm && (
                     <div className="absolute z-50 bg-white border border-gray-100 rounded-lg shadow-xl mt-2 w-full max-h-64 overflow-auto">
-                      {searchResults.length > 0 ? searchResults.map((product) => (
+                      {searchResults.length > 0 ? searchResults.map((product: any) => (
                         <Link dir={i18n.language === "ar" ? "rtl" : "ltr"} key={product.slug} href={`/products/${product.slug}`} onClick={() => setIsOpen(false)} className="flex items-center p-3 hover:bg-main/5 transition border-b border-gray-50 last:border-0">
                           <Image src={product.images?.[0] || "/placeholder.png"} alt="Product" className="w-10 h-10 rounded-md object-cover flex-shrink-0" width={40} height={40} />
                           <div className="text-sm px-3">
@@ -707,7 +673,7 @@ useEffect(() => {
                         {aboutOpen && (
                           <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
                             <div className="flex flex-col gap-3 pb-4 pt-2">
-                              {aboutMenuLinks.map((link) => {
+                              {aboutMenuLinks.map((link: any) => {
                                 const Icon = link.icon;
                                 const desc = mounted && i18n.language === "ar" ? link.descAr : link.descEn;
                                 return (
@@ -740,7 +706,7 @@ useEffect(() => {
                         {eventsOpen && (
                           <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
                             <div className="flex flex-col gap-3 pb-4 pt-2">
-                              {eventsMenuLinks.map((link) => {
+                              {eventsMenuLinks.map((link: any) => {
                                 const Icon = link.icon;
                                 const desc = mounted && i18n.language === "ar" ? link.descAr : link.descEn;
                                 return (
@@ -773,7 +739,7 @@ useEffect(() => {
                         {servicesOpen && (
                           <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
                             <div className="flex flex-col gap-3 pb-4 pt-2">
-                              {servicesMenuLinks.map((link) => {
+                              {servicesMenuLinks.map((link: any) => {
                                 const Icon = link.icon;
                                 const desc = mounted && i18n.language === "ar" ? link.descAr : link.descEn;
                                 return (
@@ -806,7 +772,7 @@ useEffect(() => {
                         {brandsOpen && (
                           <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
                             <div className="flex flex-col gap-2 pb-4 pl-4 rtl:pr-4 rtl:pl-0 border-l-2 rtl:border-l-0 rtl:border-r-2 border-main/20 ml-2 rtl:mr-2 rtl:ml-0">
-                              {brands.map((brand) => {
+                              {brands.map((brand: any) => {
                                 const brandName = i18n.language === "ar" ? brand.name_ar : brand.name_en;
                                 return (
                                   <Link key={brand.slug} href={`/brands/${brand.slug}`} dir={i18n.language === "ar" ? "rtl" : "ltr"} onClick={() => { setBrandsOpen(false); setIsOpen(false); }} className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-main/5 transition">
@@ -823,7 +789,7 @@ useEffect(() => {
                       </AnimatePresence>
                     </div>
                   ) : (
-                    <Link onClick={() => setIsOpen(false)} href={item.path} className={`flex items-center gap-2 py-4 text-lg font-bold transition-colors w-full justify-start ${pathname === item.path ? "text-main" : "text-gray-800 hover:text-main"}`}>
+                    <Link onClick={() => setIsOpen(false)} href={item.path || "/"} className={`flex items-center gap-2 py-4 text-lg font-bold transition-colors w-full justify-start ${pathname === item.path ? "text-main" : "text-gray-800 hover:text-main"}`}>
                       {mounted ? t(item.key) : item.key}
                       {item.icon && <item.icon size={18} className={pathname === item.path ? "text-main" : "text-gray-400"} />}
                     </Link>

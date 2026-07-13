@@ -2,10 +2,16 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { FaCalendarAlt } from "react-icons/fa";
-import { eventsMenuLinks } from "./navData";
-
-export default function EventsMenu({ isOpen, closeMenus, mounted, t, i18n }) {
+import { FaHandshake } from "react-icons/fa";
+import { servicesMenuLinks } from "./navData";
+interface IProps {
+  isOpen: boolean,
+  closeMenus: () => void,
+  mounted: boolean,
+  t: (key: string) => string,
+  i18n: any 
+}
+export default function ServicesMenu({ isOpen, closeMenus, mounted, t, i18n }: IProps) {
   return (
     <AnimatePresence>
       {isOpen && (
@@ -15,26 +21,30 @@ export default function EventsMenu({ isOpen, closeMenus, mounted, t, i18n }) {
           exit={{ opacity: 0, y: -15, scale: 0.985, filter: "blur(4px)" }}
           transition={{ type: "spring", stiffness: 260, damping: 22, mass: 0.6 }}
           style={{ originY: 0, transform: "translateZ(0)" }}
-          className="absolute top-[100%] mt-6 bg-white shadow-2xl border border-gray-100 z-50 rounded-3xl overflow-hidden w-[450px] ltr:-left-24 rtl:-right-24 flex"
+          className="absolute top-[100%] mt-6 bg-white shadow-2xl border border-gray-100 z-50 rounded-3xl overflow-hidden w-[800px] ltr:-left-48 rtl:-right-48 flex"
         >
           {/* Sidebar Info */}
-          <div className="w-1/3 bg-gradient-to-br from-main to-[#001a57] p-6 text-white flex flex-col justify-between relative overflow-hidden">
+          <div className="w-1/3 bg-gradient-to-br from-main to-[#001a57] p-8 text-white flex flex-col justify-between  relative overflow-hidden">
             <div className="absolute -bottom-8 -right-8 opacity-10">
-              <FaCalendarAlt size={120} />
+              <FaHandshake size={150} />
             </div>
             <div className="relative z-10">
-              <h3 className="text-xl font-bold mb-2">{mounted ? t("events") : "Media Center"}</h3>
-              <p className="text-xs text-white/80 leading-relaxed font-medium">
+              <h3 className="text-2xl font-bold mb-3">{mounted ? t("services.title") : "Services"}</h3>
+              <p className="text-sm text-white/80 leading-relaxed font-medium">
                 {mounted && i18n.language === "ar" 
-                  ? "تابع آخر أخبارنا ومقالاتنا الطبية المتجددة." 
-                  : "Follow our latest news and medical articles."}
+                  ? "نوفر لك كل ما تحتاجه من الرعاية والعناية وخدمات التصنيع للغير المتميزة." 
+                  : "We provide comprehensive care and exceptional third-party manufacturing services."}
               </p>
             </div>
+            <Link href="/services" onClick={closeMenus} className="relative z-10 mt-6 inline-flex items-center text-sm font-bold text-white hover:text-white/80 transition group w-fit bg-white/10 px-4 py-2 rounded-xl backdrop-blur-sm">
+              {mounted && i18n.language === "ar" ? "كل الخدمات" : "All Services"} 
+              <span className="ltr:ml-2 rtl:mr-2 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform">→</span>
+            </Link>
           </div>
           
           {/* Links Grid */}
-          <div className="w-2/3 p-4 flex flex-col gap-2 bg-white justify-center">
-            {eventsMenuLinks.map((link) => {
+          <div className="w-2/3 p-4 grid grid-cols-2 gap-2  bg-white content-center">
+            {servicesMenuLinks.map((link) => {
               const Icon = link.icon;
               const desc = mounted && i18n.language === "ar" ? link.descAr : link.descEn;
               return (
@@ -46,7 +56,7 @@ export default function EventsMenu({ isOpen, closeMenus, mounted, t, i18n }) {
                   className="flex items-center gap-3 p-3 rounded-2xl hover:bg-slate-50 transition group border border-transparent hover:border-slate-100"
                 >
                   <div className="bg-slate-50 w-10 h-10 rounded-xl flex flex-shrink-0 items-center justify-center text-main group-hover:scale-110 group-hover:bg-main group-hover:text-white transition-all duration-300 shadow-sm">
-                    <Icon size={18} />
+                    <Icon size={20} fill="currentColor" />
                   </div>
                   <div>
                     <h3 className="font-bold text-slate-800 group-hover:text-main transition text-[14px] mb-0.5">{mounted ? t(link.key) : link.key}</h3>

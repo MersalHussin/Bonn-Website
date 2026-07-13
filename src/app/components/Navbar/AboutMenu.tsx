@@ -4,8 +4,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { FaIndustry } from "react-icons/fa";
 import { aboutMenuLinks } from "./navData";
-
-export default function AboutMenu({ isOpen, closeMenus, mounted, t, i18n }) {
+interface IProps {
+  isOpen: boolean,
+  closeMenus: () => void,
+  mounted: boolean,
+  t: (key: string) => string,
+  i18n: any 
+}
+export default function AboutMenu({ isOpen, closeMenus, mounted, t, i18n }: IProps) {
   return (
     <AnimatePresence>
       {isOpen && (

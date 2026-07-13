@@ -45,6 +45,7 @@
     "react-leaflet": "^5.0.0",
     "react-quill-new": "^3.8.3",
     "react-select": "^5.10.2",
+    "resend": "^6.17.2",
     "sonner": "^2.0.7",
     "swiper": "^12.0.1",
     "three": "^0.179.1"
