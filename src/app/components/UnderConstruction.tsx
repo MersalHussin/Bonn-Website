@@ -20,7 +20,7 @@ export default function UnderConstruction() {
         <div className="absolute inset-0 border-4 border-dashed border-slate-300 rounded-full animate-spin-slow"></div>
       </div>
       
-      <h1 className="text-4xl md:text-5xl font-black text-slate-800 mb-4">
+      <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4">
         {isEn ? "Under Construction" : "قيد التطوير"}
       </h1>
       

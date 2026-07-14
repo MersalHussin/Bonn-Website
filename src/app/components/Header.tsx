@@ -10,10 +10,10 @@ import { usePathname, useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { IoCloseSharp } from "react-icons/io5";
-import { FaSearch, FaHome, FaHandshake, FaCertificate, FaQuestionCircle, FaBuilding, FaBullhorn, FaStar } from "react-icons/fa";
+import { FaSearch, FaHome, FaHandshake, FaCertificate, FaQuestionCircle, FaBuilding, FaBullhorn, FaStar, FaBox, FaBook, FaRegNewspaper, FaUserCircle, FaFile } from "react-icons/fa";
 import Image from "next/image";
 import { supabase } from "../lib/supabaseClient";
-
+import SearchModal from "./SearchModal";
 import AboutMenu from "./Navbar/AboutMenu";
 import EventsMenu from "./Navbar/EventsMenu";
 import BrandsMenu from "./Navbar/BrandsMenu";
@@ -49,10 +49,6 @@ export default function FactoryHeader() {
   const [aboutOpen, setAboutOpen] = useState(false);
   const [eventsOpen, setEventsOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState<any[]>([]);
-  const [searchError, setSearchError] = useState("");
-  const [products, setProducts] = useState<any[]>([]);
   const [langOpen, setLangOpen] = useState(false);
   const [searchPopupOpen, setSearchPopupOpen] = useState(false);
   const [mount , setMount] = useState(false);
@@ -65,19 +61,6 @@ export default function FactoryHeader() {
     setIsOpen(false);
   };
 
-  useEffect(() => {
-  const fetchProducts = async () => {
-    const { data, error } = await supabase
-      .from("products")
-      .select("*");
-
-    if (!error && data) {
-      setProducts(data);
-    }
-  };
-
-  fetchProducts();
-}, []);
 
   useEffect(() => {
     setMounted(true);
@@ -111,46 +94,7 @@ const navItems = [
   }, []);
 
 
-  // ✅ Fuse Search Logic
-  useEffect(() => {
-    if (!searchTerm.trim() || products.length === 0) {
-      setSearchResults([]);
-      setSearchError("");
-      return;
-    }
 
- const fuse = new Fuse(products, {
-  keys: ["name_en", "name_ar"],
-  threshold: 0.3,
-  includeMatches: true,
-});
-
-
-    const results = fuse.search(searchTerm);
-    if (results.length > 0) {
-      setSearchResults(results.map((r) => r.item));
-      setSearchError("");
-    } else {
-      setSearchResults([]);
-      setSearchError(t("productNotFound"));
-    }
-  }, [searchTerm, products]);
-
-  const handleSearchAction = () => {
-    if (!searchTerm.trim()) return;
-    const fuse = new Fuse(products, {
-      keys: ["name_en", "name_ar"],
-      threshold: 0.3,
-    });
-    const results = fuse.search(searchTerm);
-    if (results.length > 0) {
-      setSearchResults(results.map((r) => r.item));
-      setSearchError("");
-    } else {
-      setSearchResults([]);
-      setSearchError(t("productNotFound"));
-    }
-  };
 useEffect(() => {
   const handleScroll = () => {
     if (isOpen || brandsOpen || aboutOpen || eventsOpen || langOpen) {
@@ -190,132 +134,8 @@ useEffect(() => {
           </motion.div>
         )}
       </AnimatePresence>
-    {/* Search Popup */}
-    <AnimatePresence>
-      {searchPopupOpen && (
-        <>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setSearchPopupOpen(false)}
-            className="fixed inset-0 bg-slate-900/40 backdrop-blur-md z-[9998]"
-          />
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: -20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: -20 }}
-            className="fixed top-[10%] left-1/2 -translate-x-1/2 bg-white rounded-3xl shadow-2xl w-[95%] max-w-3xl max-h-[80vh] z-[9999] overflow-hidden flex flex-col  top-[50%] translate-y-[-50%] "
-          >
-            <div className="p-6 md:p-8 border-b border-slate-100">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl md:text-3xl font-black text-slate-800">{mounted ? t("searchProduct") : "Search Product"}</h2>
-                <button
-                  onClick={() => setSearchPopupOpen(false)}
-                  className="w-10 h-10 flex items-center justify-center bg-slate-50 text-slate-500 rounded-full hover:bg-slate-200 hover:text-slate-800 transition-colors"
-                >
-                  <IoCloseSharp size={24} />
-                </button>
-              </div>
-              
-              <div className="relative">
-                <div className="absolute top-1/2 -translate-y-1/2 text-slate-400 ltr:left-5 rtl:right-5">
-                  <FaSearch size={20} />
-                </div>
-                <input
-                  type="text"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && handleSearchAction()}
-                  placeholder={mounted ? (i18n.language === "ar" ? "ابحث عن منتجات، مقالات، خدمات..." : "Search products, articles, services...") : "Search..."}
-                  className="w-full ltr:pl-14 rtl:pr-14 ltr:pr-6 rtl:pl-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl outline-none focus:bg-white focus:ring-4 focus:ring-main/10 focus:border-main/30 transition-all text-lg font-medium text-slate-800 placeholder-slate-400 shadow-inner"
-                  autoFocus
-                />
-              </div>
-            </div>
-            
-            <div className="flex-1 overflow-y-auto p-6 md:p-8 bg-slate-50/50">
-              {searchTerm && (
-                <>
-                  {searchResults.length > 0 ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {searchResults.map((res: any) => {
-                        const product = res?.item || res;
-                        const matches = res?.matches || [];
-                        if (!product) return null;
-                        
-                        const highlightText = (text: string, key: string) => {
-                          if (!text || !matches.length) return text;
-                          const match = matches.find((m: any) => m.key === key);
-                          if (!match) return text;
-                          let parts: any[] = [];
-                          let lastIndex = 0;
-                          match.indices.forEach(([start, end]: [number, number], i: number) => {
-                            if (start > lastIndex) parts.push(text.slice(lastIndex, start));
-                            parts.push(<mark key={i} className="bg-main/20 text-main font-bold px-1 rounded">{text.slice(start, end + 1)}</mark>);
-                            lastIndex = end + 1;
-                          });
-                          if (lastIndex < text.length) parts.push(text.slice(lastIndex));
-                          return parts;
-                        };
-
-                        const nameKey = i18n.language === "ar" ? "name_ar" : "name_en";
-                        const descKey = i18n.language === "ar" ? "description_ar" : "description_en";
-                        const nameText = i18n.language === "ar" ? product?.name_ar || "" : product?.name_en || "";
-                        const descText = i18n.language === "ar" ? product?.description_ar || "" : product?.description_en || "";
-
-                        return (
-                          <Link
-                            key={product.id}
-                            href={`/products/${product.slug}`}
-                            dir={i18n.language === "ar" ? "rtl" : "ltr"}
-                            className="flex items-start gap-4 p-4 bg-white hover:bg-slate-50 hover:shadow-md hover:-translate-y-1 transition-all rounded-2xl border border-slate-100 group"
-                            onClick={() => {
-                              setSearchTerm("");
-                              setSearchResults([]);
-                              setSearchPopupOpen(false);
-                            }}
-                          >
-                            <div className="w-20 h-20 flex-shrink-0 bg-slate-50 rounded-xl p-2 border border-slate-100 flex items-center justify-center">
-                              <Image src={product?.images?.[0] || "/placeholder.png"} alt={nameText} className="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-500" width={80} height={80} />
-                            </div>
-                            <div className="flex-1 min-w-0">
-                              <h3 className="font-bold text-slate-800 text-[16px] mb-1.5 truncate group-hover:text-main transition-colors">{highlightText(nameText, nameKey)}</h3>
-                              <p className="text-slate-500 text-[13px] line-clamp-2 leading-relaxed">{highlightText(descText, descKey)}</p>
-                            </div>
-                          </Link>
-                        );
-                      })}
-                    </div>
-                  ) : (
-                    <div className="flex flex-col items-center justify-center py-12 text-center">
-                      <div className="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mb-4">
-                        <FaSearch className="text-3xl text-slate-300" />
-                      </div>
-                      <p className="text-lg font-bold text-slate-700 mb-1">{searchError || (mounted && i18n.language === "ar" ? "لا توجد نتائج" : "No results found")}</p>
-                      <p className="text-slate-500">{mounted && i18n.language === "ar" ? "حاول البحث بكلمات مختلفة" : "Try searching with different keywords"}</p>
-                    </div>
-                  )}
-                </>
-              )}
-              {!searchTerm && (
-                <div className="flex flex-col items-center justify-center py-16 text-center opacity-60">
-                  <div className="w-24 h-24 bg-slate-100 rounded-full flex items-center justify-center mb-6">
-                    <FaSearch className="text-4xl text-slate-300" />
-                  </div>
-                  <p className="text-xl font-bold text-slate-700 mb-2">
-                    {mounted ? (i18n.language === "ar" ? "ما الذي تبحث عنه؟" : "What are you looking for?") : "Search..."}
-                  </p>
-                  <p className="text-slate-500 max-w-sm">
-                    {mounted ? (i18n.language === "ar" ? "اكتب اسم المنتج، الخدمة، أو الكلمة المفتاحية للبدء في البحث" : "Type a product name, service, or keyword to start searching") : ""}
-                  </p>
-                </div>
-              )}
-            </div>
-          </motion.div>
-        </>
-      )}
-    </AnimatePresence>
+    {/* Search Popup Modal */}
+    <SearchModal isOpen={searchPopupOpen} onClose={() => setSearchPopupOpen(false)} mounted={mounted} i18n={i18n} />
 
     {showIntro && (
       <motion.div
@@ -629,30 +449,13 @@ useEffect(() => {
                 </div>
 
                 <div className="relative">
-                  <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-                  <input
-                    type="text"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    onKeyDown={(e) => e.key === "Enter" && handleSearchAction()}
-                    placeholder={mounted ? t("searchProduct") : "Search Product"}
-                    className="w-full pl-10 text-sm px-3 h-11 border border-gray-200 rounded-lg outline-none focus:border-main focus:ring-1 focus:ring-main/20 transition bg-gray-50"
-                  />
-                  {searchTerm && (
-                    <div className="absolute z-50 bg-white border border-gray-100 rounded-lg shadow-xl mt-2 w-full max-h-64 overflow-auto">
-                      {searchResults.length > 0 ? searchResults.map((product: any) => (
-                        <Link dir={i18n.language === "ar" ? "rtl" : "ltr"} key={product.slug} href={`/products/${product.slug}`} onClick={() => setIsOpen(false)} className="flex items-center p-3 hover:bg-main/5 transition border-b border-gray-50 last:border-0">
-                          <Image src={product.images?.[0] || "/placeholder.png"} alt="Product" className="w-10 h-10 rounded-md object-cover flex-shrink-0" width={40} height={40} />
-                          <div className="text-sm px-3">
-                            <div className="font-semibold text-gray-800">{i18n.language === "ar" ? product.name_ar : product.name_en}</div>
-                            <div className="text-gray-500 text-xs line-clamp-1">{i18n.language === "ar" ? product.description_ar : product.description_en}</div>
-                          </div>
-                        </Link>
-                      )) : (
-                        <div className="p-4 text-sm text-gray-500 text-center">{searchError}</div>
-                      )}
-                    </div>
-                  )}
+                  <button
+                    onClick={() => { setIsOpen(false); setSearchPopupOpen(true); }}
+                    className="flex items-center gap-3 w-full h-11 px-4 rounded-lg border border-gray-200 text-sm hover:bg-main/5 transition font-medium text-gray-500 bg-gray-50"
+                  >
+                    <FaSearch className="text-gray-400" />
+                    <span>{mounted ? (i18n.language === "ar" ? "ابحث على ما تريد" : "Search what you want") : "Search..."}</span>
+                  </button>
                 </div>
               </div>
 

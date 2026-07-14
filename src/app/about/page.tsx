@@ -116,7 +116,7 @@ export default function AboutUsPage() {
         <section className="relative pt-28 pb-16 md:pt-36 md:pb-20 bg-gradient-to-b from-[#EBF3FC] via-[#FCFDFF] to-[#FCFDFF] px-4 md:px-12 lg:px-24">
           <div className="max-w-7xl mx-auto text-center space-y-8">
             {/* Title & Description above the image */}
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-black text-[var(--main-color)] leading-tight max-w-4xl mx-auto">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[var(--main-color)] leading-tight max-w-4xl mx-auto">
               {t("about_title")}
             </h1>
             
@@ -241,7 +241,7 @@ export default function AboutUsPage() {
               <span className="px-3.5 py-1.5 rounded-full bg-white/10 text-white text-xs font-bold uppercase tracking-wider">
                 {isRTL ? "شركاء النجاح" : "Our Partners"}
               </span>
-              <h2 className="text-3xl md:text-5xl font-black text-white">
+              <h2 className="text-3xl md:text-5xl font-bold text-white">
                 {isRTL ? "من نستهدف في بون؟" : "Who We Serve"}
               </h2>
               <p className="text-sm md:text-base text-white/80 leading-relaxed">
@@ -492,7 +492,7 @@ export default function AboutUsPage() {
                   ✕
                 </button>
 
-                <h3 className="text-2xl md:text-3xl font-black text-[var(--main-color)] mb-6">
+                <h3 className="text-2xl md:text-3xl font-bold text-[var(--main-color)] mb-6">
                   {t("ourStoryTitle")}
                 </h3>
                 <div className="max-h-[60vh] overflow-y-auto pr-2">

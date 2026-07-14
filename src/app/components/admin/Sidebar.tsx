@@ -13,6 +13,7 @@ import {
   MapPin,
   LayoutDashboard,
   Newspaper,
+  Users,
 } from "lucide-react";
 import { useAdminAuth } from "../../context/AdminAuthContext";
 
@@ -37,6 +38,7 @@ export default function Sidebar() {
     // { name: "الفروع", href: "/admin/locations", icon: MapPin },
     { name: "المقالات", href: "/admin/blog", icon: FileText },
     { name: "الأخبار", href: "/admin/news", icon: Newspaper },
+    { name: "الفريق", href: "/admin/team", icon: Users },
     { name: "طلبات التصنيع", href: "/admin/pdf", icon: ClipboardList },
   ];
 

@@ -116,7 +116,7 @@ export default async function NewsPostPage({ params }: PageProps) {
         </div>
 
         {/* Title */}
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-slate-900 leading-[1.1] mb-8 group">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-slate-900 leading-[1.1] mb-8 group">
           {displayTitle}
         </h1>
 
@@ -243,7 +243,7 @@ async function RelatedNews({ currentSlug, isEn, dir }: { currentSlug: string, is
 
   return (
     <div className={`max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 mt-16 border-t border-slate-100 ${isEn ? 'text-left' : 'text-right'}`} dir={dir}>
-      <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mb-12 uppercase tracking-wide">
+      <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-12 uppercase tracking-wide">
         {isEn ? 'More News' : 'مزيد من الأخبار'}
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
