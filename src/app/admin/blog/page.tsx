@@ -9,6 +9,7 @@ import dynamic from 'next/dynamic';
 import 'react-quill-new/dist/quill.snow.css';
 import ImageUploader from '../../components/admin/ImageUploader';
 import { useAdminAuth } from '../../context/AdminAuthContext';
+import { addArtical, updateArtical, deleteArtical } from '../../actions/articalsActions';
 
 const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false, loading: () => <p className="text-gray-500 text-sm p-4">جاري تحميل المحرر...</p> });
 
@@ -75,8 +76,9 @@ export default function BlogAdminPage() {
     if (!confirm('هل أنت متأكد من حذف هذه المقالة؟')) return;
     
     try {
-      const { error } = await supabase.from('articals').delete().eq('id', id);
-      if (error) throw error;
+      const result = await deleteArtical(id);
+      if (!result.success) throw new Error(result.error);
+      
       setarticals(articals.filter(a => a.id !== id));
       toast.success('تم حذف المقالة بنجاح');
     } catch (err: any) {
@@ -121,43 +123,36 @@ export default function BlogAdminPage() {
 
     try {
       if (editingId) {
-        const { data, error } = await supabase
-          .from('articals')
-          .update({ 
+        const result = await updateArtical(editingId, { 
             title, slug, summary, content, 
             image_url: imageUrl || null, 
             production_line: productionLine,
             title_en: titleEn || null,
             summary_en: summaryEn || null,
             content_en: contentEn || null
-          })
-          .eq('id', editingId)
-          .select();
+        });
 
-        if (error) throw error;
+        if (!result.success) throw new Error(result.error);
 
-        if (data) {
-          setarticals(articals.map(a => a.id === editingId ? data[0] : a));
+        if (result.data) {
+          setarticals(articals.map(a => a.id === editingId ? result.data : a));
           resetForm();
           toast.success('تم تعديل المقالة بنجاح!');
         }
       } else {
-        const { data, error } = await supabase
-          .from('articals')
-          .insert([{ 
+        const result = await addArtical({ 
             title, slug, summary, content, 
             image_url: imageUrl || null, 
             production_line: productionLine,
             title_en: titleEn || null,
             summary_en: summaryEn || null,
             content_en: contentEn || null
-          }])
-          .select();
+        });
 
-        if (error) throw error;
+        if (!result.success) throw new Error(result.error);
 
-        if (data) {
-          setarticals([data[0], ...articals]);
+        if (result.data) {
+          setarticals([result.data, ...articals]);
           resetForm();
           toast.success('تم نشر المقالة بنجاح!');
         }

@@ -49,7 +49,7 @@ export default function TeamPage() {
 
   return (
     <>
-      {/* <Head>
+     <Head>
         <title>{isRTL ? 'الفريق | مصنع بون' : 'Our Team | Bonn Factory'}</title>
         <meta name="description" content={isRTL ? 'تعرف على فريق العمل في مصنع بون' : 'Meet the team at Bonn Factory'} />
       </Head>
@@ -124,8 +124,7 @@ export default function TeamPage() {
             )}
           </div>
         </section>
-      </main> */}
-            <UnderConstruction />
+      </main> 
     </>
   );
 }

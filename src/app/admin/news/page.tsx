@@ -9,6 +9,7 @@ import dynamic from 'next/dynamic';
 import 'react-quill-new/dist/quill.snow.css';
 import ImageUploader from '../../components/admin/ImageUploader';
 import { useAdminAuth } from '../../context/AdminAuthContext';
+import { addNews, updateNews, deleteNews } from '../../actions/newsActions';
 
 const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false, loading: () => <p className="text-gray-500 text-sm p-4">جاري تحميل المحرر...</p> });
 
@@ -73,8 +74,9 @@ export default function NewsAdminPage() {
     if (!confirm('هل أنت متأكد من حذف هذا الخبر؟')) return;
     
     try {
-      const { error } = await supabase.from('news').delete().eq('id', id);
-      if (error) throw error;
+      const result = await deleteNews(id);
+      if (!result.success) throw new Error(result.error);
+      
       setNews(news.filter(n => n.id !== id));
       toast.success('تم حذف الخبر بنجاح');
     } catch (err: any) {
@@ -117,9 +119,7 @@ export default function NewsAdminPage() {
 
     try {
       if (editingId) {
-        const { data, error } = await supabase
-          .from('news')
-          .update({ 
+        const result = await updateNews(editingId, { 
             title_ar: titleAr, 
             slug, 
             summary_ar: summaryAr, 
@@ -128,21 +128,17 @@ export default function NewsAdminPage() {
             title_en: titleEn || null,
             summary_en: summaryEn || null,
             content_en: contentEn || null
-          })
-          .eq('id', editingId)
-          .select();
+        });
 
-        if (error) throw error;
+        if (!result.success) throw new Error(result.error);
 
-        if (data) {
-          setNews(news.map(n => n.id === editingId ? data[0] : n));
+        if (result.data) {
+          setNews(news.map(n => n.id === editingId ? result.data : n));
           resetForm();
           toast.success('تم تعديل الخبر بنجاح!');
         }
       } else {
-        const { data, error } = await supabase
-          .from('news')
-          .insert([{ 
+        const result = await addNews({ 
             title_ar: titleAr, 
             slug, 
             summary_ar: summaryAr, 
@@ -151,19 +147,18 @@ export default function NewsAdminPage() {
             title_en: titleEn || null,
             summary_en: summaryEn || null,
             content_en: contentEn || null
-          }])
-          .select();
+        });
 
-        if (error) throw error;
+        if (!result.success) throw new Error(result.error);
 
-        if (data) {
-          setNews([data[0], ...news]);
+        if (result.data) {
+          setNews([result.data, ...news]);
           resetForm();
-          toast.success('تم نشر الخبر بنجاح!');
+          toast.success('تمت إضافة الخبر بنجاح!');
         }
       }
     } catch (err: any) {
-      toast.error(err.message || 'حدث خطأ أثناء حفظ الخبر');
+      toast.error(err.message || 'حدث خطأ أثناء حفظ البيانات');
     } finally {
       setLoading(false);
     }
