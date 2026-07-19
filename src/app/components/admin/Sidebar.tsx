@@ -14,6 +14,7 @@ import {
   LayoutDashboard,
   Newspaper,
   Users,
+  Briefcase,
 } from "lucide-react";
 import { useAdminAuth } from "../../context/AdminAuthContext";
 
@@ -39,7 +40,8 @@ export default function Sidebar() {
     { name: "المقالات", href: "/admin/blog", icon: FileText },
     { name: "الأخبار", href: "/admin/news", icon: Newspaper },
     { name: "الفريق", href: "/admin/team", icon: Users },
-    { name: "طلبات التصنيع", href: "/admin/pdf", icon: ClipboardList },
+    { name: "الوظائف", href: "/admin/jobs", icon: Briefcase },
+    // { name: "طلبات التصنيع", href: "/admin/clients", icon: ClipboardList },
   ];
 
   return (

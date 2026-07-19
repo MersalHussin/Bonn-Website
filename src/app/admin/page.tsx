@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Package, MapPin, FileText, ClipboardList, Newspaper } from 'lucide-react';
+import { Package, MapPin, FileText, ClipboardList, Newspaper, Briefcase, Users } from 'lucide-react';
 
 export default function AdminDashboard() {
   const cards = [
@@ -7,7 +7,9 @@ export default function AdminDashboard() {
     // { title: "الفروع", href: "/admin/locations", icon: MapPin, desc: "إدارة المواقع والفروع" },
     { title: "المقالات", href: "/admin/blog", icon: FileText, desc: "إضافة وتعديل المقالات" },
     { title: "الأخبار", href: "/admin/news", icon: Newspaper, desc: "إدارة الأخبار والتحديثات" },
-    { title: "طلبات التصنيع", href: "/admin/pdf", icon: ClipboardList, desc: "عرض وتحميل طلبات العملاء" },
+    { title: "الوظائف", href: "/admin/jobs", icon: Briefcase, desc: "إدارة التوظيف والفرص المتاحة" },
+    { title: "الفريق", href: "/admin/team", icon: Users, desc: "إدارة الفريق" },
+    // { title: "طلبات التصنيع", href: "/admin/clients", icon: ClipboardList, desc: "عرض وتحميل طلبات العملاء" },
   ];
 
   return (
