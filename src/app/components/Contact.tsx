@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
 import Container from "./Container";
 import SectionTitle from "./SectionTitle";
+import { supabase } from "../lib/supabaseClient";
 
 export default function ContactUs() {
   const { t, i18n } = useTranslation();
@@ -19,6 +20,7 @@ export default function ContactUs() {
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [newsletterEmail, setNewsletterEmail] = useState("");
   const [isSubscribing, setIsSubscribing] = useState(false);
   const [isNewsletterModalOpen, setIsNewsletterModalOpen] = useState(false);
@@ -62,14 +64,44 @@ export default function ContactUs() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
-    // Add real submit logic here if needed
-    setTimeout(() => {
-      setSubmitted(false);
-      setIsModalOpen(false);
-    }, 2000);
+    setIsSubmitting(true);
+    
+    try {
+      const { error } = await supabase
+        .from('contact_messages')
+        .insert([
+          {
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone || null,
+            subject: formData.subject,
+            message: formData.message,
+          }
+        ]);
+
+      if (error) throw error;
+
+      setSubmitted(true);
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        subject: t("options.general"),
+        message: "",
+      });
+      
+      setTimeout(() => {
+        setSubmitted(false);
+        setIsModalOpen(false);
+      }, 3000);
+    } catch (error: any) {
+      console.error("Error submitting form:", error);
+      toast.error(i18n.language === "ar" ? "حدث خطأ أثناء الإرسال" : "An error occurred while sending");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const fadeUp = {
@@ -269,6 +301,7 @@ export default function ContactUs() {
               <input
                 type="text"
                 name="name"
+                value={formData.name}
                 placeholder={t("fullName")}
                 required
                 onChange={handleChange}
@@ -277,6 +310,7 @@ export default function ContactUs() {
               <input
                 type="email"
                 name="email"
+                value={formData.email}
                 placeholder={t("emailAddress")}
                 required
                 onChange={handleChange}
@@ -285,6 +319,7 @@ export default function ContactUs() {
               <input
                 type="tel"
                 name="phone"
+                value={formData.phone}
                 placeholder={t("optionalPhone")}
                 onChange={handleChange}
                 className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-main/20 focus:border-main transition"
@@ -303,6 +338,7 @@ export default function ContactUs() {
               </select>
               <textarea
                 name="message"
+                value={formData.message}
                 placeholder={t("message")}
                 rows={4}
                 required
@@ -312,9 +348,10 @@ export default function ContactUs() {
               
               <button
                 type="submit"
-                className="w-full bg-main text-white font-bold py-3.5 px-4 rounded-xl hover:bg-blue-700 transition"
+                disabled={isSubmitting}
+                className="w-full bg-main text-white font-bold py-3.5 px-4 rounded-xl hover:bg-blue-700 transition disabled:opacity-70 disabled:cursor-not-allowed"
               >
-                {t("send")}
+                {isSubmitting ? (isRTL ? "جاري الإرسال..." : "Sending...") : t("send")}
               </button>
 
               {submitted && (

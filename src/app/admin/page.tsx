@@ -9,7 +9,7 @@ export default function AdminDashboard() {
     { title: "الأخبار", href: "/admin/news", icon: Newspaper, desc: "إدارة الأخبار والتحديثات" },
     { title: "الوظائف", href: "/admin/jobs", icon: Briefcase, desc: "إدارة التوظيف والفرص المتاحة" },
     { title: "الفريق", href: "/admin/team", icon: Users, desc: "إدارة الفريق" },
-    // { title: "طلبات التصنيع", href: "/admin/clients", icon: ClipboardList, desc: "عرض وتحميل طلبات العملاء" },
+    { title: "طلبات التصنيع", href: "/admin/clients", icon: ClipboardList, desc: "عرض وتحميل طلبات العملاء" },
   ];
 
   return (
