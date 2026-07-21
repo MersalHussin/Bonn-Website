@@ -10,7 +10,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { IoCloseSharp } from "react-icons/io5";
-import { FaSearch, FaHome, FaHandshake, FaCertificate, FaQuestionCircle, FaBuilding, FaBullhorn, FaStar, FaBox, FaBook, FaRegNewspaper, FaUserCircle, FaFile } from "react-icons/fa";
+import { FaSearch, FaHome, FaHandshake, FaCertificate, FaQuestionCircle, FaBuilding, FaBullhorn, FaStar, FaBox, FaBook, FaRegNewspaper, FaUserCircle, FaFile, FaSitemap } from "react-icons/fa";
 import Image from "next/image";
 import { supabase } from "../lib/supabaseClient";
 import SearchModal from "./SearchModal";
@@ -81,6 +81,7 @@ const navItems = [
   { key: "services.title", type: "dropdown_services", icon: FaHandshake },
   { key: "brands", type: "dropdown", icon: FaStar },
   { key: "events", type: "dropdown_events", icon: FaBullhorn },
+  { key: "departments", path: "/departments", icon: FaSitemap },
   { key: "certifications", path: "/certifications", icon: FaCertificate },
   { key: "faq_nav", path: "/faq", icon: FaQuestionCircle },
 ];
@@ -279,7 +280,7 @@ useEffect(() => {
                         }`}
                       >
                         {mounted ? t(item.key) : "About Us"}
-                        {item.icon && <item.icon size={13} className={`transition-colors ${aboutOpen || pathname.startsWith("/about") ? "text-main" : "text-gray-400 group-hover:text-main"}`} />}
+                        {/* {item.icon && <item.icon size={13} className={`transition-colors ${aboutOpen || pathname.startsWith("/about") ? "text-main" : "text-gray-400 group-hover:text-main"}`} />} */}
                       </button>
 
                       <AboutMenu isOpen={aboutOpen} closeMenus={closeMenus} mounted={mounted} t={t} i18n={i18n} />
@@ -295,7 +296,7 @@ useEffect(() => {
                         }`}
                       >
                         {mounted ? t("events") : "Events"}
-                        {item.icon && <item.icon size={13} className={`transition-colors ${eventsOpen || pathname.startsWith("/events") || pathname.startsWith("/news") || pathname.startsWith("/blog") ? "text-main" : "text-gray-400 group-hover:text-main"}`} />}
+                        {/* {item.icon && <item.icon size={13} className={`transition-colors ${eventsOpen || pathname.startsWith("/events") || pathname.startsWith("/news") || pathname.startsWith("/blog") ? "text-main" : "text-gray-400 group-hover:text-main"}`} />} */}
                       </button>
 
                       <EventsMenu isOpen={eventsOpen} closeMenus={closeMenus} mounted={mounted} t={t} i18n={i18n} />
@@ -311,7 +312,7 @@ useEffect(() => {
                         }`}
                       >
                         {mounted ? t(item.key) : "Services"}
-                        {item.icon && <item.icon size={13} className={`transition-colors ${servicesOpen || pathname.startsWith("/services") ? "text-main" : "text-gray-400 group-hover:text-main"}`} />}
+                        {/* {item.icon && <item.icon size={13} className={`transition-colors ${servicesOpen || pathname.startsWith("/services") ? "text-main" : "text-gray-400 group-hover:text-main"}`} />} */}
                       </button>
                       <ServicesMenu isOpen={servicesOpen} closeMenus={closeMenus} mounted={mounted} t={t} i18n={i18n} />
                     </>
@@ -327,7 +328,7 @@ useEffect(() => {
                         }`}
                       >
                         {mounted ? t("ourbrands") : "Our Brands"}
-                        {item.icon && <item.icon size={13} className={`transition-colors ${brandsOpen || pathname.startsWith("/brands") ? "text-main" : "text-gray-400 group-hover:text-main"}`} />}
+                        {/* {item.icon && <item.icon size={13} className={`transition-colors ${brandsOpen || pathname.startsWith("/brands") ? "text-main" : "text-gray-400 group-hover:text-main"}`} />} */}
                       </button>
 
                       {/* Dropdown */}
@@ -344,7 +345,7 @@ useEffect(() => {
                       } group`}
                     >
                       <span className="relative z-10">{mounted ? t(item.key) : item.key}</span>
-                      {item.icon && <item.icon size={13} className={`group-hover:text-main transition-colors ${pathname === item.path ? "text-main" : "text-gray-400"}`} />}
+                      {/* {item.icon && <item.icon size={13} className={`group-hover:text-main transition-colors ${pathname === item.path ? "text-main" : "text-gray-400"}`} />} */}
                       <span className="absolute bottom-[-4px] left-0 w-0 h-[2px] bg-main group-hover:w-full transition-all duration-300"></span>
                     </Link>
                   )}

@@ -16,6 +16,7 @@ import {
   Users,
   Briefcase,
   MessageSquare,
+  HelpCircle,
 } from "lucide-react";
 import { useAdminAuth } from "../../context/AdminAuthContext";
 
@@ -44,6 +45,7 @@ export default function Sidebar() {
     { name: "الوظائف", href: "/admin/jobs", icon: Briefcase },
     { name: "طلبات التصنيع", href: "/admin/clients", icon: ClipboardList },
     { name: "الرسائل", href: "/admin/messages", icon: MessageSquare },
+    { name: "أسئلة الزوار", href: "/admin/faq-questions", icon: HelpCircle },
   ];
 
   return (

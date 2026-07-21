@@ -4,6 +4,7 @@ import React, { useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, ChevronDown, HelpCircle, MessageSquare, Mail, X } from "lucide-react";
+import { supabase } from "../lib/supabaseClient";
 import Container from "./Container";
 
 interface FAQItem {
@@ -21,6 +22,8 @@ export default function FAQComponent() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -35,14 +38,30 @@ export default function FAQComponent() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setIsModalOpen(false);
-      setFormData({ name: "", email: "", phone: "", subject: t("options.general") || "عام", message: "" });
-    }, 2000);
+    setIsSubmitting(true);
+    setErrorMsg("");
+    
+    try {
+      const { error } = await supabase
+        .from("faq_questions")
+        .insert([{ email: formData.email, question: formData.message }]);
+
+      if (error) throw error;
+      
+      setSubmitted(true);
+      setTimeout(() => {
+        setSubmitted(false);
+        setIsModalOpen(false);
+        setFormData({ name: "", email: "", phone: "", subject: t("options.general") || "عام", message: "" });
+      }, 2000);
+    } catch (err: any) {
+      console.error("Error submitting question:", err);
+      setErrorMsg(isAr ? "حدث خطأ أثناء الإرسال. الرجاء المحاولة مرة أخرى." : "Error submitting. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // Safely retrieve items from i18n
@@ -324,10 +343,17 @@ export default function FAQComponent() {
                 
                 <button
                   type="submit"
-                  className="w-full bg-main text-white font-bold py-3.5 px-4 rounded-xl hover:bg-blue-700 transition cursor-pointer"
+                  disabled={isSubmitting}
+                  className="w-full bg-main text-white font-bold py-3.5 px-4 rounded-xl hover:bg-blue-700 transition disabled:opacity-70 cursor-pointer"
                 >
-                  {isAr ? "إرسال السؤال" : "Send Question"}
+                  {isSubmitting ? (isAr ? "جاري الإرسال..." : "Sending...") : (isAr ? "إرسال السؤال" : "Send Question")}
                 </button>
+
+                {errorMsg && (
+                  <p className="text-red-500 text-center text-sm font-medium pt-2">
+                    {errorMsg}
+                  </p>
+                )}
 
                 {submitted && (
                   <motion.p 

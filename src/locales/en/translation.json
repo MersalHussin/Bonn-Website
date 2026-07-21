@@ -14,7 +14,100 @@
   "blog": "Blog",
   "events": "Media Center",
   "team": "The Team",
-  "rnd": "R&D",
+  "rnd": {
+    "title": "Research & Development",
+    "subtitle": "From Concept to Compliant, Stable, and Scalable Formulations",
+    "intro": "At Bonn, our R&D team is the engine driving innovation and quality in every product we create. With deep expertise in cosmetic science, regulatory compliance, and market trends",
+    "introtitle": "",
+    "process": {
+      "title": "R&D Process — Step by Step",
+      "steps": [
+        {
+          "title": "Idea Research & Market Benchmarking",
+          "desc": "Analyzing trends, feedback, and reference products to identify opportunities for improvement and innovation."
+        },
+        {
+          "title": "Data Preparation & Specifications",
+          "desc": "Defining requirements and customer specifications to ensure formulation relevance."
+        },
+        {
+          "title": "Initial Formulation",
+          "desc": "Designing preliminary formulations using the latest ingredient science and safety guidelines."
+        },
+        {
+          "title": "R&D Trials & Analytical Testing",
+          "desc": "Lab trials paired with chemical and microbiological analyses for safety, efficacy, and stability."
+        },
+        {
+          "title": "Product Evaluation",
+          "desc": "Assessing lab performance, safety testing, and real-world trials when needed."
+        },
+        {
+          "title": "Stability Formulation & Testing",
+          "desc": "Advanced stability studies meeting local (SFDA) and global standards for reliable shelf life."
+        },
+        {
+          "title": "Design & Packaging Development",
+          "desc": "Attractive, functional, and compliant packaging that protects the product and stands out on shelves."
+        },
+        {
+          "title": "Product Registration",
+          "desc": "End-to-end registration management aligned with Saudi and international regulations for smooth market entry."
+        },
+        {
+          "title": "Delivery & Logistics",
+          "desc": "Flexible supply and shipping solutions ensuring on-time delivery."
+        },
+        {
+          "title": "Feedback & Continuous Improvement",
+          "desc": "Leveraging post-delivery insights to refine R&D, production, and documentation continuously."
+        }
+      ],
+      "feedbackTitle": "Feedback & Continuous Improvement",
+      "feedbackDesc": "We gather post-delivery feedback and turn it into actionable improvements in formulations, processes, and documentation—connecting lab to production line and market."
+    },
+    "labs": {
+      "title": "R&D Divisions & Advanced Labs",
+      "deptTitle": "Core Departments",
+      "departments": [
+        {
+          "title": "Microbiology Lab",
+          "desc": "Certified microbial testing to ensure safety, immunity, and product quality."
+        },
+        {
+          "title": "Quality Control — Chemical Analysis",
+          "desc": "Rigorous analytical verification and contamination control to ensure batch-to-batch consistency."
+        }
+      ],
+      "techTitle": "Technologies & Equipment",
+      "technologies": [
+        "High-Performance Liquid Chromatography (HPLC)",
+        "Gas Chromatography (GC)",
+        "Spectrophotometry",
+        "Karl Fischer Moisture Analysis",
+        "Automated Titration Devices"
+      ]
+    },
+    "innovation": {
+      "title": "What Drives Our Innovation?",
+      "intro": "Our product development is powered by real-time, actionable signals.",
+      "drivers": [
+        "Latest market trends and forecasts",
+        "Direct feedback from key clients",
+        "Continuous updates from global industry and science"
+      ]
+    },
+    "stability": {
+      "title": "Our Edge in Stability Testing",
+      "desc": "Our advanced stability expertise ensures product safety and efficacy throughout its lifecycle—meeting strict regulatory standards and market expectations."
+    },
+    "cta": {
+      "title": "Ready to Develop Your Next Product?",
+      "subtitle": "Submit your brief to our R&D team—we’ll take it from idea to compliant, stable, and scalable formulation.",
+      "primary": "Contact R&D Team",
+      "secondary": "Explore Our Services"
+    }
+  },
   "production_lines": "Production Lines",
   "faq_nav": "FAQ",
   "language": "العربية",
@@ -22,7 +115,7 @@
   "productNotFound": "Product not found",
   "headline": "Innovation in Every Drop",
   "button": "See Our Services",
-  "video-subtitle":"A Whole New Look",
+  "video-subtitle": "A Whole New Look",
   "whoWeAre": "Who Are We..? ",
   "weAreDifferent": "About Us ",
   "bmiIsFuture": "Bonn Is The Future ",
@@ -30,7 +123,7 @@
   "aboutParagraph1": "Bonn is a contract manufacturer located in Riyadh, Saudi Arabia. Equipped with the latest and up to date machines and equipment, we are confident that we are able to provide the latest and novel formulations under cGMP regulations, either for standard formulations as well as bespoke preparations when required. Our highly qualified staff is continuously improving and actualizing their knowledge to attend the constant advances in the sector.",
   "aboutParagraph2": "All these experience and qualifications helped us develop, formulate and manufacture highly professional cosmetics as well as providing the corresponding technical and documental support according to the latest Saudi Food and Drug Administration “SFDA” regulations ...",
   "aboutParagraph3": "With all these qualities, Bonn is the ideal partner for companies searching for quality, security and improvement in their product’s development and manufacturing.",
-  "readMore": "Read More..",  
+  "readMore": "Read More..",
   "capability1": "Production Capacity: tons/day",
   "capability2": "Units per Day",
   "capability3": "High Quality, Effective & Safe Products",
@@ -107,10 +200,9 @@
     "followUs": "Follow Us",
     "rights": "All rights reserved."
   },
-
-    "services_title": "Our Services",
-    "services_subtitle": "We provide everything you need for care and attention",
-    "clinic_support": "Clinic Support",
+  "services_title": "Our Services",
+  "services_subtitle": "We provide everything you need for care and attention",
+  "clinic_support": "Clinic Support",
   "clinic_support_desc": "Comprehensive support for clinics with advanced solutions.",
   "derma_products": "Dermatological Products",
   "derma_products_desc": "Specialized and safe products for skin and beauty.",
@@ -194,64 +286,6 @@
   "value_innovation_desc": "Practical R&D that solves real market needs.",
   "value_sustainability_title": "Sustainability",
   "value_sustainability_desc": "Smarter inputs, reduced waste, responsible packaging.",
-  "rnd": {
-    "title": "Research & Development",
-    "subtitle": "From Concept to Compliant, Stable, and Scalable Formulations",
-    "intro": "At Bonn, our R&D team is the engine driving innovation and quality in every product we create. With deep expertise in cosmetic science, regulatory compliance, and market trends",
-    "introtitle": "",
-    "process": {
-      "title": "R&D Process — Step by Step",
-      "steps": [
-        { "title": "Idea Research & Market Benchmarking", "desc": "Analyzing trends, feedback, and reference products to identify opportunities for improvement and innovation." },
-        { "title": "Data Preparation & Specifications", "desc": "Defining requirements and customer specifications to ensure formulation relevance." },
-        { "title": "Initial Formulation", "desc": "Designing preliminary formulations using the latest ingredient science and safety guidelines." },
-        { "title": "R&D Trials & Analytical Testing", "desc": "Lab trials paired with chemical and microbiological analyses for safety, efficacy, and stability." },
-        { "title": "Product Evaluation", "desc": "Assessing lab performance, safety testing, and real-world trials when needed." },
-        { "title": "Stability Formulation & Testing", "desc": "Advanced stability studies meeting local (SFDA) and global standards for reliable shelf life." },
-        { "title": "Design & Packaging Development", "desc": "Attractive, functional, and compliant packaging that protects the product and stands out on shelves." },
-        { "title": "Product Registration", "desc": "End-to-end registration management aligned with Saudi and international regulations for smooth market entry." },
-        { "title": "Delivery & Logistics", "desc": "Flexible supply and shipping solutions ensuring on-time delivery." },
-        { "title": "Feedback & Continuous Improvement", "desc": "Leveraging post-delivery insights to refine R&D, production, and documentation continuously." }
-      ],
-      "feedbackTitle": "Feedback & Continuous Improvement",
-      "feedbackDesc": "We gather post-delivery feedback and turn it into actionable improvements in formulations, processes, and documentation—connecting lab to production line and market."
-    },
-    "labs": {
-      "title": "R&D Divisions & Advanced Labs",
-      "deptTitle": "Core Departments",
-      "departments": [
-        { "title": "Microbiology Lab", "desc": "Certified microbial testing to ensure safety, immunity, and product quality." },
-        { "title": "Quality Control — Chemical Analysis", "desc": "Rigorous analytical verification and contamination control to ensure batch-to-batch consistency." }
-      ],
-      "techTitle": "Technologies & Equipment",
-      "technologies": [
-        "High-Performance Liquid Chromatography (HPLC)",
-        "Gas Chromatography (GC)",
-        "Spectrophotometry",
-        "Karl Fischer Moisture Analysis",
-        "Automated Titration Devices"
-      ]
-    },
-    "innovation": {
-      "title": "What Drives Our Innovation?",
-      "intro": "Our product development is powered by real-time, actionable signals.",
-      "drivers": [
-        "Latest market trends and forecasts",
-        "Direct feedback from key clients",
-        "Continuous updates from global industry and science"
-      ]
-    },
-    "stability": {
-      "title": "Our Edge in Stability Testing",
-      "desc": "Our advanced stability expertise ensures product safety and efficacy throughout its lifecycle—meeting strict regulatory standards and market expectations."
-    },
-    "cta": {
-      "title": "Ready to Develop Your Next Product?",
-      "subtitle": "Submit your brief to our R&D team—we’ll take it from idea to compliant, stable, and scalable formulation.",
-      "primary": "Contact R&D Team",
-      "secondary": "Explore Our Services"
-    }
-  },
   "operations": {
     "title": "Operations",
     "subtitle": "Excellence in Quality Management and Research & Development.",
@@ -305,7 +339,7 @@
     }
   },
   "OurClients": "Our Clients",
-    "form": {
+  "form": {
     "title": "Registration Form",
     "subtitle": "Fill out the form below to start your private label / contract manufacturing journey with us.",
     "step": "Step",
@@ -332,97 +366,91 @@
     "selectOption": "Select an option",
     "other": "Other",
     "successMessage": "Thank you! Our team will contact you shortly.",
-
-  "section1Title": "Section 1: Company Information",
-  "website": "Website",
-  "postalAddress": "Postal Address",
-  "licenseNumber": "Trade/Commercial License Number",
-  "yearEstablished": "Year Established",
-  "owners": "Owner(s)/Shareholders",
-
-  "section2Title": "Section 2: Business Profile",
-  "businessType": "Type of Business",
-  "brandOwner": "Brand Owner",
-  "distributor": "Distributor/Wholesaler",
-  "retailer": "Retailer",
-  "ecommerce": "E-commerce",
-  "presence": "International, Regional, or Local Presence (list countries/markets)",
-  "turnover": "Annual Turnover (Sales)",
-  "teamSize": "Team Size (Employees)",
-  "partnerBrands": "Distributed/Partner Brands",
-  "references": "References (Clients, Distributors, or Pharmacy Chains)",
-  "competitors": "Main Competitors",
-
-  "section3Title": "Section 3: Project Details",
-  "requestedProducts": "Requested Product(s)",
-  "targetProfile": "Target Consumer Profile (Age, Gender, Market)",
-  "category": "Category of Products",
-  "hairCare": "Hair Care",
-  "skinCare": "Skin Care",
-  "personalCare": "Personal Care",
-  "colorCosmetics": "Color Cosmetics",
-  "otherCategory": "Other",
-  "launchDate": "Estimated Launch Date",
-
-  "section4Title": "Section 4: Custom Formulation & Development",
-  "requireFormulation": "Do you require custom formulation development?",
-  "yes": "Yes",
-  "no": "No",
-  "formulationDetails": "Target Claim, Ingredient Preferences, Allergens to Exclude, Desired Features",
-  "sampleQuantity": "Required Sample Quantity",
-  "sampleDeadline": "Deadline for First Sample Delivery",
-  "testing": "Testing & Safety Requirements",
-
-  "section5Title": "Section 5: Packaging & Design",
-  "packagingRequirements": "Packaging Requirements",
-  "bottle": "Bottle",
-  "jar": "Jar",
-  "tube": "Tube",
-  "sachet": "Sachet",
-  "preferredMaterials": "Preferred Materials/Colors/Sizes",
-  "artwork": "Artwork/Branding (Supplied or Need to be Designed?)",
-  "barcode": "Barcode/EAN Requirements",
-  "labelling": "Local Language Labelling",
-
-  "section6Title": "Section 6: Logistics & Supply Chain",
-  "logisticsNeeds": "Expected Logistics Needs",
-  "localSupply": "Local Supply",
-  "gccExport": "GCC Export",
-  "intlExport": "International Export",
-  "incoterms": "Preferred Incoterms (EXW, FOB, DDP, etc.)",
-  "traceability": "Required Barcoding/Serialization/Traceability",
-  "deliveryTime": "Delivery Lead Time Expectations",
-  "distributors": "Authorized Distributors (If Any)",
-  "storage": "Required Storage Conditions",
-  "notes": "Other Notes or Requests",
-
-  "declarationTitle": "Declaration",
-  "declarationText": "I hereby certify the information provided is accurate and complete. I agree to comply with all regulatory, quality, and business requirements set by Bonn Medical Industries.",
-  "signature": "Signature",
-  "date": "Date",
-  "tradeLicense": "Trade/Commercial License",
-  "countryOfRegistration": "Country Of Registration",
-  "telephone": "Phone Number",
-  "launchDatePlaceholder": "After 2 Years",
-  "sampleQty": "Sample Quantity",
-  "packagingDetails": "Packaging Details",
-  "localLanguage": "Local Language",
-  "serialization": "Serialization",
-  "deliveryLeadTime": "Delivery Lead Time",
-  "authorizedDistributors": "Authorized Distributors",
-  "storageConditions": "Storage Conditions",
-  "otherNotes": "Other Notes",
-  "customFormulation": "Custom Formulation",
-  "testingRequirements": "Testing Requirements",
-  "agreeTerms": "I agree to the ",
-  "termsAndConditions": "terms and conditions",
-  "size_small": "Small (1-10)",
-  "size_medium": "Medium (11-50)",
-  "size_large": "Large (51-200)",
-  "size_enterprise": "Enterprise (200+)",
-  "selected_quantity": "Selected Quantity",
-  "addNew": "Add New",
-  "delete": "Delete" },
+    "section1Title": "Section 1: Company Information",
+    "website": "Website",
+    "postalAddress": "Postal Address",
+    "licenseNumber": "Trade/Commercial License Number",
+    "yearEstablished": "Year Established",
+    "owners": "Owner(s)/Shareholders",
+    "section2Title": "Section 2: Business Profile",
+    "businessType": "Type of Business",
+    "brandOwner": "Brand Owner",
+    "distributor": "Distributor/Wholesaler",
+    "retailer": "Retailer",
+    "ecommerce": "E-commerce",
+    "presence": "International, Regional, or Local Presence (list countries/markets)",
+    "turnover": "Annual Turnover (Sales)",
+    "teamSize": "Team Size (Employees)",
+    "partnerBrands": "Distributed/Partner Brands",
+    "references": "References (Clients, Distributors, or Pharmacy Chains)",
+    "competitors": "Main Competitors",
+    "section3Title": "Section 3: Project Details",
+    "requestedProducts": "Requested Product(s)",
+    "targetProfile": "Target Consumer Profile (Age, Gender, Market)",
+    "category": "Category of Products",
+    "hairCare": "Hair Care",
+    "skinCare": "Skin Care",
+    "personalCare": "Personal Care",
+    "colorCosmetics": "Color Cosmetics",
+    "otherCategory": "Other",
+    "launchDate": "Estimated Launch Date",
+    "section4Title": "Section 4: Custom Formulation & Development",
+    "requireFormulation": "Do you require custom formulation development?",
+    "yes": "Yes",
+    "no": "No",
+    "formulationDetails": "Target Claim, Ingredient Preferences, Allergens to Exclude, Desired Features",
+    "sampleQuantity": "Required Sample Quantity",
+    "sampleDeadline": "Deadline for First Sample Delivery",
+    "testing": "Testing & Safety Requirements",
+    "section5Title": "Section 5: Packaging & Design",
+    "packagingRequirements": "Packaging Requirements",
+    "bottle": "Bottle",
+    "jar": "Jar",
+    "tube": "Tube",
+    "sachet": "Sachet",
+    "preferredMaterials": "Preferred Materials/Colors/Sizes",
+    "artwork": "Artwork/Branding (Supplied or Need to be Designed?)",
+    "barcode": "Barcode/EAN Requirements",
+    "labelling": "Local Language Labelling",
+    "section6Title": "Section 6: Logistics & Supply Chain",
+    "logisticsNeeds": "Expected Logistics Needs",
+    "localSupply": "Local Supply",
+    "gccExport": "GCC Export",
+    "intlExport": "International Export",
+    "incoterms": "Preferred Incoterms (EXW, FOB, DDP, etc.)",
+    "traceability": "Required Barcoding/Serialization/Traceability",
+    "deliveryTime": "Delivery Lead Time Expectations",
+    "distributors": "Authorized Distributors (If Any)",
+    "storage": "Required Storage Conditions",
+    "notes": "Other Notes or Requests",
+    "declarationTitle": "Declaration",
+    "declarationText": "I hereby certify the information provided is accurate and complete. I agree to comply with all regulatory, quality, and business requirements set by Bonn Medical Industries.",
+    "signature": "Signature",
+    "date": "Date",
+    "tradeLicense": "Trade/Commercial License",
+    "countryOfRegistration": "Country Of Registration",
+    "telephone": "Phone Number",
+    "launchDatePlaceholder": "After 2 Years",
+    "sampleQty": "Sample Quantity",
+    "packagingDetails": "Packaging Details",
+    "localLanguage": "Local Language",
+    "serialization": "Serialization",
+    "deliveryLeadTime": "Delivery Lead Time",
+    "authorizedDistributors": "Authorized Distributors",
+    "storageConditions": "Storage Conditions",
+    "otherNotes": "Other Notes",
+    "customFormulation": "Custom Formulation",
+    "testingRequirements": "Testing Requirements",
+    "agreeTerms": "I agree to the ",
+    "termsAndConditions": "terms and conditions",
+    "size_small": "Small (1-10)",
+    "size_medium": "Medium (11-50)",
+    "size_large": "Large (51-200)",
+    "size_enterprise": "Enterprise (200+)",
+    "selected_quantity": "Selected Quantity",
+    "addNew": "Add New",
+    "delete": "Delete"
+  },
   "whyChooseUs": "Why Choose Us?",
   "whyChooseUsDesc": "We combine advanced technology, strict quality control, and a customer-centric approach to deliver exceptional products that meet your needs and exceed your expectations.",
   "best_seller": "Best Seller",
@@ -432,17 +460,17 @@
   "countries": "Countries",
   "productionLines": "Production Lines",
   "contactUs": {
-  "title": "Contact Us",
-  "name": "Full Name",
-  "email": "Email Address",
-  "phone": "Phone Number",
-  "message": "Your Message",
-  "namePlaceholder": "John Doe",
-  "emailPlaceholder": "example@email.com",
-  "phonePlaceholder": "+96000000000",
-  "messagePlaceholder": "Type your message here...",
-  "submit": "Send"
-},
+    "title": "Contact Us",
+    "name": "Full Name",
+    "email": "Email Address",
+    "phone": "Phone Number",
+    "message": "Your Message",
+    "namePlaceholder": "John Doe",
+    "emailPlaceholder": "example@email.com",
+    "phonePlaceholder": "+96000000000",
+    "messagePlaceholder": "Type your message here...",
+    "submit": "Send"
+  },
   "ourbrands": "Our Brands",
   "products": {
     "title": "Products",
@@ -458,7 +486,6 @@
     "tonsPerDay": "Tons/Day",
     "countries": "Countries",
     "statsTitle": "Statistics"
-
   },
   "actions": {
     "edit": "Edit",
@@ -484,9 +511,9 @@
     "updated": "Product updated successfully",
     "deleteError": "Failed to delete product"
   },
-  "add":"Add",
-  "cancel":"Cancel",
-  "update":"Update",
+  "add": "Add",
+  "cancel": "Cancel",
+  "update": "Update",
   "pdfs": {
     "title": "Clients PDFs",
     "search": "Search PDFs...",
@@ -509,99 +536,98 @@
   "delete": "Delete",
   "noLocations": "No locations added yet",
   "confirmDeleteLocation": "Are you sure you want to delete this location?",
-   "globalPresenceTitle": "Global Presence",
+  "globalPresenceTitle": "Global Presence",
   "globalPresenceDesc": "Our manufacturing facilities and partners across different countries around the world.",
   "city": "City",
   "close": "Close",
-"services": {
-  "title": "Our Services",
-  "subtitle": "End-to-end pharmaceutical manufacturing powered by science, precision, and trust.",
-
-  "ideation": {
-    "title": "Product Ideation",
-    "desc": "Data-driven product concepts built on market demand, regulatory feasibility, and medical value.",
-    "details": "Our product ideation service helps you define the right product from the very start. We analyze market trends, competitor landscapes, and regulatory requirements to identify the most viable product opportunities for your brand. Our team works closely with you to transform raw ideas into concrete, market-ready concepts.",
-    "features": [
-      "Market trend analysis and competitor benchmarking",
-      "Regulatory feasibility assessment (SFDA compliance)",
-      "Target audience and positioning strategy",
-      "Product concept development and validation",
-      "Cost-in-use optimization from day one"
-    ]
+  "services": {
+    "title": "Our Services",
+    "subtitle": "End-to-end pharmaceutical manufacturing powered by science, precision, and trust.",
+    "ideation": {
+      "title": "Product Ideation",
+      "desc": "Data-driven product concepts built on market demand, regulatory feasibility, and medical value.",
+      "details": "Our product ideation service helps you define the right product from the very start. We analyze market trends, competitor landscapes, and regulatory requirements to identify the most viable product opportunities for your brand. Our team works closely with you to transform raw ideas into concrete, market-ready concepts.",
+      "features": [
+        "Market trend analysis and competitor benchmarking",
+        "Regulatory feasibility assessment (SFDA compliance)",
+        "Target audience and positioning strategy",
+        "Product concept development and validation",
+        "Cost-in-use optimization from day one"
+      ]
+    },
+    "formulation": {
+      "title": "Custom Formulation",
+      "desc": "Advanced R&D delivering safe, effective, and scalable pharmaceutical formulas.",
+      "details": "Our R&D lab develops custom formulations tailored to your brand's unique requirements. Using cutting-edge ingredient science and strict safety protocols, we create formulas that are stable, effective, and ready for large-scale production. Every formulation undergoes rigorous testing before moving to production.",
+      "features": [
+        "Tailored formulations using active and natural ingredients",
+        "Stability and compatibility testing",
+        "Safety and efficacy validation",
+        "Scalable from lab to full production",
+        "cGMP-compliant development process"
+      ]
+    },
+    "ready": {
+      "title": "Ready Formulas",
+      "desc": "Clinically tested, market-proven formulations ready for fast-track production.",
+      "details": "Choose from our library of pre-developed, clinically tested formulations that are ready for immediate production. These formulas have been validated for safety, stability, and market appeal, allowing you to launch faster without compromising on quality.",
+      "features": [
+        "Pre-approved, tested formulations",
+        "Faster time-to-market",
+        "Proven stability and shelf life",
+        "Customizable branding and packaging",
+        "Regulatory documentation included"
+      ]
+    },
+    "packaging": {
+      "title": "Packaging & Design",
+      "desc": "Regulatory-compliant packaging engineered for protection and clarity.",
+      "details": "We design and source packaging solutions that protect your product, comply with regulations, and stand out on shelves. From material selection to artwork design, we ensure every detail aligns with your brand identity and market requirements.",
+      "features": [
+        "Creative and functional packaging design",
+        "Material sourcing and quality assurance",
+        "Regulatory-compliant labeling",
+        "Brand-aligned artwork and visual identity",
+        "Sustainable packaging options"
+      ]
+    },
+    "production": {
+      "title": "Production",
+      "desc": "GMP-certified manufacturing with strict quality control.",
+      "details": "Our state-of-the-art manufacturing facility operates under strict GMP standards, ensuring every batch meets the highest quality requirements. From raw material sourcing to filling, labeling, and final quality release, we handle the entire production process with precision and care.",
+      "features": [
+        "Full-scale GMP-certified manufacturing",
+        "In-process quality controls at every stage",
+        "Raw material sourcing and verification",
+        "Filling, labeling, and batch release",
+        "Scalable production capacity (25+ tons/day)"
+      ]
+    },
+    "registration": {
+      "title": "Registration",
+      "desc": "Complete regulatory documentation and market authorization support.",
+      "details": "We handle the full regulatory journey for your products, from preparing technical documentation to submitting applications and securing market authorizations. Our regulatory affairs team ensures compliance with SFDA requirements and supports international market entry.",
+      "features": [
+        "SFDA product registration and licensing",
+        "Technical documentation preparation",
+        "International market authorization support",
+        "Post-market surveillance compliance",
+        "Regulatory updates and renewal management"
+      ]
+    }
   },
-  "formulation": {
-    "title": "Custom Formulation",
-    "desc": "Advanced R&D delivering safe, effective, and scalable pharmaceutical formulas.",
-    "details": "Our R&D lab develops custom formulations tailored to your brand's unique requirements. Using cutting-edge ingredient science and strict safety protocols, we create formulas that are stable, effective, and ready for large-scale production. Every formulation undergoes rigorous testing before moving to production.",
-    "features": [
-      "Tailored formulations using active and natural ingredients",
-      "Stability and compatibility testing",
-      "Safety and efficacy validation",
-      "Scalable from lab to full production",
-      "cGMP-compliant development process"
-    ]
+  "breadcrumb": {
+    "home": "Home",
+    "services": "Services"
   },
-  "ready": {
-    "title": "Ready Formulas",
-    "desc": "Clinically tested, market-proven formulations ready for fast-track production.",
-    "details": "Choose from our library of pre-developed, clinically tested formulations that are ready for immediate production. These formulas have been validated for safety, stability, and market appeal, allowing you to launch faster without compromising on quality.",
-    "features": [
-      "Pre-approved, tested formulations",
-      "Faster time-to-market",
-      "Proven stability and shelf life",
-      "Customizable branding and packaging",
-      "Regulatory documentation included"
-    ]
+  "servicePage": {
+    "ctaTitle": "Ready to get started?",
+    "ctaDesc": "Contact our team to discuss how we can help bring your product to market.",
+    "ctaPrimary": "Start Your Project",
+    "ctaSecondary": "Explore All Services",
+    "keyFeatures": "Key Features"
   },
-  "packaging": {
-    "title": "Packaging & Design",
-    "desc": "Regulatory-compliant packaging engineered for protection and clarity.",
-    "details": "We design and source packaging solutions that protect your product, comply with regulations, and stand out on shelves. From material selection to artwork design, we ensure every detail aligns with your brand identity and market requirements.",
-    "features": [
-      "Creative and functional packaging design",
-      "Material sourcing and quality assurance",
-      "Regulatory-compliant labeling",
-      "Brand-aligned artwork and visual identity",
-      "Sustainable packaging options"
-    ]
-  },
-  "production": {
-    "title": "Production",
-    "desc": "GMP-certified manufacturing with strict quality control.",
-    "details": "Our state-of-the-art manufacturing facility operates under strict GMP standards, ensuring every batch meets the highest quality requirements. From raw material sourcing to filling, labeling, and final quality release, we handle the entire production process with precision and care.",
-    "features": [
-      "Full-scale GMP-certified manufacturing",
-      "In-process quality controls at every stage",
-      "Raw material sourcing and verification",
-      "Filling, labeling, and batch release",
-      "Scalable production capacity (25+ tons/day)"
-    ]
-  },
-  "registration": {
-    "title": "Registration",
-    "desc": "Complete regulatory documentation and market authorization support.",
-    "details": "We handle the full regulatory journey for your products, from preparing technical documentation to submitting applications and securing market authorizations. Our regulatory affairs team ensures compliance with SFDA requirements and supports international market entry.",
-    "features": [
-      "SFDA product registration and licensing",
-      "Technical documentation preparation",
-      "International market authorization support",
-      "Post-market surveillance compliance",
-      "Regulatory updates and renewal management"
-    ]
-  }
-},
-"breadcrumb": {
-  "home": "Home",
-  "services": "Services"
-},
-"servicePage": {
-  "ctaTitle": "Ready to get started?",
-  "ctaDesc": "Contact our team to discuss how we can help bring your product to market.",
-  "ctaPrimary": "Start Your Project",
-  "ctaSecondary": "Explore All Services",
-  "keyFeatures": "Key Features"
-},
-"brandName": "Le Visage Plus",
+  "brandName": "Le Visage Plus",
   "heroTitle": "LE VISAGE PLUS",
   "heroSubtitle": "A Saudi beauty brand relying on latest formulations and natural ingredients from KÖLN Naturstoffe",
   "heroCta": "Explore Products",
@@ -609,16 +635,37 @@
   "whoText": "Le Visage Plus provides advanced cosmetic solutions for skin, hair, and body care with full compliance to ISO and global quality standards.",
   "featuresTitle": "Our Values",
   "features": [
-    { "title": "Safety First", "desc": "Products undergo strict testing with safe natural ingredients daily." },
-    { "title": "Guaranteed Quality", "desc": "Global manufacturing standards with premium raw materials." },
-    { "title": "Proven Results", "desc": "Visible improvement and true comfort in use." },
-    { "title": "Attention to Detail", "desc": "Customized lines for every skin type for maximum efficacy." }
+    {
+      "title": "Safety First",
+      "desc": "Products undergo strict testing with safe natural ingredients daily."
+    },
+    {
+      "title": "Guaranteed Quality",
+      "desc": "Global manufacturing standards with premium raw materials."
+    },
+    {
+      "title": "Proven Results",
+      "desc": "Visible improvement and true comfort in use."
+    },
+    {
+      "title": "Attention to Detail",
+      "desc": "Customized lines for every skin type for maximum efficacy."
+    }
   ],
   "numbersTitle": "By Numbers",
   "numbers": [
-    { "label": "Served Clients", "value": "650+" },
-    { "label": "Produced Units", "value": "≈ 4,000,000" },
-    { "label": "Markets", "value": "6+" }
+    {
+      "label": "Served Clients",
+      "value": "650+"
+    },
+    {
+      "label": "Produced Units",
+      "value": "≈ 4,000,000"
+    },
+    {
+      "label": "Markets",
+      "value": "6+"
+    }
   ],
   "ctaTitle": "Ready to feel the difference?",
   "ctaBtn": "Browse Products",
@@ -630,13 +677,10 @@
     "nameAr": "Product Name (Arabic)",
     "descriptionEn": "Description (English)",
     "descriptionAr": "Description (Arabic)",
-
     "images": "Product Images",
     "imagesHint": "You can upload up to {{count}} images.",
     "uploadImages": "Upload Images",
-
     "category": "Product Category",
-
     "brand": "Brand",
     "selectBrand": "Select Brand",
     "flags": {
@@ -646,7 +690,7 @@
       "new_arrival": "New Arrival",
       "disabled": "Disabled"
     },
-     "details": "Product Details",
+    "details": "Product Details",
     "taglineEn": "Tagline (English)",
     "taglineAr": "Tagline (Arabic)",
     "usageEn": "Usage Description (English)",
@@ -655,37 +699,34 @@
     "usageTargetAr": "Target Audience (Arabic)",
     "instructionsEn": "Instructions (English)",
     "instructionsAr": "Instructions (Arabic)",
-
     "ingredientsStorage": "Ingredients & Storage",
     "ingredientsEn": "Ingredients (English)",
     "ingredientsAr": "Ingredients (Arabic)",
     "ingredientsHint": "Comma separated values",
     "storageEn": "Storage Instructions (English)",
     "storageAr": "Storage Instructions (Arabic)",
-
     "compliance": "Compliance & Safety",
     "complianceDesc": "Compliance information, certifications, or safety notes",
-
     "seo": "SEO Settings",
     "seoTitleEn": "SEO Title (English)",
     "seoTitleAr": "SEO Title (Arabic)",
     "seoDescEn": "SEO Description (English)",
     "seoDescAr": "SEO Description (Arabic)"
   },
-    "gallery": {
+  "gallery": {
     "title": "Gallery",
     "subtitle": "Explore our collection of product images & videos showcasing quality and variety.",
     "viewMore": "View More "
-    },
-    "connectWithUs": "Follow Us",
-    "youtubeChannel": "YouTube Channel",
-    "linkedinProfile": "LinkedIn Profile",
-    "tiktokProfile": "TikTok Profile",
-    "viewBrandProducts": "View Brand Products →",
-    "underDevelopment": "This page is under development. Please check back later.",
-    "comingSoonDescription": "We are working hard to bring you an amazing experience. Stay tuned for updates and new features coming soon!",
-    "expectedLaunch": "Soon",
-    "ctaBanner": {
+  },
+  "connectWithUs": "Follow Us",
+  "youtubeChannel": "YouTube Channel",
+  "linkedinProfile": "LinkedIn Profile",
+  "tiktokProfile": "TikTok Profile",
+  "viewBrandProducts": "View Brand Products →",
+  "underDevelopment": "This page is under development. Please check back later.",
+  "comingSoonDescription": "We are working hard to bring you an amazing experience. Stay tuned for updates and new features coming soon!",
+  "expectedLaunch": "Soon",
+  "ctaBanner": {
     "title": "How can we help you today?",
     "subtitle": "Our team is ready to answer your inquiries and provide the support you need, whether you're looking for consultation or manufacturing.",
     "contactBtn": "Contact Us Now",
@@ -750,5 +791,6 @@
         "category": "services"
       }
     ]
-  }
+  },
+  "departments": "Departments"
 }
