@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import MessagesTable, { ContactMessage } from "../../components/admin/MessagesTable";
 import { fetchMessagesAction, markMessageReadAction } from "../../actions/messageActions";
-import { Mail, MailOpen, Reply, X } from "lucide-react";
+import { MessageSquare, X, Reply } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function AdminMessagesPage() {
@@ -14,7 +14,7 @@ export default function AdminMessagesPage() {
   const fetchMessages = async () => {
     setLoading(true);
     const { success, data, error } = await fetchMessagesAction();
-      
+
     if (!success) console.error("Error fetching messages:", error);
     else setMessages(data);
     setLoading(false);
@@ -26,11 +26,10 @@ export default function AdminMessagesPage() {
 
   const handleViewMessage = async (msg: ContactMessage) => {
     setSelectedMessage(msg);
-    // If it's unread, mark it as read automatically when opened
     if (!msg.is_read) {
       const { success, error } = await markMessageReadAction(msg.id);
       if (success) {
-        fetchMessages(); // refresh background list
+        fetchMessages();
       } else {
         console.error("Failed to mark as read:", error);
       }
@@ -40,17 +39,28 @@ export default function AdminMessagesPage() {
   return (
     <div className="admin-page space-y-6" dir="rtl">
       {/* ===== Header ===== */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
-        <div className="admin-page-header" style={{ marginBottom: 0 }}>
-          <h1>الرسائل الواردة</h1>
-          <p>إدارة رسائل تواصل معنا واستفسارات العملاء</p>
+      <div className="bg-white p-6 rounded-3xl border border-gray-200/80 shadow-sm flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="p-3 bg-main/10 text-main rounded-2xl">
+            <MessageSquare size={28} />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">الرسائل الواردة</h1>
+            <p className="text-sm text-gray-500 mt-0.5">
+              إدارة رسائل تواصل معنا واستفسارات العملاء والرد عليها
+            </p>
+          </div>
+        </div>
+
+        <div className="text-sm font-semibold text-gray-600 bg-gray-100 px-4 py-2 rounded-xl">
+          إجمالي الرسائل: {messages.length}
         </div>
       </div>
 
       {/* ===== Messages Table ===== */}
-      <div className="admin-content-card" style={{ padding: 16 }}>
+      <div className="bg-white p-6 rounded-3xl border border-gray-200/80 shadow-sm">
         {loading ? (
-          <p style={{ color: "#64748b", padding: 20 }}>جارِ التحميل...</p>
+          <p className="text-gray-500 py-8 text-center">جارِ التحميل...</p>
         ) : (
           <MessagesTable
             messages={messages}
@@ -75,72 +85,77 @@ export default function AdminMessagesPage() {
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-2xl bg-white rounded-2xl shadow-xl overflow-hidden"
+              className="relative w-full max-w-2xl bg-white rounded-3xl shadow-2xl overflow-hidden"
               dir="rtl"
             >
               <div className="flex justify-between items-center p-6 border-b border-gray-100">
                 <h3 className="text-xl font-bold text-gray-900">تفاصيل الرسالة</h3>
                 <button
                   onClick={() => setSelectedMessage(null)}
-                  className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition"
+                  className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition cursor-pointer"
                 >
                   <X size={20} />
                 </button>
               </div>
-              
+
               <div className="p-6 space-y-6">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <p className="text-sm font-medium text-gray-500">الاسم</p>
-                    <p className="font-medium text-gray-900">{selectedMessage.name}</p>
+                    <p className="text-xs font-semibold text-gray-500">الاسم</p>
+                    <p className="font-bold text-gray-900">{selectedMessage.name}</p>
                   </div>
                   <div className="space-y-1">
-                    <p className="text-sm font-medium text-gray-500">نوع الطلب</p>
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                    <p className="text-xs font-semibold text-gray-500">نوع الطلب</p>
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-100 text-blue-800">
                       {selectedMessage.subject}
                     </span>
                   </div>
                   <div className="space-y-1">
-                    <p className="text-sm font-medium text-gray-500">البريد الإلكتروني</p>
-                    <p className="font-medium text-gray-900">{selectedMessage.email}</p>
-                 <a
-                    href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(selectedMessage.email)}&su=${encodeURIComponent(`رد على: ${selectedMessage.subject}`)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-1.5 cursor-pointer text-gray-500 hover:text-green-600 hover:bg-green-50 rounded transition inline-flex"
-                    title="الرد عبر Gmail"
-                  >
-                    <Reply size={18} />
-                  </a>
+                    <p className="text-xs font-semibold text-gray-500">البريد الإلكتروني</p>
+                    <p className="font-bold text-gray-900">{selectedMessage.email}</p>
                   </div>
                   <div className="space-y-1">
-                    <p className="text-sm font-medium text-gray-500">رقم الهاتف</p>
-                    <p className="font-medium text-gray-900" dir="ltr">{selectedMessage.phone || 'غير متوفر'}</p>
+                    <p className="text-xs font-semibold text-gray-500">رقم الهاتف</p>
+                    <p className="font-bold text-gray-900" dir="ltr">
+                      {selectedMessage.phone || "غير متوفر"}
+                    </p>
                   </div>
                   <div className="space-y-1 col-span-2">
-                    <p className="text-sm font-medium text-gray-500">تاريخ الإرسال</p>
-                    <p className="font-medium text-gray-900">
+                    <p className="text-xs font-semibold text-gray-500">تاريخ الإرسال</p>
+                    <p className="font-bold text-gray-900">
                       {new Date(selectedMessage.created_at).toLocaleString("ar-SA", {
-                        year: 'numeric', month: 'long', day: 'numeric',
-                        hour: '2-digit', minute: '2-digit'
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
                       })}
                     </p>
                   </div>
-              
                 </div>
 
                 <div className="pt-4 border-t border-gray-100 space-y-2">
-                  <p className="text-sm font-medium text-gray-500">محتوى الرسالة</p>
-                  <div className="bg-gray-50 p-4 rounded-xl text-gray-800 leading-relaxed whitespace-pre-wrap">
+                  <p className="text-xs font-semibold text-gray-500">محتوى الرسالة</p>
+                  <div className="bg-gray-50 p-4 rounded-2xl text-gray-800 leading-relaxed whitespace-pre-wrap">
                     {selectedMessage.message}
                   </div>
                 </div>
               </div>
 
-              <div className="p-6 bg-gray-50 border-t border-gray-100 flex justify-end">
+              <div className="p-6 bg-gray-50 border-t border-gray-100 flex justify-between items-center">
+                <a
+                  href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+                    selectedMessage.email
+                  )}&su=${encodeURIComponent(`رد على: ${selectedMessage.subject}`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-5 py-2.5 bg-green-600 text-white font-bold rounded-xl hover:bg-green-700 transition"
+                >
+                  <Reply size={18} /> الرد عبر Gmail
+                </a>
                 <button
                   onClick={() => setSelectedMessage(null)}
-                  className="px-6 py-2.5 bg-gray-200 text-gray-800 font-medium rounded-xl hover:bg-gray-300 transition"
+                  className="px-6 py-2.5 bg-gray-200 text-gray-800 font-medium rounded-xl hover:bg-gray-300 transition cursor-pointer"
                 >
                   إغلاق
                 </button>

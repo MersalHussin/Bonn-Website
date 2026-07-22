@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import FaqQuestionsTable, { FaqQuestion } from "../../components/admin/FaqQuestionsTable";
 import { fetchFaqQuestionsAction, markFaqReadAction } from "../../actions/faqActions";
-import { HelpCircle, X } from "lucide-react";
+import { HelpCircle, X, Reply } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function AdminFaqQuestionsPage() {
@@ -14,7 +14,7 @@ export default function AdminFaqQuestionsPage() {
   const fetchQuestions = async () => {
     setLoading(true);
     const { success, data, error } = await fetchFaqQuestionsAction();
-      
+
     if (!success) console.error("Error fetching FAQ questions:", error);
     else setQuestions(data);
     setLoading(false);
@@ -26,11 +26,10 @@ export default function AdminFaqQuestionsPage() {
 
   const handleViewQuestion = async (q: FaqQuestion) => {
     setSelectedQuestion(q);
-    // If it's unread, mark it as read automatically when opened
     if (!q.is_read) {
       const { success, error } = await markFaqReadAction(q.id);
       if (success) {
-        fetchQuestions(); // refresh background list
+        fetchQuestions();
       } else {
         console.error("Failed to mark as read:", error);
       }
@@ -40,24 +39,28 @@ export default function AdminFaqQuestionsPage() {
   return (
     <div className="admin-page space-y-6" dir="rtl">
       {/* ===== Header ===== */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
-        <div className="admin-page-header" style={{ marginBottom: 0 }}>
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-main/10 text-main rounded-xl">
-              <HelpCircle size={28} />
-            </div>
-            <div>
-              <h1>أسئلة الزوار (FAQ)</h1>
-              <p>إدارة الأسئلة غير الموجودة في صفحة الأسئلة الشائعة</p>
-            </div>
+      <div className="bg-white p-6 rounded-3xl border border-gray-200/80 shadow-sm flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="p-3 bg-main/10 text-main rounded-2xl">
+            <HelpCircle size={28} />
           </div>
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">أسئلة الزوار (FAQ Questions)</h1>
+            <p className="text-sm text-gray-500 mt-0.5">
+              متابعة وإدارة أسئلة واستفسارات الزوار غير الجاهزة في صفحة الأسئلة الشائعة
+            </p>
+          </div>
+        </div>
+
+        <div className="text-sm font-semibold text-gray-600 bg-gray-100 px-4 py-2 rounded-xl">
+          إجمالي الأسئلة: {questions.length}
         </div>
       </div>
 
       {/* ===== Questions Table ===== */}
-      <div className="admin-content-card" style={{ padding: 16 }}>
+      <div className="bg-white p-6 rounded-3xl border border-gray-200/80 shadow-sm">
         {loading ? (
-          <p style={{ color: "#64748b", padding: 20 }}>جارِ التحميل...</p>
+          <p className="text-gray-500 py-8 text-center">جارِ التحميل...</p>
         ) : (
           <FaqQuestionsTable
             questions={questions}
@@ -82,48 +85,61 @@ export default function AdminFaqQuestionsPage() {
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-2xl bg-white rounded-2xl shadow-xl overflow-hidden"
+              className="relative w-full max-w-2xl bg-white rounded-3xl shadow-2xl overflow-hidden"
               dir="rtl"
             >
               <div className="flex justify-between items-center p-6 border-b border-gray-100">
-                <h3 className="text-xl font-bold text-gray-900">تفاصيل السؤال</h3>
+                <h3 className="text-xl font-bold text-gray-900">تفاصيل سؤال الزائر</h3>
                 <button
                   onClick={() => setSelectedQuestion(null)}
-                  className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition"
+                  className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition cursor-pointer"
                 >
                   <X size={20} />
                 </button>
               </div>
-              
+
               <div className="p-6 space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <p className="text-sm font-medium text-gray-500">البريد الإلكتروني</p>
-                    <p className="font-medium text-gray-900">{selectedQuestion.email}</p>
+                    <p className="text-xs font-semibold text-gray-500">البريد الإلكتروني</p>
+                    <p className="font-bold text-gray-900">{selectedQuestion.email}</p>
                   </div>
                   <div className="space-y-1">
-                    <p className="text-sm font-medium text-gray-500">تاريخ الإرسال</p>
-                    <p className="font-medium text-gray-900">
+                    <p className="text-xs font-semibold text-gray-500">تاريخ الإرسال</p>
+                    <p className="font-bold text-gray-900">
                       {new Date(selectedQuestion.created_at).toLocaleString("ar-SA", {
-                        year: 'numeric', month: 'long', day: 'numeric',
-                        hour: '2-digit', minute: '2-digit'
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
                       })}
                     </p>
                   </div>
                 </div>
 
                 <div className="pt-4 border-t border-gray-100 space-y-2">
-                  <p className="text-sm font-medium text-gray-500">محتوى السؤال</p>
-                  <div className="bg-gray-50 p-4 rounded-xl text-gray-800 leading-relaxed whitespace-pre-wrap">
+                  <p className="text-xs font-semibold text-gray-500">محتوى السؤال</p>
+                  <div className="bg-gray-50 p-4 rounded-2xl text-gray-800 leading-relaxed whitespace-pre-wrap">
                     {selectedQuestion.question}
                   </div>
                 </div>
               </div>
 
-              <div className="p-6 bg-gray-50 border-t border-gray-100 flex justify-end">
+              <div className="p-6 bg-gray-50 border-t border-gray-100 flex justify-between items-center">
+                <a
+                  href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+                    selectedQuestion.email
+                  )}&su=${encodeURIComponent("رد على سؤالك بخصوص مصنع بون")}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-5 py-2.5 bg-green-600 text-white font-bold rounded-xl hover:bg-green-700 transition"
+                >
+                  <Reply size={18} /> الرد عبر Gmail
+                </a>
                 <button
                   onClick={() => setSelectedQuestion(null)}
-                  className="px-6 py-2.5 bg-gray-200 text-gray-800 font-medium rounded-xl hover:bg-gray-300 transition"
+                  className="px-6 py-2.5 bg-gray-200 text-gray-800 font-medium rounded-xl hover:bg-gray-300 transition cursor-pointer"
                 >
                   إغلاق
                 </button>

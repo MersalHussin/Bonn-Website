@@ -1,11 +1,13 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, ChevronDown, HelpCircle, MessageSquare, Mail, X } from "lucide-react";
 import { supabase } from "../lib/supabaseClient";
 import Container from "./Container";
+import { fetchFaqsAction } from "../actions/faqActions";
+import { FAQItemData } from "../constants/defaultFaqs";
 
 interface FAQItem {
   q: string;
@@ -16,6 +18,9 @@ interface FAQItem {
 export default function FAQComponent() {
   const { t, i18n } = useTranslation();
   const isAr = i18n.language === "ar";
+
+  const [dbFaqs, setDbFaqs] = useState<FAQItemData[]>([]);
+  const [loadingFaqs, setLoadingFaqs] = useState(true);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("all");
@@ -31,6 +36,18 @@ export default function FAQComponent() {
     subject: t("options.general") || "عام",
     message: "",
   });
+
+  useEffect(() => {
+    async function loadFaqs() {
+      setLoadingFaqs(true);
+      const res = await fetchFaqsAction();
+      if (res.success && res.data && res.data.length > 0) {
+        setDbFaqs(res.data);
+      }
+      setLoadingFaqs(false);
+    }
+    loadFaqs();
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -64,11 +81,19 @@ export default function FAQComponent() {
     }
   };
 
-  // Safely retrieve items from i18n
+  // Process items from DB or fallback to i18n
   const faqItems = useMemo<FAQItem[]>(() => {
+    if (dbFaqs.length > 0) {
+      return dbFaqs.map((item) => ({
+        q: isAr ? item.question_ar : item.question_en || item.question_ar,
+        a: isAr ? item.answer_ar : item.answer_en || item.answer_ar,
+        category: item.category || "general",
+      }));
+    }
+
     const items = t("faq.items", { returnObjects: true });
     return Array.isArray(items) ? items : [];
-  }, [t]);
+  }, [dbFaqs, isAr, t]);
 
   // Categories definition
   const categories = useMemo(() => [
@@ -167,7 +192,7 @@ export default function FAQComponent() {
                     setActiveCategory(cat.id);
                     setOpenIndex(null);
                   }}
-                  className={`px-5 py-2.5 rounded-full text-sm font-semibold whitespace-nowrap transition-all duration-300 ${
+                  className={`px-5 py-2.5 rounded-full text-sm font-semibold whitespace-nowrap transition-all duration-300 cursor-pointer ${
                     isActive
                       ? "bg-main text-white shadow-md shadow-main/20 scale-[1.02]"
                       : "bg-white text-main/80 border border-main/10 hover:bg-main/5"
@@ -196,7 +221,7 @@ export default function FAQComponent() {
                   >
                     <button
                       onClick={() => toggleAccordion(index)}
-                      className="w-full py-5 px-6 flex items-center justify-between text-start gap-4 focus:outline-none"
+                      className="w-full py-5 px-6 flex items-center justify-between text-start gap-4 focus:outline-none cursor-pointer"
                     >
                       <span className="text-base md:text-lg font-bold text-main">
                         {item.q}

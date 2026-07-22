@@ -59,6 +59,10 @@ export default function JobsAdminPage() {
   }
 
   const handleDelete = async (id: number) => {
+    if (!isSuperUser) {
+      toast.error('عفواً، صلاحية الحذف مقتصرة على الـ Super User فقط.');
+      return;
+    }
     if (!confirm('هل أنت متأكد من حذف هذه الوظيفة؟')) return;
     
     try {

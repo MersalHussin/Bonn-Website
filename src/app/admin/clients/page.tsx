@@ -1,7 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Search, ChevronDown, ChevronUp, FileText, Building2, User, Phone, Mail, Printer, CheckCircle2, Circle, ArrowDownUp } from "lucide-react";
+import {
+  Search,
+  ChevronDown,
+  ChevronUp,
+  FileText,
+  Building2,
+  User,
+  Phone,
+  Mail,
+  Printer,
+  CheckCircle2,
+  Circle,
+  ArrowDownUp,
+  Globe,
+} from "lucide-react";
 
 type ClientData = Record<string, any>;
 
@@ -36,9 +50,15 @@ export default function AdminRequestsPage() {
     .filter((c) => {
       const name = c["Name"] || c["اسم الشركة"] || "";
       const person = c["Contact Person"] || c["الشخص المسؤول"] || "";
+      const phone = c["Phone Number"] || c["رقم الهاتف"] || "";
+      const email = c["Email"] || c["البريد الإلكتروني"] || "";
+
+      const s = search.toLowerCase();
       return (
-        name.toLowerCase().includes(search.toLowerCase()) ||
-        person.toLowerCase().includes(search.toLowerCase())
+        name.toLowerCase().includes(s) ||
+        person.toLowerCase().includes(s) ||
+        phone.toLowerCase().includes(s) ||
+        email.toLowerCase().includes(s)
       );
     })
     .sort((a, b) => {
@@ -55,10 +75,10 @@ export default function AdminRequestsPage() {
 
   const toggleStatus = async (client: ClientData) => {
     const newStatus = client.Status === "Reviewed" ? "" : "Reviewed";
-    
+
     // Optimistic update
     const newClients = [...clients];
-    const clientIndex = newClients.findIndex(c => c.rowIndex === client.rowIndex);
+    const clientIndex = newClients.findIndex((c) => c.rowIndex === client.rowIndex);
     if (clientIndex !== -1) {
       newClients[clientIndex] = { ...newClients[clientIndex], Status: newStatus };
       setClients(newClients);
@@ -68,7 +88,7 @@ export default function AdminRequestsPage() {
       await fetch("/api/updateClientStatus", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ rowIndex: client.rowIndex, status: newStatus })
+        body: JSON.stringify({ rowIndex: client.rowIndex, status: newStatus }),
       });
     } catch (e) {
       console.error("Failed to update status", e);
@@ -81,38 +101,43 @@ export default function AdminRequestsPage() {
     }
   };
 
-  const parseValue = (val: string | undefined, key: string) => {
-    if (!val) return "-";
+  const parseValue = (val: any, key: string) => {
+    if (val === undefined || val === null || val === "") return "-";
+    if (typeof val === "boolean") return val ? "نعم" : "لا";
+
     try {
-      const parsed = JSON.parse(val);
-      if (parsed && typeof parsed === "object" && parsed.label) {
-        if (key === "Country" && parsed.value) {
-          try {
-            const arName = new Intl.DisplayNames(['ar'], { type: 'region' }).of(parsed.value);
-            if (arName) return `${parsed.value} (${arName})`;
-          } catch (e) {
-            // Ignore invalid region codes
+      if (typeof val === "string") {
+        const parsed = JSON.parse(val);
+        if (parsed && typeof parsed === "object" && parsed.label) {
+          if (key === "Country" && parsed.value) {
+            try {
+              const arName = new Intl.DisplayNames(["ar"], { type: "region" }).of(
+                parsed.value
+              );
+              if (arName) return `${parsed.value} (${arName})`;
+            } catch (e) {}
           }
+          return parsed.label;
         }
-        return parsed.label;
-      }
-      if (Array.isArray(parsed)) {
-         return parsed.map(p => p.label || p).join(", ");
+        if (Array.isArray(parsed)) {
+          return parsed.map((p) => p.label || p).join("، ");
+        }
       }
     } catch (e) {
-      // not JSON
-      if (key === "Country" && val.length === 2) {
-         try {
-            const arName = new Intl.DisplayNames(['ar'], { type: 'region' }).of(val.toUpperCase());
-            if (arName) return `${val.toUpperCase()} (${arName})`;
-         } catch (e) {}
+      if (key === "Country" && typeof val === "string" && val.length === 2) {
+        try {
+          const arName = new Intl.DisplayNames(["ar"], { type: "region" }).of(
+            val.toUpperCase()
+          );
+          if (arName) return `${val.toUpperCase()} (${arName})`;
+        } catch (e) {}
       }
     }
-    return val;
+    return String(val);
   };
 
   const handlePrint = (client: ClientData) => {
-    const printWindow = window.open('', '_blank');
+    const printWindow = window.open("", "_blank");
     if (!printWindow) {
       alert("يرجى السماح بالنوافذ المنبثقة (Pop-ups) للطباعة");
       return;
@@ -149,7 +174,7 @@ export default function AdminRequestsPage() {
           <div class="grid">
     `;
 
-    displayFields.forEach(field => {
+    displayFields.forEach((field) => {
       let value = parseValue(client[field.key], field.key);
       if (!value) value = "-";
 
@@ -222,31 +247,52 @@ export default function AdminRequestsPage() {
     { key: "Agree Terms", label: "الموافقة على الشروط" },
   ];
 
+  const knownKeys = new Set([
+    ...displayFields.map((f) => f.key),
+    "rowIndex",
+    "Status",
+    "created_at",
+  ]);
+
   return (
-    <div className="admin-page" dir="rtl">
-      <div className="admin-page-header">
-        <h1>طلبات التصنيع</h1>
-        <p>عرض تفاصيل طلبات العملاء المباشرة</p>
+    <div className="admin-page space-y-6" dir="rtl">
+      <div className="bg-white p-6 rounded-3xl border border-gray-200/80 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="p-3 bg-main/10 text-main rounded-2xl">
+            <Building2 size={28} />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">طلبات التصنيع (Private Label / OEM)</h1>
+            <p className="text-sm text-gray-500 mt-0.5">
+              عرض وتقييم تفاصيل كافة طلبات التصنيع للعملاء المباشرة
+            </p>
+          </div>
+        </div>
+
+        <div className="text-sm font-semibold text-gray-600 bg-gray-100 px-4 py-2 rounded-xl">
+          إجمالي الطلبات: {clients.length}
+        </div>
       </div>
 
       {/* Filters and Search */}
-      <div style={{ display: "flex", gap: 16, marginBottom: 24, flexWrap: "wrap" }}>
-        <div className="admin-search" style={{ flex: 1, minWidth: 250, margin: 0 }}>
-          <Search size={18} />
+      <div className="flex flex-col sm:flex-row gap-4 items-center justify-between bg-white p-4 rounded-2xl border border-gray-200/80 shadow-sm">
+        <div className="relative flex-1 w-full">
+          <Search className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
           <input
             type="text"
-            placeholder="بحث باسم الشركة أو الشخص المسؤول..."
+            placeholder="بحث باسم الشركة، الشخص المسؤول، رقم الهاتف، أو البريد..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
+            className="w-full pl-4 pr-10 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-main/20 text-gray-800"
           />
         </div>
-        
-        <div style={{ display: "flex", alignItems: "center", gap: 10, backgroundColor: "white", padding: "0 16px", borderRadius: 8, border: "1px solid #e2e8f0" }}>
-          <ArrowDownUp size={16} color="#64748b" />
-          <select 
+
+        <div className="flex items-center gap-2 bg-gray-50 border border-gray-200 px-4 py-2 rounded-xl text-sm text-gray-700 w-full sm:w-auto">
+          <ArrowDownUp size={16} className="text-gray-400" />
+          <select
             value={sortOrder}
             onChange={(e) => setSortOrder(e.target.value as "newest" | "oldest")}
-            style={{ border: "none", outline: "none", backgroundColor: "transparent", fontSize: 14, color: "#334155", padding: "10px 0", cursor: "pointer" }}
+            className="bg-transparent border-none outline-none font-medium cursor-pointer"
           >
             <option value="newest">الأحدث أولاً</option>
             <option value="oldest">الأقدم أولاً</option>
@@ -255,135 +301,135 @@ export default function AdminRequestsPage() {
       </div>
 
       {loading ? (
-        <div style={{ display: "flex", alignItems: "center", gap: 10, color: "#64748b", padding: 20 }}>
-          <div className="admin-spinner" style={{ width: 24, height: 24 }} />
-          <span>جارِ تحميل الطلبات...</span>
+        <div className="p-12 text-center text-gray-500 bg-white rounded-3xl border border-gray-200/80">
+          جارِ تحميل طلبات التصنيع...
         </div>
       ) : sortedClients.length === 0 ? (
-        <div style={{ textAlign: "center", padding: "60px 20px", color: "#94a3b8" }}>
-          <FileText size={48} style={{ marginBottom: 12, opacity: 0.4, marginInline: "auto" }} />
-          <p style={{ fontSize: 16, fontWeight: 600 }}>لا توجد طلبات</p>
-          <p style={{ fontSize: 13 }}>لم يتم العثور على أي طلبات مطابقة</p>
+        <div className="p-12 text-center text-gray-400 bg-white rounded-3xl border border-gray-200/80">
+          <FileText size={48} className="mx-auto mb-3 opacity-30 text-main" />
+          <p className="font-bold text-gray-700 text-base">لا توجد طلبات تصنيع</p>
+          <p className="text-xs">لم يتم العثور على أي طلبات مطابقة لبحثك</p>
         </div>
       ) : (
-        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+        <div className="space-y-4">
           {sortedClients.map((client, idx) => {
             const isExpanded = expandedIndex === idx;
-            const companyName = client["Name"] || "-";
-            const contactPerson = client["Contact Person"] || "-";
-            const phone = client["Phone Number"] || "-";
-            const email = client["Email"] || "-";
-            const date = client["Date"] || "-";
+            const companyName = client["Name"] || client["اسم الشركة"] || "شركة غير محددة";
+            const contactPerson = client["Contact Person"] || client["الشخص المسؤول"] || "-";
+            const phone = client["Phone Number"] || client["رقم الهاتف"] || "-";
+            const email = client["Email"] || client["البريد الإلكتروني"] || "-";
+            const date = client["Date"] || client["التاريخ"] || "-";
+
+            // Extra dynamic fields not in displayFields
+            const extraKeys = Object.keys(client).filter((k) => !knownKeys.has(k));
 
             return (
-              <div 
-                key={idx} 
-                className="admin-content-card" 
-                style={{ overflow: "hidden", transition: "all 0.3s ease" }}
+              <div
+                key={idx}
+                className="bg-white rounded-3xl border border-gray-200/80 shadow-sm overflow-hidden transition"
               >
                 {/* Header (Always Visible) */}
-                <div 
+                <div
                   onClick={() => toggleExpand(idx)}
-                  style={{ 
-                    display: "flex", 
-                    justifyContent: "space-between", 
-                    alignItems: "center", 
-                    padding: "20px 24px", 
-                    cursor: "pointer",
-                    backgroundColor: isExpanded ? "#f8fafc" : "white",
-                    borderBottom: isExpanded ? "1px solid #e2e8f0" : "none"
-                  }}
+                  className={`p-6 flex flex-wrap items-center justify-between gap-4 cursor-pointer transition ${
+                    isExpanded ? "bg-gray-50/80 border-b border-gray-200/80" : "hover:bg-gray-50/40"
+                  }`}
                 >
-                  <div style={{ display: "flex", gap: 24, flexWrap: "wrap", flex: 1 }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 200 }}>
-                      <div style={{ backgroundColor: "#eff6ff", color: "#2563eb", padding: 10, borderRadius: 8 }}>
-                        <Building2 size={20} />
-                      </div>
-                      <div>
-                        <h2 style={{ fontSize: 16, fontWeight: 700, color: "#1e293b", margin: "0 0 4px" }}>
-                          {companyName}
-                        </h2>
-                        <span style={{ fontSize: 13, color: "#64748b", display: "flex", alignItems: "center", gap: 4 }}>
-                          <User size={14} /> {contactPerson}
-                        </span>
-                      </div>
+                  <div className="flex items-center gap-4 min-w-[240px]">
+                    <div className="p-3 bg-blue-50 text-main rounded-2xl shrink-0">
+                      <Building2 size={24} />
                     </div>
-                    
-                    <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: 6 }}>
-                      <span style={{ fontSize: 13, color: "#475569", display: "flex", alignItems: "center", gap: 6 }}>
-                        <Phone size={14} /> {phone}
+                    <div>
+                      <h2 className="text-lg font-bold text-gray-900 mb-0.5">
+                        {companyName}
+                      </h2>
+                      <span className="text-xs text-gray-500 flex items-center gap-1">
+                        <User size={14} /> {contactPerson}
                       </span>
-                      <span style={{ fontSize: 13, color: "#475569", display: "flex", alignItems: "center", gap: 6 }}>
-                        <Mail size={14} /> {email}
-                      </span>
-                    </div>
-
-                    <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 12, paddingRight: 20 }}>
-                       <button
-                          onClick={(e) => { e.stopPropagation(); toggleStatus(client); }}
-                          style={{ 
-                            display: "flex", alignItems: "center", gap: 6, 
-                            padding: "6px 12px", borderRadius: 12, border: "none", cursor: "pointer",
-                            backgroundColor: client.Status === "Reviewed" ? "#dcfce7" : "#f1f5f9",
-                            color: client.Status === "Reviewed" ? "#166534" : "#64748b",
-                            fontWeight: 600, fontSize: 12, transition: "all 0.2s"
-                          }}
-                       >
-                         {client.Status === "Reviewed" ? <CheckCircle2 size={14} /> : <Circle size={14} />}
-                         {client.Status === "Reviewed" ? "تم المراجعة" : "لم يتم المراجعة"}
-                       </button>
-
-                       <span style={{ fontSize: 13, color: "#94a3b8", backgroundColor: "#f1f5f9", padding: "4px 10px", borderRadius: 12 }}>
-                         التاريخ: {date}
-                       </span>
                     </div>
                   </div>
-                  
-                  <div style={{ color: "#94a3b8", padding: 8 }}>
+
+                  <div className="flex flex-col gap-1 text-xs text-gray-600">
+                    <span className="flex items-center gap-1.5 font-medium">
+                      <Phone size={14} className="text-gray-400" /> {phone}
+                    </span>
+                    <span className="flex items-center gap-1.5 font-medium">
+                      <Mail size={14} className="text-gray-400" /> {email}
+                    </span>
+                  </div>
+
+                  <div className="mr-auto flex items-center gap-3">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleStatus(client);
+                      }}
+                      className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition border cursor-pointer ${
+                        client.Status === "Reviewed"
+                          ? "bg-green-50 text-green-700 border-green-200"
+                          : "bg-gray-100 text-gray-600 border-gray-200"
+                      }`}
+                    >
+                      {client.Status === "Reviewed" ? (
+                        <CheckCircle2 size={14} />
+                      ) : (
+                        <Circle size={14} />
+                      )}
+                      {client.Status === "Reviewed" ? "تمت المراجعة" : "لم يراجع"}
+                    </button>
+
+                    <span className="text-xs text-gray-400 bg-gray-100 px-3 py-1.5 rounded-xl font-medium">
+                      {date}
+                    </span>
+
                     {isExpanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                   </div>
                 </div>
 
-                {/* Details (Expanded View) */}
+                {/* Expanded Details Section */}
                 {isExpanded && (
-                  <div style={{ padding: "24px", backgroundColor: "white" }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16, paddingBottom: 10, borderBottom: "1px solid #e2e8f0" }}>
-                      <h3 style={{ fontSize: 15, fontWeight: 700, color: "#334155", margin: 0 }}>
-                        كافة تفاصيل الطلب
+                  <div className="p-6 bg-white space-y-6">
+                    <div className="flex items-center justify-between border-b border-gray-100 pb-4">
+                      <h3 className="text-base font-bold text-gray-900">
+                        كافة تفاصيل وبيانات الطلب ({displayFields.length + extraKeys.length} حقل)
                       </h3>
                       <button
-                        onClick={(e) => { e.stopPropagation(); handlePrint(client); }}
-                        className="admin-btn admin-btn-secondary"
-                        style={{ display: "flex", alignItems: "center", gap: 6, padding: "6px 16px", backgroundColor: "#f8fafc", color: "#1e293b", border: "1px solid #e2e8f0", borderRadius: "6px", cursor: "pointer", fontWeight: 600, fontSize: "14px" }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handlePrint(client);
+                        }}
+                        className="flex items-center gap-2 px-4 py-2 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-xl text-xs font-bold text-gray-800 transition cursor-pointer"
                       >
-                        <Printer size={16} /> طباعة التقرير
+                        <Printer size={16} /> طباعة التقرير الشامل
                       </button>
                     </div>
-                    
-                    <div style={{ 
-                      display: "grid", 
-                      gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))", 
-                      gap: "20px 30px" 
-                    }}>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                       {displayFields.map((field) => {
                         let value = parseValue(client[field.key], field.key);
-                        if (!value) value = "-";
-
                         return (
-                          <div key={field.key} style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                            <span style={{ fontSize: 13, color: "#64748b", fontWeight: 500 }}>{field.label}</span>
-                            <span style={{ 
-                              fontSize: 14, 
-                              color: "#0f172a", 
-                              fontWeight: 600,
-                              wordBreak: "break-word",
-                              padding: "8px 12px",
-                              backgroundColor: "#f8fafc",
-                              borderRadius: 6,
-                              border: "1px solid #f1f5f9"
-                            }}>
-                              {value}
+                          <div key={field.key} className="space-y-1">
+                            <span className="text-xs font-semibold text-gray-500 block">
+                              {field.label}
                             </span>
+                            <div className="text-sm font-semibold text-gray-900 p-3 bg-gray-50/70 border border-gray-200/60 rounded-2xl break-words min-h-[42px] flex items-center">
+                              {value}
+                            </div>
+                          </div>
+                        );
+                      })}
+
+                      {/* Extra Dynamic Keys if present */}
+                      {extraKeys.map((key) => {
+                        let value = parseValue(client[key], key);
+                        return (
+                          <div key={key} className="space-y-1">
+                            <span className="text-xs font-semibold text-purple-600 block">
+                              {key}
+                            </span>
+                            <div className="text-sm font-semibold text-gray-900 p-3 bg-purple-50/30 border border-purple-100 rounded-2xl break-words min-h-[42px] flex items-center">
+                              {value}
+                            </div>
                           </div>
                         );
                       })}
