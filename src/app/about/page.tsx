@@ -1,6 +1,5 @@
 "use client";
 
-import AnimatedBackground from "../components/AnimatedBackground";
 import Breadcrumb from "../components/Breadcrumb";
 import ContactUs from "../components/Contact";
 import Lottie from "lottie-react";
@@ -10,6 +9,22 @@ import { useTranslation } from "react-i18next";
 import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Head from "next/head";
+import { createClient } from '@supabase/supabase-js';
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);
+
+interface TeamMember {
+  id: number;
+  name_ar: string;
+  name_en: string;
+  title_ar: string;
+  title_en: string;
+  image_url: string;
+}
+
 import {
   FaEye,
   FaBullseye,
@@ -31,6 +46,10 @@ import {
   FaBookOpen,
 } from "react-icons/fa";
 import Image from "next/image";
+import Link from "next/link";
+import { departmentsData } from "../constants/departmentsData";
+import { FaArrowLeft, FaArrowRight, FaSitemap } from "react-icons/fa";
+import TeamMemberCard from "../components/TeamMemberCard";
 
 // Typing Effect for Story
 function TypingStory({ text }: { text: string }) {
@@ -53,7 +72,24 @@ function TypingStory({ text }: { text: string }) {
 export default function AboutUsPage() {
   const { t, i18n } = useTranslation();
   const [showStory, setShowStory] = useState(false);
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
   const isRTL = i18n.language === "ar";
+
+  useEffect(() => {
+    async function fetchMembers() {
+      const { data, error } = await supabase
+        .from('team_members')
+        .select('*')
+        .order('created_at', { ascending: true })
+        .limit(3);
+
+      if (!error && data) {
+        setTeamMembers(data);
+      }
+    }
+    
+    fetchMembers();
+  }, []);
 
   const valuesIcons: Record<string, React.ReactNode> = {
     quality: <FaCheckCircle className="text-3xl text-main mx-auto mb-3" />,
@@ -64,36 +100,7 @@ export default function AboutUsPage() {
     sustainability: <FaLeaf className="text-3xl text-main mx-auto mb-3" />,
   };
 
-  const targetPartners = [
-    {
-      icon: <FaIndustry className="text-3xl text-main" />,
-      titleAr: "مصنعى العلامات الخاصة",
-      titleEn: "Private Label Manufacturing",
-      descAr: "نُمكّن أصحاب العلامات التجارية ورواد الأعمال من تصنيع منتجاتهم الخاصة بأعلى معايير الجودة، من التركيبة حتى التغليف النهائي.",
-      descEn: "We empower brand owners and entrepreneurs to manufacture their own products with the highest quality standards, from formulation to final packaging."
-    },
-    {
-      icon: <FaHandshake className="text-3xl text-main" />,
-      titleAr: "الموزعون والشركاء التجاريون",
-      titleEn: "Distributors & Trade Partners",
-      descAr: "نتعاون مع الموزعين وتجار التجزئة لتوريد منتجاتنا بكميات كبيرة وجودة ثابتة، مع إمكانية بناء شراكات تجارية طويلة الأمد.",
-      descEn: "We partner with distributors and retailers to supply our products in bulk with consistent quality, building long-term trade partnerships."
-    },
-    {
-      icon: <FaLandmark className="text-3xl text-main" />,
-      titleAr: "المناقصات الحكومية",
-      titleEn: "Government Tenders",
-      descAr: "نشارك في المناقصات الحكومية لتوريد المنتجات الطبية والصحية للجهات الحكومية والمستشفيات بمعايير الجودة المطلوبة.",
-      descEn: "We participate in government tenders to supply medical and healthcare products to government entities and hospitals with required quality standards."
-    },
-    {
-      icon: <FaUsers className="text-3xl text-main" />,
-      titleAr: "المستهلك النهائي",
-      titleEn: "End Consumer",
-      descAr: "نصنع منتجات عالية الجودة تصل مباشرة إلى المستخدم النهائي عبر علاماتنا التجارية، لتلبية احتياجاته اليومية في العناية والصحة.",
-      descEn: "We create high-quality products that reach the end consumer through our own brands, meeting their daily care and health needs."
-    }
-  ];
+  // Target partners removed
 
   return (
     <>
@@ -108,12 +115,11 @@ export default function AboutUsPage() {
         <link rel="canonical" href="https://www.bonnmed.com/about" />
       </Head>
 
-      <main dir={isRTL ? "rtl" : "ltr"} className="w-full bg-[#FCFDFF] text-[#1A3351] overflow-hidden">
-        <Breadcrumb items={[{ label: t("about") || (isRTL ? "من نحن" : "About Us") }]} />
-        <AnimatedBackground />
+      <main dir={isRTL ? "rtl" : "ltr"} className="w-full bg-[#FCFDFF] text-[#1A3351] overflow-hidden ">
+        <Breadcrumb items={[{ label: isRTL ? "عن بون" : "About Boon" }]} />
 
         {/* ================= HERO SECTION ================= */}
-        <section className="relative pt-28 pb-16 md:pt-36 md:pb-20 bg-gradient-to-b from-[#EBF3FC] via-[#FCFDFF] to-[#FCFDFF] px-4 md:px-12 lg:px-24">
+        <section className="relative pt-12 pb-16 md:pt-16 md:pb-20 bg-gradient-to-b from-[#EBF3FC] via-[#FCFDFF] to-[#FCFDFF] px-4 md:px-12 lg:px-24">
           <div className="max-w-7xl mx-auto text-center space-y-8">
             {/* Title & Description above the image */}
             <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[var(--main-color)] leading-tight max-w-4xl mx-auto">
@@ -226,87 +232,69 @@ export default function AboutUsPage() {
           </div>
         </section>
 
-        {/* ================= BLUE SECTION: WHO WE SERVE (من نستهدف) ================= */}
-        <section className="py-24 px-4 md:px-12 lg:px-24 bg-gradient-to-br from-main via-[#0046b0] to-[#00368a] relative overflow-hidden">
+        {/* ================= FACTORY DEPARTMENTS SECTION (Blue Theme) ================= */}
+        <section className="py-24 px-4 md:px-12 lg:px-24 bg-gradient-to-r from-main via-[#0951be] to-[#00368a] relative overflow-hidden">
           {/* Background decorations */}
-          <div className="absolute inset-0 opacity-[0.03]" style={{
-            backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
-            backgroundSize: '24px 24px',
-          }} />
-          <div className="absolute -top-24 -right-24 w-96 h-96 bg-white/5 rounded-full blur-3xl" />
-          <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-white/5 rounded-full blur-3xl" />
+
 
           <div className="max-w-7xl mx-auto space-y-16 relative z-10">
-            <div className="text-center max-w-2xl mx-auto space-y-4">
-              <span className="px-3.5 py-1.5 rounded-full bg-white/10 text-white text-xs font-bold uppercase tracking-wider">
-                {isRTL ? "شركاء النجاح" : "Our Partners"}
-              </span>
-              <h2 className="text-3xl md:text-5xl font-bold text-white">
-                {isRTL ? "من نستهدف في بون؟" : "Who We Serve"}
+            <div className="text-center max-w-3xl mx-auto space-y-4">
+
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white">
+                {isRTL ? "إدارات المصنع" : "Our Factory Departments"}
               </h2>
               <p className="text-sm md:text-base text-white/80 leading-relaxed">
                 {isRTL
-                  ? "نحن ندعم مختلف قطاعات الرعاية التجميلية والصحية لإطلاق وتوسيع علاماتهم التجارية بجودة لا تضاهى وبشراكة مستدامة."
-                  : "We support various cosmetic and healthcare sectors to launch and scale their brands with unmatched quality and sustainable partnership."}
+                  ? "تتميز شركة بون بمنظومة إدارية وفنية متكاملة تتضافر فيها كافة الأقسام لتحقيق أعلى مستويات الجودة والابتكار."
+                  : "Bonn Medical Industries operates through a seamless network of specialized departments working in harmony to deliver excellence."}
               </p>
             </div>
 
-            {/* Target Partners Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {targetPartners.map((partner, idx) => (
-                <div
-                  key={idx}
-                  className="bg-white rounded-2xl p-6 shadow-xl border border-blue-100 flex flex-col space-y-4 text-start hover:-translate-y-1.5 transition-all duration-300"
-                >
-                  <div className="w-12 h-12 rounded-xl bg-main/5 flex items-center justify-center flex-shrink-0">
-                    {partner.icon}
-                  </div>
-                  <h3 className="text-lg font-bold text-[var(--main-color)]">
-                    {isRTL ? partner.titleAr : partner.titleEn}
-                  </h3>
-                  <p className="text-xs md:text-sm text-gray-500 leading-relaxed">
-                    {isRTL ? partner.descAr : partner.descEn}
-                  </p>
-                </div>
-              ))}
+            {/* All Departments Grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+              {departmentsData.slice(0, 8).map((dept) => {
+                const Icon = dept.icon;
+                return (
+                  <Link
+                    key={dept.id}
+                    href={`/about/departments/${dept.id}`}
+                    className="group relative bg-white/5 backdrop-blur-md rounded-3xl p-6 border border-white/10 hover:border-white/30 shadow-lg hover:shadow-2xl hover:shadow-white/10 hover:-translate-y-2 transition-all duration-500 flex flex-col items-center text-center overflow-hidden"
+                  >
+                    {/* Hover Glow Effect */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/0 to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    
+                    <div className="relative w-16 h-16 mb-4 rounded-2xl flex items-center justify-center bg-gradient-to-br from-white to-white/90 text-main shadow-md group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
+                      <Icon size={28} />
+                    </div>
+                    
+                    <h4 className="relative font-bold text-base md:text-lg text-white  transition-colors">
+                      {isRTL ? dept.nameAr : dept.nameEn}
+                    </h4>
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* CTA to View All Departments */}
+            <div className="text-center pt-8 ">
+              <Link
+                href="/about/departments"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-white backdrop-blur-md text-main font-bold rounded-2xl shadow-lg hover:bg-white/95 transition-all duration-300 text-sm md:text-base border border-white/20"
+              >
+                <span>{isRTL ? "استعرض كافة الإدارات" : "Explore All Departments"}</span>
+                {isRTL ? <FaArrowLeft /> : <FaArrowRight />}
+              </Link>
             </div>
           </div>
         </section>
 
-        {/* ================= VISION & MISSION ================= */}
-        <section className="py-20 px-4 md:px-12 lg:px-24 bg-white">
-          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Vision Card */}
-            <div className="bg-gradient-to-br from-[#F5F9FF] to-white border border-blue-50 rounded-3xl p-8 md:p-10 shadow-sm flex flex-col md:flex-row gap-6 items-start text-start">
-              <div className="w-14 h-14 rounded-2xl bg-main/10 flex items-center justify-center text-main text-2xl flex-shrink-0 mx-auto md:mx-0">
-                <FaEye />
-              </div>
-              <div className="space-y-3">
-                <h3 className="text-2xl font-bold text-[var(--main-color)] text-center md:text-start">{t("visionTitle")}</h3>
-                <p className="text-sm md:text-base text-gray-600 leading-relaxed text-center md:text-start">{t("visionText")}</p>
-              </div>
-            </div>
-
-            {/* Mission Card */}
-            <div className="bg-gradient-to-br from-[#F5F9FF] to-white border border-blue-50 rounded-3xl p-8 md:p-10 shadow-sm flex flex-col md:flex-row gap-6 items-start text-start">
-              <div className="w-14 h-14 rounded-2xl bg-main/10 flex items-center justify-center text-main text-2xl flex-shrink-0 mx-auto md:mx-0">
-                <FaBullseye />
-              </div>
-              <div className="space-y-3">
-                <h3 className="text-2xl font-bold text-[var(--main-color)] text-center md:text-start">{t("missionTitle")}</h3>
-                <p className="text-sm md:text-base text-gray-600 leading-relaxed text-center md:text-start">{t("missionText")}</p>
-              </div>
-            </div>
-          </div>
-        </section>
+       
 
         {/* ================= VALUES SECTION ================= */}
         <section className="py-20 px-4 md:px-12 lg:px-24 bg-[#FCFDFF] border-t border-gray-50">
           <div className="max-w-7xl mx-auto space-y-12">
             <div className="text-center max-w-2xl mx-auto space-y-3">
-              <span className="px-3 py-1 rounded-full bg-main/10 text-main text-xs font-bold uppercase tracking-wider">
-                {isRTL ? "مبادئنا الأساسية" : "Our Core Values"}
-              </span>
+
               <h2 className="text-3xl md:text-4xl font-extrabold text-[var(--main-color)]">
                 {t("valuesTitle")}
               </h2>
@@ -334,8 +322,38 @@ export default function AboutUsPage() {
           </div>
         </section>
 
-        {/* ================= BLUE SECTION: RESPONSIBILITIES & INNOVATION ================= */}
+
+         {/* ================= VISION & MISSION ================= */}
+  
         <section className="py-24 px-4 md:px-12 lg:px-24 bg-gradient-to-br from-[#F4F9FF] to-[#EBF4FF] border-t border-gray-100">
+
+   <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
+            {/* Vision Card */}
+            <div className="bg-gradient-to-br from-[#F5F9FF] to-white border border-blue-50 rounded-3xl p-8 md:p-10 shadow-sm flex flex-col md:flex-row gap-6 items-start text-start">
+              <div className="w-14 h-14 rounded-2xl bg-main/10 flex items-center justify-center text-main text-2xl flex-shrink-0 mx-auto md:mx-0">
+                <FaEye />
+              </div>
+              <div className="space-y-3">
+                <h3 className="text-2xl font-bold text-[var(--main-color)] text-center md:text-start">{t("visionTitle")}</h3>
+                <p className="text-sm md:text-base text-gray-600 leading-relaxed text-center md:text-start">{t("visionText")}</p>
+              </div>
+            </div>
+
+            {/* Mission Card */}
+            <div className="bg-gradient-to-br from-[#F5F9FF] to-white border border-blue-50 rounded-3xl p-8 md:p-10 shadow-sm flex flex-col md:flex-row gap-6 items-start text-start">
+              <div className="w-14 h-14 rounded-2xl bg-main/10 flex items-center justify-center text-main text-2xl flex-shrink-0 mx-auto md:mx-0">
+                <FaBullseye />
+              </div>
+              <div className="space-y-3">
+                <h3 className="text-2xl font-bold text-[var(--main-color)] text-center md:text-start">{t("missionTitle")}</h3>
+                <p className="text-sm md:text-base text-gray-600 leading-relaxed text-center md:text-start">{t("missionText")}</p>
+              </div>
+            </div>
+          </div>
+
+        {/* ================= BLUE SECTION: RESPONSIBILITIES & INNOVATION ================= */}
+
+
           <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Responsibilities Card */}
             <div className="bg-white border border-blue-100/50 rounded-3xl p-8 shadow-sm flex flex-col justify-between space-y-6 text-start">
@@ -397,15 +415,51 @@ export default function AboutUsPage() {
           </div>
         </section>
 
+        {/* ================= OUR TEAM SECTION ================= */}
+        <section className="py-20 px-4 md:px-12 lg:px-24 bg-white border-t border-gray-100">
+          <div className="max-w-7xl mx-auto space-y-12">
+            <div className="text-center max-w-3xl mx-auto space-y-4">
+
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-[var(--main-color)]">
+                {isRTL ? "فريق بون" : "Boon Team"}
+              </h2>
+              <p className="text-sm md:text-base text-gray-500 leading-relaxed">
+                {isRTL
+                  ? "نفخر بنخبة من أفضل الخبراء والمهندسين والأطباء المتخصصين الذين يكرسون جهودهم للابتكار والجودة."
+                  : "We are proud of our elite team of experts, engineers, and specialists dedicated to innovation and uncompromised quality."}
+              </p>
+            </div>
+
+            {/* Team Members Grid Preview */}
+            {teamMembers.length > 0 && (
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+                {teamMembers.map((member, idx) => (
+                      <TeamMemberCard key={member.id} member={member} idx={idx} />
+                 
+                ))}
+              </div>
+            )}
+
+            {/* CTA to View All Team Members */}
+            <div className="text-center pt-6">
+              <Link
+                href="/about/team"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-main text-white font-bold rounded-2xl shadow-lg shadow-main/20 hover:bg-main/90 hover:scale-[1.02] transition-all duration-300 text-sm md:text-base"
+              >
+                <span>{isRTL ? "تعرف على فريق بون الكامل" : "Meet the Full Boon Team"}</span>
+                {isRTL ? <FaArrowLeft /> : <FaArrowRight />}
+              </Link>
+            </div>
+          </div>
+        </section>
+
         {/* ================= CERTIFICATIONS SECTION ================= */}
         <section className="py-24 px-4 md:px-12 lg:px-24 bg-[#FCFDFF] border-t border-gray-50">
           <div className="max-w-7xl mx-auto space-y-16">
             <div className="text-center max-w-3xl mx-auto space-y-4">
-              <span className="px-3.5 py-1.5 rounded-full bg-main/10 text-main text-xs font-bold uppercase tracking-wider">
-                {isRTL ? "الاعتمادات" : "Accreditations"}
-              </span>
+
               <h2 className="text-3xl md:text-4xl font-extrabold text-[var(--main-color)]">
-                {isRTL ? "شهادات واعتمادات الجودة" : "Our Quality Certifications"}
+                {isRTL ? "الشهادات" : "Our Certifications"}
               </h2>
               <p className="text-sm md:text-base text-gray-500 leading-relaxed">
                 {isRTL 
@@ -418,8 +472,8 @@ export default function AboutUsPage() {
               {[
                 { img: "cert1.png", title: "ISO 9001:2015", link: "/certificates/ISO9001.pdf" },
                 { img: "cert2.png", title: "ISO 22716 (GMP)", link: "/certificates/cert2.png" },
-                { img: "cert3.png", title: "ISO 13485", link: "/certificates/ISO13485.pdf" },
-                { img: "cert4.png", title: "ISO 22000", link: "/certificates/ISO22000.pdf" },
+                { img: "cert3.png", title: "ISO 22000", link: "/certificates/ISO22000.pdf" },
+                { img: "cert4.png", title: "ISO 13485", link: "/certificates/ISO13485.pdf" },
                 { img: "Food&Drug.png", title: isRTL ? "هيئة الغذاء والدواء" : "SFDA Compliant", link: "/certificates/Food&Drug.png" },
               ].map((cert, idx) => (
                 <a 
@@ -430,26 +484,44 @@ export default function AboutUsPage() {
                   className="block group"
                 >
                   <motion.div
-                    className="bg-white border border-gray-100 shadow-sm rounded-3xl p-6 flex flex-col items-center justify-between gap-6 hover:shadow-2xl hover:shadow-main/20 hover:-translate-y-2 transition-all duration-500 h-full relative overflow-hidden"
+                    className="group relative bg-white rounded-3xl p-6 flex flex-col items-center justify-between gap-5 hover:-translate-y-2 transition-all duration-500 h-full overflow-hidden border border-gray-100"
+                    style={{
+                      boxShadow: "0 8px 30px rgba(0,0,0,0.04)"
+                    }}
                   >
-                    <div className="absolute inset-0 bg-gradient-to-b from-transparent to-main/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <div className="w-full h-32 md:h-40 flex items-center justify-center relative z-10">
+                    {/* Hover Glow Background */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-main/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    
+                    {/* Corner Decoration */}
+                    <div className="absolute -top-10 -right-10 w-24 h-24 bg-gradient-to-br from-main/10 to-main/5 rounded-full blur-xl group-hover:scale-150 transition-transform duration-700" />
+                    
+                    <div className="w-full h-32 md:h-44 flex items-center justify-center relative z-10 p-2">
                       <Image 
                         src={`/certificates/${cert.img}`} 
                         alt={cert.title} 
-                        width={200}
-                        height={200}
-                        className="max-w-full max-h-full object-contain filter drop-shadow-sm group-hover:scale-110 transition-transform duration-500"
+                        width={220}
+                        height={220}
+                        className="max-w-full max-h-full object-contain filter drop-shadow-md group-hover:drop-shadow-xl group-hover:scale-110 transition-all duration-500 relative z-10"
                       />
                     </div>
-                    <div className="w-full pt-4 border-t border-gray-50 text-center relative z-10 flex flex-col items-center gap-1.5">
-                      <h4 className="font-bold text-sm md:text-base text-gray-700 group-hover:text-main transition-colors">
-                        {cert.title}
-                      </h4>
-                      <span className="text-[10px] md:text-xs text-main font-bold opacity-0 group-hover:opacity-100 transition-all flex items-center gap-1.5 translate-y-2 group-hover:translate-y-0 duration-300">
-                        <FaEye className="text-[11px]" /> {isRTL ? "عرض الشهادة" : "View Certificate"}
-                      </span>
+                    
+                    <div className="w-full pt-5 border-t border-gray-100/80 text-center relative z-10 flex flex-col items-center gap-3">
+                      <div className="flex items-center justify-center gap-2">
+                        <FaAward className="text-main/70 text-sm shrink-0" />
+                        <h4 className="font-extrabold text-sm md:text-base text-gray-800 group-hover:text-main transition-colors line-clamp-1">
+                          {cert.title}
+                        </h4>
+                      </div>
+                      
+                      <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 translate-y-3 group-hover:translate-y-0 transition-all duration-300">
+                        <span className="text-[11px] md:text-xs text-white font-bold bg-main px-4 py-1.5 rounded-full shadow-md shadow-main/20 flex items-center gap-1.5">
+                          <FaEye className="text-[11px]" /> {isRTL ? "عرض الشهادة" : "View Certificate"}
+                        </span>
+                      </div>
                     </div>
+                    
+                    {/* Border gradient effect on hover */}
+                    <div className="absolute inset-0 border-2 border-transparent group-hover:border-main/20 rounded-3xl transition-colors duration-500 pointer-events-none" />
                   </motion.div>
                 </a>
               ))}

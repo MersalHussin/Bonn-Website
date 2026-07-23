@@ -19,6 +19,7 @@ import EventsMenu from "./Navbar/EventsMenu";
 import BrandsMenu from "./Navbar/BrandsMenu";
 import ServicesMenu from "./Navbar/ServicesMenu";
 import { aboutMenuLinks, eventsMenuLinks, servicesMenuLinks, brands } from "./Navbar/navData";
+import { departmentsData } from "../constants/departmentsData";
 
 
 
@@ -77,11 +78,11 @@ export default function FactoryHeader() {
 
 const navItems = [
   { key: "home", path: "/", icon: FaHome },
-  { key: "about_boon", type: "dropdown_about", icon: FaBuilding },
+  { key: "about_boon", path: "/about", icon: FaBuilding },
   { key: "services.title", type: "dropdown_services", icon: FaHandshake },
   { key: "brands", type: "dropdown", icon: FaStar },
   { key: "events", type: "dropdown_events", icon: FaBullhorn },
-  { key: "departments", path: "/departments", icon: FaSitemap },
+  // { key: "departments", path: "/about/departments", icon: FaSitemap },
   { key: "certifications", path: "/certifications", icon: FaCertificate },
   { key: "faq_nav", path: "/faq", icon: FaQuestionCircle },
 ];
@@ -271,8 +272,9 @@ useEffect(() => {
                 >
                   {item.type === "dropdown_about" ? (
                     <>
-                      <button
-                        onClick={() => { setAboutOpen(!aboutOpen); setBrandsOpen(false); setEventsOpen(false); }}
+                      <Link
+                        href="/about"
+                        onClick={() => closeMenus()}
                         className={`relative flex items-center gap-1 font-bold text-[17px] transition group ${
                           aboutOpen || pathname.startsWith("/about")
                             ? "text-main after:absolute after:left-0 after:-bottom-1 after:w-full after:h-[2px] after:bg-main cursor-pointer"
@@ -280,10 +282,9 @@ useEffect(() => {
                         }`}
                       >
                         {mounted ? t(item.key) : "About Us"}
-                        {/* {item.icon && <item.icon size={13} className={`transition-colors ${aboutOpen || pathname.startsWith("/about") ? "text-main" : "text-gray-400 group-hover:text-main"}`} />} */}
-                      </button>
+                      </Link>
 
-                      <AboutMenu isOpen={aboutOpen} closeMenus={closeMenus} mounted={mounted} t={t} i18n={i18n} />
+                      <AboutMenu isOpen={aboutOpen} closeMenus={closeMenus} mounted={mounted} t={t} i18n={i18n} setAboutOpen={setAboutOpen} />
                     </>
                   ) : item.type === "dropdown_events" ? (
                     <>
@@ -354,15 +355,16 @@ useEffect(() => {
           </nav>
         </div>
 
-        {/* Desktop Action Icons (Search & Lang) */}
+        {/* Desktop Action Icons (Search, Lang & Contact) */}
         <div className="hidden min-[916px]:flex items-center gap-3">
               <button
                 onClick={() => setSearchPopupOpen(true)}
                 className="flex items-center justify-center gap-2 bg-slate-50 text-slate-700 hover:bg-main hover:text-white transition-all px-4 py-2.5 rounded-full font-bold text-sm shadow-sm hover:shadow-md cursor-pointer border border-slate-100 group"
               >
                 <FaSearch size={16} className="group-hover:scale-110 transition-transform" />
-                <span>{mounted ? (i18n.language === "ar" ? "ابحث" : "Search") : "Search"}</span>
+                {/* <span>{mounted ? (i18n.language === "ar" ? "ابحث" : "Search") : "Search"}</span> */}
               </button>
+            
 
               <div className="relative">
                 <button
@@ -372,7 +374,7 @@ useEffect(() => {
                   <svg className="w-4 h-4 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
                   </svg>
-                  <span>{mounted ? (i18n.language === "ar" ? "العربية" : "English") : "English"}</span>
+                  {/* <span>{mounted ? (i18n.language === "ar" ? "العربية" : "English") : "English"}</span> */}
                 </button>
                 <AnimatePresence>
                   {langOpen && (
@@ -400,6 +402,12 @@ useEffect(() => {
                   )}
                 </AnimatePresence>
               </div>
+                <Link
+                href="/contact"
+                className="flex items-center justify-center gap-2 bg-main text-white hover:bg-main/90 transition-all px-6 py-2.5 rounded-full font-bold text-sm shadow-md hover:shadow-lg cursor-pointer hover:-translate-y-0.5"
+              >
+                <span>{mounted ? (i18n.language === "ar" ? "تواصل معنا" : "Contact Us") : "Contact Us"}</span>
+              </Link>
         </div>
       </div>
 
@@ -473,29 +481,11 @@ useEffect(() => {
                         </div>
                         <motion.span animate={{ rotate: aboutOpen ? 180 : 0 }} className="text-gray-400">▼</motion.span>
                       </button>
-                      <AnimatePresence>
-                        {aboutOpen && (
-                          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
-                            <div className="flex flex-col gap-3 pb-4 pt-2">
-                              {aboutMenuLinks.map((link: any) => {
-                                const Icon = link.icon;
-                                const desc = mounted && i18n.language === "ar" ? link.descAr : link.descEn;
-                                return (
-                                  <Link key={link.key} href={link.path} dir={i18n.language === "ar" ? "rtl" : "ltr"} onClick={() => { setAboutOpen(false); setIsOpen(false); }} className="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 hover:bg-main/5 transition border border-transparent hover:border-main/10 shadow-sm">
-                                    <div className="min-w-[48px] h-[48px] flex justify-center items-center text-main bg-white rounded-xl shadow-sm border border-gray-100">
-                                      <Icon size={14} />
-                                    </div>
-                                    <div className="flex flex-col">
-                                      <span className="text-[15px] font-bold text-gray-800 mb-1">{mounted ? t(link.key) : link.key}</span>
-                                      <span className="text-[13px] text-gray-500 leading-snug">{desc}</span>
-                                    </div>
-                                  </Link>
-                                );
-                              })}
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
+                    
+
+
+
+
                     </div>
                   ) : item.type === "dropdown_events" ? (
                     <div className="flex flex-col">
@@ -600,6 +590,18 @@ useEffect(() => {
                   )}
                 </motion.div>
               ))}
+              
+              {/* Mobile Contact CTA */}
+              <div className="mt-4 pt-4 border-t border-gray-100">
+                <Link
+                  href="/contact"
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center justify-center gap-2 w-full bg-main text-white py-3.5 rounded-xl font-bold text-lg shadow-md hover:bg-main/90 transition-colors"
+                >
+                  {mounted ? (i18n.language === "ar" ? "تواصل معنا" : "Contact Us") : "Contact Us"}
+                </Link>
+              </div>
+
               </div>
             </div>
           </motion.div>
