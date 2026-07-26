@@ -27,6 +27,17 @@ export default function MessagesTable({ messages, onRefresh, onView }: Props) {
   const [filterSubject, setFilterSubject] = useState("الكل");
   const [filterStatus, setFilterStatus] = useState("الكل");
 
+  const handleReplyClick = (e: React.MouseEvent<HTMLAnchorElement>, email: string, subject: string) => {
+    e.preventDefault();
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const subjectLine = encodeURIComponent(`رد على: ${subject}`);
+    if (isMobile) {
+      window.location.href = `mailto:${email}?subject=${subjectLine}`;
+    } else {
+      window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${subjectLine}`, '_blank');
+    }
+  };
+
   const toggleReadStatus = async (id: string, currentStatus: boolean) => {
     try {
       const { success, error } = await toggleMessageReadAction(id, currentStatus);
@@ -197,13 +208,10 @@ export default function MessagesTable({ messages, onRefresh, onView }: Props) {
                         <FileText size={18} />
                       </button>
                       <a
-                        href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
-                          msg.email
-                        )}&su=${encodeURIComponent(`رد على: ${msg.subject}`)}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        href={`mailto:${msg.email}`}
+                        onClick={(e) => handleReplyClick(e, msg.email, msg.subject)}
                         className="p-1.5 cursor-pointer text-gray-500 hover:text-green-600 hover:bg-green-50 rounded transition inline-flex"
-                        title="الرد عبر Gmail"
+                        title="الرد"
                       >
                         <Reply size={18} />
                       </a>

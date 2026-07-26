@@ -11,6 +11,17 @@ export default function AdminMessagesPage() {
   const [loading, setLoading] = useState(false);
   const [selectedMessage, setSelectedMessage] = useState<ContactMessage | null>(null);
 
+  const handleReplyClick = (e: React.MouseEvent<HTMLAnchorElement>, email: string, subject: string) => {
+    e.preventDefault();
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const subjectLine = encodeURIComponent(`رد على: ${subject}`);
+    if (isMobile) {
+      window.location.href = `mailto:${email}?subject=${subjectLine}`;
+    } else {
+      window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${subjectLine}`, '_blank');
+    }
+  };
+
   const fetchMessages = async () => {
     setLoading(true);
     const { success, data, error } = await fetchMessagesAction();
@@ -144,14 +155,11 @@ export default function AdminMessagesPage() {
 
               <div className="p-6 bg-gray-50 border-t border-gray-100 flex justify-between items-center">
                 <a
-                  href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
-                    selectedMessage.email
-                  )}&su=${encodeURIComponent(`رد على: ${selectedMessage.subject}`)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-5 py-2.5 bg-green-600 text-white font-bold rounded-xl hover:bg-green-700 transition"
+                  href={`mailto:${selectedMessage.email}`}
+                  onClick={(e) => handleReplyClick(e, selectedMessage.email, selectedMessage.subject)}
+                  className="flex items-center gap-2 px-5 py-2.5 bg-green-600 text-white font-bold rounded-xl hover:bg-green-700 transition cursor-pointer"
                 >
-                  <Reply size={18} /> الرد عبر Gmail
+                  <Reply size={18} /> الرد
                 </a>
                 <button
                   onClick={() => setSelectedMessage(null)}

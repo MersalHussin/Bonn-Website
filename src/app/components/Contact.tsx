@@ -2,25 +2,24 @@
 
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
-import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaYoutube, FaLinkedin, FaTiktok, FaCheckCircle } from "react-icons/fa";
+import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaYoutube, FaLinkedin, FaTiktok, FaCheckCircle, FaHeadset, FaGlobe, FaHandshake } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 import { toast } from "sonner";
 import Container from "./Container";
 import SectionTitle from "./SectionTitle";
-import { supabase } from "../lib/supabaseClient";
-
 export default function ContactUs() {
   const { t, i18n } = useTranslation();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    subject: t("options.general"),
-    message: "",
-  });
-  const [submitted, setSubmitted] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleEmailClick = (e: React.MouseEvent<HTMLAnchorElement>, email: string) => {
+    e.preventDefault();
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+      window.location.href = `mailto:${email}`;
+    } else {
+      window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${email}`, '_blank');
+    }
+  };
   const [newsletterEmail, setNewsletterEmail] = useState("");
   const [isSubscribing, setIsSubscribing] = useState(false);
   const [isNewsletterModalOpen, setIsNewsletterModalOpen] = useState(false);
@@ -58,51 +57,7 @@ export default function ContactUs() {
     }
   };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    try {
-      const { error } = await supabase
-        .from('contact_messages')
-        .insert([
-          {
-            name: formData.name,
-            email: formData.email,
-            phone: formData.phone || null,
-            subject: formData.subject,
-            message: formData.message,
-          }
-        ]);
-
-      if (error) throw error;
-
-      setSubmitted(true);
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        subject: t("options.general"),
-        message: "",
-      });
-      
-      setTimeout(() => {
-        setSubmitted(false);
-        setIsModalOpen(false);
-      }, 3000);
-    } catch (error: any) {
-      console.error("Error submitting form:", error);
-      toast.error(i18n.language === "ar" ? "حدث خطأ أثناء الإرسال" : "An error occurred while sending");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   const fadeUp = {
     hidden: { opacity: 0, y: 50 },
@@ -132,12 +87,12 @@ export default function ContactUs() {
         </p>
         
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <button
-            onClick={() => setIsModalOpen(true)}
+          <Link
+            href="/contact"
             className="w-full sm:w-auto px-8 py-3.5 bg-white text-main font-bold rounded-xl hover:bg-gray-50 transition-all hover:scale-105"
           >
             {t("ctaBanner.contactBtn")}
-          </button>
+          </Link>
           <a
             href="/registration"
             className="w-full sm:w-auto px-8 py-3.5 bg-[#3b87f3] text-white font-semibold rounded-xl border border-white/20 hover:bg-[#4b91f5] transition-all hover:scale-105"
@@ -180,7 +135,13 @@ export default function ContactUs() {
               </div>
               <div>
                 <h4 className="font-semibold text-gray-900">{t("email")}</h4>
-                <p className="text-gray-600 mt-1">marketing@bonnmed.com</p>
+                <a 
+                  href={`mailto:marketing@bonnmed.com`}
+                  onClick={(e) => handleEmailClick(e, "marketing@bonnmed.com")}
+                  className="text-gray-600 mt-1 block hover:text-main transition-colors"
+                >
+                  marketing@bonnmed.com
+                </a>
               </div>
             </div>
 
@@ -253,120 +214,7 @@ export default function ContactUs() {
         </div>
       </motion.div>
 
-      {/* 3. Popup Form Modal */}
-      {isModalOpen && (
-        <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4">
-          {/* Backdrop */}
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setIsModalOpen(false)}
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-          />
 
-          {/* Modal Content */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl p-6 md:p-8 overflow-hidden"
-            dir={isRTL ? "rtl" : "ltr"}
-          >
-            {/* Decorative top bar */}
-            <div className="absolute top-0 inset-x-0 h-1.5 bg-main" />
-
-            {/* Close Button */}
-            <button 
-              onClick={() => setIsModalOpen(false)}
-              className={`absolute top-6 ${isRTL ? 'left-6' : 'right-6'} w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition text-gray-500 cursor-pointer z-10`}
-            >
-              ✕
-            </button>
-
-            {/* Mail Icon/Header */}
-            <div className="flex flex-col items-center text-center mt-4 mb-6">
-              <div className="w-16 h-16 bg-main/5 rounded-full flex items-center justify-center mb-3 border border-main/10">
-                <FaEnvelope className="text-2xl text-main" />
-              </div>
-              <h3 className="text-2xl font-bold text-main">
-                {t("ctaBanner.contactBtn")}
-              </h3>
-              <p className="text-sm text-gray-500 mt-1">
-                {isRTL ? "يسعدنا تواصلك معنا، وسنقوم بالرد عليك في أقرب وقت." : "We'd love to hear from you. We'll get back to you shortly."}
-              </p>
-            </div>
-
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                placeholder={t("fullName")}
-                required
-                onChange={handleChange}
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-main/20 focus:border-main transition"
-              />
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                placeholder={t("emailAddress")}
-                required
-                onChange={handleChange}
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-main/20 focus:border-main transition"
-              />
-              <input
-                type="tel"
-                name="phone"
-                value={formData.phone}
-                placeholder={t("optionalPhone")}
-                onChange={handleChange}
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-main/20 focus:border-main transition"
-              />
-              <label htmlFor="subject" className="sr-only">{t("subject")}</label>
-              <select
-                name="subject"
-                value={formData.subject}
-                onChange={handleChange}
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-main/20 focus:border-main transition appearance-none bg-transparent"
-              >
-                <option>{t("options.general")}</option>
-                <option>{t("options.support")}</option>
-                <option>{t("options.partner")}</option>
-                <option>{t("options.other")}</option>
-              </select>
-              <textarea
-                name="message"
-                value={formData.message}
-                placeholder={t("message")}
-                rows={4}
-                required
-                onChange={handleChange}
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-main/20 focus:border-main transition resize-none"
-              ></textarea>
-              
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full bg-main text-white font-bold py-3.5 px-4 rounded-xl hover:bg-blue-700 transition disabled:opacity-70 disabled:cursor-not-allowed"
-              >
-                {isSubmitting ? (isRTL ? "جاري الإرسال..." : "Sending...") : t("send")}
-              </button>
-
-              {submitted && (
-                <motion.p 
-                  initial={{ opacity: 0, y: 10 }} 
-                  animate={{ opacity: 1, y: 0 }} 
-                  className="text-green-600 text-center font-medium pt-2"
-                >
-                  {t("submit.success")}
-                </motion.p>
-              )}
-            </form>
-          </motion.div>
-        </div>
-      )}
 
       {/* 4. Newsletter Success Modal */}
       <AnimatePresence>
@@ -412,3 +260,4 @@ export default function ContactUs() {
     </Container>
   );
 }
+

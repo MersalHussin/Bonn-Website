@@ -32,6 +32,8 @@ export default function EventsMenu({ isOpen, closeMenus, mounted, t, i18n }: IPr
                 href={link.path}
                 dir={i18n.language === "ar" ? "rtl" : "ltr"}
                 onClick={closeMenus}
+                target={(link as any).target}
+                download={(link as any).download}
                 className="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition group border border-transparent hover:border-slate-100"
               >
                 <div className="bg-slate-50 w-8 h-8 rounded-lg flex flex-shrink-0 items-center justify-center text-main group-hover:scale-110 group-hover:bg-main group-hover:text-white transition-all duration-300 shadow-sm">

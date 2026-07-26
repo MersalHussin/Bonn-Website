@@ -1,4 +1,4 @@
-import { FaInfoCircle, FaUsers, FaFlask, FaIndustry, FaNewspaper, FaBlog, FaMicroscope, FaVials, FaTags, FaFileContract } from "react-icons/fa";
+import { FaInfoCircle, FaUsers, FaFlask, FaIndustry, FaNewspaper, FaBlog, FaMicroscope, FaVials, FaTags, FaFileContract, FaFileDownload } from "react-icons/fa";
 
 export const aboutMenuLinks = [
   { key: "about", path: "/about", icon: FaInfoCircle, descEn: "Company overview & history", descAr: "نظرة عامة وتاريخ الشركة" },
@@ -10,6 +10,7 @@ export const aboutMenuLinks = [
 export const eventsMenuLinks = [
   { key: "news", path: "/events?tab=news", icon: FaNewspaper, descEn: "Latest company news", descAr: "أحدث أخبار الشركة" },
   { key: "blog", path: "/events?tab=blog", icon: FaBlog, descEn: "Articles and insights", descAr: "مقالات ورؤى طبية" },
+  { key: "knowledge_center", path: "/resources", icon: FaFileDownload, descEn: "Downloadable resources", descAr: "تحميل الملفات والمصادر" },
 ];
 
 export const servicesMenuLinks = [

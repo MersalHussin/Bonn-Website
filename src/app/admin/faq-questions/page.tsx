@@ -11,6 +11,17 @@ export default function AdminFaqQuestionsPage() {
   const [loading, setLoading] = useState(false);
   const [selectedQuestion, setSelectedQuestion] = useState<FaqQuestion | null>(null);
 
+  const handleReplyClick = (e: React.MouseEvent<HTMLAnchorElement>, email: string) => {
+    e.preventDefault();
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const subjectLine = encodeURIComponent("رد على سؤالك بخصوص مصنع بون");
+    if (isMobile) {
+      window.location.href = `mailto:${email}?subject=${subjectLine}`;
+    } else {
+      window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${subjectLine}`, '_blank');
+    }
+  };
+
   const fetchQuestions = async () => {
     setLoading(true);
     const { success, data, error } = await fetchFaqQuestionsAction();
@@ -128,14 +139,11 @@ export default function AdminFaqQuestionsPage() {
 
               <div className="p-6 bg-gray-50 border-t border-gray-100 flex justify-between items-center">
                 <a
-                  href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
-                    selectedQuestion.email
-                  )}&su=${encodeURIComponent("رد على سؤالك بخصوص مصنع بون")}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-5 py-2.5 bg-green-600 text-white font-bold rounded-xl hover:bg-green-700 transition"
+                  href={`mailto:${selectedQuestion.email}`}
+                  onClick={(e) => handleReplyClick(e, selectedQuestion.email)}
+                  className="flex items-center gap-2 px-5 py-2.5 bg-green-600 text-white font-bold rounded-xl hover:bg-green-700 transition cursor-pointer"
                 >
-                  <Reply size={18} /> الرد عبر Gmail
+                  <Reply size={18} /> الرد
                 </a>
                 <button
                   onClick={() => setSelectedQuestion(null)}

@@ -13,6 +13,16 @@ export default function Footer() {
   const isAr = i18n.language === "ar";
   const pathname = usePathname();
 
+  const handleEmailClick = (e: React.MouseEvent<HTMLAnchorElement>, email: string) => {
+    e.preventDefault();
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+      window.location.href = `mailto:${email}`;
+    } else {
+      window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${email}`, '_blank');
+    }
+  };
+
   if (pathname?.startsWith('/admin')) return null;
 
   return (
@@ -22,14 +32,14 @@ export default function Footer() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         viewport={{ once: true }}
-        className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12"
+        className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8 lg:gap-12"
       >
         {/* Logo & About */}
-        <div className="flex flex-col gap-6 lg:col-span-1">
-          <div className="bg-white p-3 rounded-2xl w-fit">
-            <Image src="/images/Logo.svg" alt="Bonn Medical Industries" width={100} height={100} className="object-contain" />
+        <div className="flex flex-col gap-6 lg:col-span-2">
+          <div className="rounded-2xl w-full flex justify-start">
+            <Image src="/images/Logo-White.svg" alt="Bonn Medical Industries" width={150} height={150} className="object-contain" />
           </div>
-          <p className="text-sm leading-relaxed text-white/70">
+          <p className="text-sm leading-relaxed text-white/70 max-w-sm">
             {isAr 
               ? "شريكك الموثوق في تصنيع منتجات الرعاية الصحية ومستحضرات التجميل بأعلى معايير الجودة العالمية."
               : t("footer.description", "Your trusted partner in quality healthcare and cosmetics manufacturing.")}
@@ -37,7 +47,7 @@ export default function Footer() {
         </div>
 
         {/* Contact Info */}
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-5 lg:col-span-1">
           <h3 className="text-white font-bold text-lg mb-2 relative inline-block w-fit">
             {isAr ? "معلومات التواصل" : "Contact Info"}
             <span className="absolute -bottom-2 left-0 w-10 h-1 bg-[#2563eb] rounded-full"></span>
@@ -48,28 +58,49 @@ export default function Footer() {
           </div>
           <div className="flex items-center gap-3 text-sm text-white/70">
             <Mail className="w-5 h-5 text-white/70 shrink-0" />
-            <a href="mailto:marketing@bonnmed.com" className="hover:text-white transition">marketing@bonnmed.com</a>
+            <a 
+              href="mailto:marketing@bonnmed.com" 
+              onClick={(e) => handleEmailClick(e, "marketing@bonnmed.com")}
+              className="hover:text-white transition"
+            >
+              marketing@bonnmed.com
+            </a>
           </div>
           <div className="flex items-center gap-3 text-sm text-white/70">
             <Phone className="w-5 h-5 text-white/70 shrink-0" />
-            <a href="tel:+966110000000" className="hover:text-white transition" dir="ltr">+966 5803 47173</a>
+            <a href="tel:+966580347173" className="hover:text-white transition" dir="ltr">+966 5803 47173</a>
           </div>
         </div>
 
-        {/* Navigation */}
-        <div className="flex flex-col gap-4">
+        {/* Company Links */}
+        <div className="flex flex-col gap-4 lg:col-span-1">
           <h3 className="text-white font-bold text-lg mb-2 relative inline-block w-fit">
-            {t("footer.links", "Quick Links")}
+            {t("footer.company", "Company")}
             <span className="absolute -bottom-2 left-0 w-10 h-1 bg-[#2563eb] rounded-full"></span>
           </h3>
-          <Link href="/" className="hover:text-white hover:translate-x-1 transition-all w-fit">{t("home")}</Link>
           <Link href="/about" className="hover:text-white hover:translate-x-1 transition-all w-fit">{t("about")}</Link>
+          <Link href="/about/departments" className="hover:text-white hover:translate-x-1 transition-all w-fit">{t("departments")}</Link>
+          <Link href="/about/team" className="hover:text-white hover:translate-x-1 transition-all w-fit">{t("team")}</Link>
+          <Link href="/jobs" className="hover:text-white hover:translate-x-1 transition-all w-fit">{t("jobs")}</Link>
+          <Link href="/brands" className="hover:text-white hover:translate-x-1 transition-all w-fit">{t("ourbrands", "Our Brands")}</Link>
+          <Link href="/resources" className="hover:text-white hover:translate-x-1 transition-all w-fit">{t("knowledge_center")}</Link>
+        </div>
+
+        {/* Explore Links */}
+        <div className="flex flex-col gap-4 lg:col-span-1">
+          <h3 className="text-white font-bold text-lg mb-2 relative inline-block w-fit">
+            {t("footer.explore", "Explore")}
+            <span className="absolute -bottom-2 left-0 w-10 h-1 bg-[#2563eb] rounded-full"></span>
+          </h3>
           <Link href="/services" className="hover:text-white hover:translate-x-1 transition-all w-fit">{t("services.title")}</Link>
-          <Link href="/certifications" className="hover:text-white hover:translate-x-1 transition-all w-fit">{t("certifications")}</Link>
+          <Link href="/events?tab=news" className="hover:text-white hover:translate-x-1 transition-all w-fit">{t("news")}</Link>
+          <Link href="/events?tab=blog" className="hover:text-white hover:translate-x-1 transition-all w-fit">{t("blog")}</Link>
+          <Link href="/faq" className="hover:text-white hover:translate-x-1 transition-all w-fit">{t("faq.title", "FAQ")}</Link>
+          <Link href="/contact" className="hover:text-white hover:translate-x-1 transition-all w-fit">{t("contact")}</Link>
         </div>
 
         {/* Legal & Social */}
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 lg:col-span-1">
           <h3 className="text-white font-bold text-lg mb-2 relative inline-block w-fit">
             {isAr ? "روابط هامة" : "Legal"}
             <span className="absolute -bottom-2 left-0 w-10 h-1 bg-[#2563eb] rounded-full"></span>
@@ -84,18 +115,18 @@ export default function Footer() {
           <h3 className="text-white font-bold text-lg mt-4 mb-2">
             {t("footer.followUs", "Follow Us")}
           </h3>
-          <div className="flex gap-3 text-white">
+          <div className="flex flex-wrap gap-2 text-white">
             <Link href="https://www.facebook.com/bonnmedical" aria-label="Visit Our Facebook" target="_blank" rel="noopener noreferrer" className="bg-white/10 p-2.5 rounded-full hover:bg-[#2563eb] transition-colors">
-              <FaFacebookF size={16} />
+              <FaFacebookF size={14} />
             </Link>
             <Link href="https://instagram.com/bonnmedical" aria-label="Visit Our Instagram" target="_blank" rel="noopener noreferrer" className="bg-white/10 p-2.5 rounded-full hover:bg-[#e1306c] transition-colors">
-              <FaInstagram size={16} />
+              <FaInstagram size={14} />
             </Link>
             <Link href="https://www.linkedin.com/company/bonnmedical" aria-label="Visit Our Linkedin" target="_blank" rel="noopener noreferrer" className="bg-white/10 p-2.5 rounded-full hover:bg-[#0077b5] transition-colors">
-              <FaLinkedinIn size={16} />
+              <FaLinkedinIn size={14} />
             </Link>
             <Link href="https://www.youtube.com/@BonnMedical" aria-label="Visit Our Youtube" target="_blank" rel="noopener noreferrer" className="bg-white/10 p-2.5 rounded-full hover:bg-[#ff0000] transition-colors">
-              <FaYoutube size={16} />
+              <FaYoutube size={14} />
             </Link>
           </div>
         </div>

@@ -144,7 +144,7 @@ useEffect(() => {
         initial={{ opacity: 1 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0, transition: { duration: 0.5, ease: "easeInOut" } }}
-        className="fixed inset-0 bg-white z-[9999] flex flex-col justify-center items-center"
+        className="fixed inset-0 h-[100dvh] w-full bg-white z-[9999] flex flex-col justify-center items-center"
       >
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-50 via-white to-white opacity-60"></div>
         
@@ -504,7 +504,7 @@ useEffect(() => {
                                 const Icon = link.icon;
                                 const desc = mounted && i18n.language === "ar" ? link.descAr : link.descEn;
                                 return (
-                                  <Link key={link.key} href={link.path} dir={i18n.language === "ar" ? "rtl" : "ltr"} onClick={() => { setEventsOpen(false); setIsOpen(false); }} className="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 hover:bg-main/5 transition border border-transparent hover:border-main/10 shadow-sm">
+                                  <Link key={link.key} href={link.path} dir={i18n.language === "ar" ? "rtl" : "ltr"} target={link.target} download={link.download} onClick={() => { setEventsOpen(false); setIsOpen(false); }} className="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 hover:bg-main/5 transition border border-transparent hover:border-main/10 shadow-sm">
                                     <div className="min-w-[48px] h-[48px] flex justify-center items-center text-main bg-white rounded-xl shadow-sm border border-gray-100">
                                       <Icon size={14} />
                                     </div>

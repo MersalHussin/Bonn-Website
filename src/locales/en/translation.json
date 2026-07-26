@@ -12,8 +12,10 @@
   "operation": "Operations",
   "news": "News",
   "blog": "Blog",
+  "knowledge_center": "Brand Assets",
   "events": "Media Center",
   "team": "The Team",
+  "jobs": "Careers",
   "rnd": {
     "title": "Research & Development",
     "subtitle": "From Concept to Compliant, Stable, and Scalable Formulations",
@@ -120,7 +122,7 @@
   "weAreDifferent": "About Us ",
   "bmiIsFuture": "Bonn Is The Future ",
   "aboutVideo": "https://www.youtube.com/embed/QVeLyK5S5co",
-  "aboutParagraph1": "Bonn is a contract manufacturer located in Riyadh, Saudi Arabia. Equipped with the latest and up to date machines and equipment, we are confident that we are able to provide the latest and novel formulations under cGMP regulations, either for standard formulations as well as bespoke preparations when required. Our highly qualified staff is continuously improving and actualizing their knowledge to attend the constant advances in the sector.",
+  "aboutParagraph1": "Bonn is a contract manufacturer located in Riyadh, Saudi Arabia. Equipped with the latest and up to date machines and equipment, we are confident that we are able toFor the production of cosmetics, medical devices, health products, and nutritional supplements from the Saudi Food and Drug Authority under cGMP regulations, either for standard formulations as well as bespoke preparations when required. Our highly qualified staff is continuously improving and actualizing their knowledge to attend the constant advances in the sector.",
   "aboutParagraph2": "All these experience and qualifications helped us develop, formulate and manufacture highly professional cosmetics as well as providing the corresponding technical and documental support according to the latest Saudi Food and Drug Administration “SFDA” regulations ...",
   "aboutParagraph3": "With all these qualities, Bonn is the ideal partner for companies searching for quality, security and improvement in their product’s development and manufacturing.",
   "readMore": "Read More..",
@@ -197,6 +199,8 @@
   "footer": {
     "description": "Your trusted partner in quality healthcare and cosmetics manufacturing.",
     "links": "Quick Links",
+    "company": "Company",
+    "explore": "Explore",
     "followUs": "Follow Us",
     "rights": "All rights reserved."
   },
@@ -792,5 +796,12 @@
       }
     ]
   },
-  "departments": "Departments"
+  "departments": "Departments",
+  "resources": {
+    "title": "Brand Assets",
+    "subtitle": "Browse and download company profiles and important resources from Bonn Medical",
+    "companyProfile": "Company Profile",
+    "download": "Download File",
+    "view": "View File"
+  }
 }
