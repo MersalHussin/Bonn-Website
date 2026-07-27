@@ -8,6 +8,7 @@ import ClientsSection from './components/ClientsSection';
 import ArtVid from './components/ArtVid';
 import CTAButton from './components/CTAButton';
 import OurMap from './components/OurMap2';
+import Image from 'next/image';
 
 
 export default function Home() {

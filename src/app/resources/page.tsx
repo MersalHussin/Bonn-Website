@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
-import { FaFilePdf, FaDownload, FaEye } from "react-icons/fa";
+import { FaFilePdf, FaExternalLinkAlt, FaEye } from "react-icons/fa";
 import Link from "next/link";
 import Breadcrumb from "../components/Breadcrumb";
 import SectionTitle from "../components/SectionTitle";
@@ -70,32 +70,21 @@ export default function ResourcesPage() {
                     {resource.desc}
                   </p>
                   
-                  <div className="flex flex-col sm:flex-row items-center gap-3 pt-6 border-t border-gray-100 mt-auto">
-                    <span className="text-sm font-medium text-gray-400 bg-gray-50 px-3 py-1 rounded-full whitespace-nowrap ml-auto sm:ml-0">
+                  <div className="flex items-center justify-between gap-4 pt-6 border-t border-gray-100 mt-auto">
+                    <span className="text-sm font-medium text-gray-400 bg-gray-50 px-3 py-1.5 rounded-full whitespace-nowrap">
                       {resource.size}
                     </span>
                     
-                    <div className="flex items-center gap-2 w-full sm:w-auto mt-4 sm:mt-0">
-                      <Link
-                        href={`/resources/${resource.slug}`}
-                        className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-gray-100 text-gray-700 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-gray-200 transition-colors group/btn2"
-                      >
-                        <FaEye className="group-hover/btn2:scale-110 transition-transform" />
-                        <span>{mounted ? t("resources.view") : "View"}</span>
-                      </Link>
-                      
                       <a
                         href={resource.fileUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        download
-                        className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-main text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-main/90 transition-colors shadow-sm shadow-main/20 hover:shadow-md hover:shadow-main/30 group/btn"
+                        className="flex-1 flex items-center justify-center gap-2 bg-main text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-main/90 transition-colors shadow-sm shadow-main/20 hover:shadow-md hover:shadow-main/30 group/btn"
                       >
-                        <FaDownload className="group-hover/btn:-translate-y-0.5 transition-transform" />
                         <span>{mounted ? t("resources.download") : "Download"}</span>
+                        <FaExternalLinkAlt className="group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5 transition-transform text-[12px]" />
                       </a>
                     </div>
-                  </div>
                 </motion.div>
               );
             })}

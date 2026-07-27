@@ -59,3 +59,9 @@ export async function deleteTeamMember(id: number) {
     return { success: false, error: error.message };
   }
 }
+
+export async function verifyUploadPassword(password: string) {
+  const envPassword = process.env.TEAM_UPLOAD_PASSWORD;
+  if (!envPassword) return false;
+  return password === envPassword;
+}

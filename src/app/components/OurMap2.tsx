@@ -35,45 +35,76 @@ type LocationData = {
 
 /* ===== MOCK DATA ===== */
 const MOCK_LOCATIONS: LocationData[] = [
-  // {
-  //   id: "1",
-  //   name_en: "Riyadh Headquarters",
-  //   name_ar: "المقر الرئيسي - الرياض",
-  //   brand_name: "Boon",
-  //   description: "Our main headquarters and primary facility.",
-  //   city: "Riyadh",
-  //   address: "Riyadh, Saudi Arabia",
-  //   lat: 24.7136,
-  //   lng: 46.6753,
-  //   active: true,
-  //   brand_color: "red",
-  // },
-  // {
-  //   id: "2",
-  //   name_en: "Jeddah Branch",
-  //   name_ar: "فرع جدة",
-  //   brand_name: "Boon",
-  //   description: "Regional office serving the western region.",
-  //   city: "Jeddah",
-  //   address: "Jeddah, Saudi Arabia",
-  //   lat: 21.4858,
-  //   lng: 39.1925,
-  //   active: true,
-  //   brand_color: "#2563eb",
-  // },
-  // {
-  //   id: "3",
-  //   name_en: "Dubai Office",
-  //   name_ar: "مكتب دبي",
-  //   brand_name: "Boon Global",
-  //   description: "International distribution and partnership center.",
-  //   city: "Dubai",
-  //   address: "Dubai, UAE",
-  //   lat: 25.2048,
-  //   lng: 55.2708,
-  //   active: true,
-  //   brand_color: "#2563eb",
-  // }
+  {
+    id: "1",
+    name_en: "Saudi Arabia",
+    name_ar: "السعودية",
+    city: "Saudi Arabia",
+    lat: 23.8859,
+    lng: 45.0792,
+    active: true,
+    brand_color: "#003A8C",
+  },
+  {
+    id: "2",
+    name_en: "Kuwait",
+    name_ar: "الكويت",
+    city: "Kuwait",
+    lat: 29.3759,
+    lng: 47.9774,
+    active: true,
+    brand_color: "#003A8C",
+  },
+  {
+    id: "3",
+    name_en: "Bahrain",
+    name_ar: "البحرين",
+    city: "Bahrain",
+    lat: 25.9304,
+    lng: 50.6378,
+    active: true,
+    brand_color: "#003A8C",
+  },
+  {
+    id: "4",
+    name_en: "Oman",
+    name_ar: "عمان",
+    city: "Oman",
+    lat: 21.4735,
+    lng: 55.9754,
+    active: true,
+    brand_color: "#003A8C",
+  },
+  {
+    id: "5",
+    name_en: "Yemen",
+    name_ar: "اليمن",
+    city: "Yemen",
+    lat: 15.5527,
+    lng: 48.5164,
+    active: true,
+    brand_color: "#003A8C",
+  },
+  {
+    id: "6",
+    name_en: "Jordan",
+    name_ar: "الأردن",
+    city: "Jordan",
+    lat: 31.2400,
+    lng: 36.5100,
+    active: true,
+    brand_color: "#003A8C",
+  },
+  {
+    id: "7",
+    name_en: "Libya",
+    name_ar: "ليبيا",
+    city: "Libya",
+    lat: 26.3351,
+    lng: 17.2283,
+    active: true,
+    brand_color: "#003A8C",
+  }
 ];
 
 /* ================= COMPONENT ================= */
@@ -87,22 +118,11 @@ export default function OurMap() {
   }, []);
 
   const [locations, setLocations] = useState<LocationData[]>(MOCK_LOCATIONS);
-  const [active, setActive] = useState<LocationData | null>(null);
+  const [hovered, setHovered] = useState<string | null>(null);
   const [center, setCenter] = useState<[number, number]>([24.7136, 46.6753]);
   const [zoom, setZoom] = useState(4);
 
-  /* ===== Handlers ===== */
-  const handleMarkerClick = useCallback((loc: LocationData) => {
-    setActive(loc);
-    setCenter([loc.lat, loc.lng]);
-    setZoom(7);
-  }, []);
 
-  const closePanel = useCallback(() => {
-    setActive(null);
-    setCenter([24, 20]);
-    setZoom(2.5 );
-  }, []);
 
   return (
     <section className="relative py-24 bg-gradient-to-b from-[#003A8C] to-[#001d4a] overflow-hidden">
@@ -161,146 +181,41 @@ export default function OurMap() {
               provider={(x, y, z) =>
                 `https://a.basemaps.cartocdn.com/light_all/${z}/${x}/${y}@2x.png`
               }
-              onClick={() => closePanel()}
             >
-              {/* Markers */}
-              {locations.map((loc) => {
-                const isActive = active?.id === loc.id;
-                return (
-                  <Marker
-                    key={loc.id}
-                    anchor={[loc.lat, loc.lng]}
-                    width={isActive ? 52 : 38}
-                    color={loc.brand_color || "#003A8C"}
-                    onClick={() => handleMarkerClick(loc)}
-                  />
-                );
-              })}
-
-              {/* Popup Overlay */}
-              {active && (
-                <Overlay
-                  anchor={[active.lat, active.lng]}
-                  offset={[0, 50]}
-                >
-                  <AnimatePresence>
-                    <motion.div
-                      onClick={(e) => e.stopPropagation()}
-                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                      transition={{ duration: 0.25 }}
-                      className="relative w-[300px] sm:w-[340px] bg-white rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.2)] overflow-hidden"
-                      style={{
-                        borderTop: `4px solid ${active.brand_color || "#003A8C"}`,
-                      }}
-                    >
-                      {/* Close Button */}
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          closePanel();
-                        }}
-                        className="absolute top-3 right-3 w-7 h-7 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors z-10"
-                        aria-label="Close"
-                      >
-                        <X size={14} className="text-gray-600" />
-                      </button>
-
-                      <div className="p-5">
-                        {/* Brand Header */}
-                        <div className="flex items-center gap-3 mb-4">
-                          {active.brand_logo && (
-                            <div
-                              className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
-                              style={{
-                                backgroundColor: `${active.brand_color || "#003A8C"}15`,
-                              }}
-                            >
-                              <Image
-                                src={active.brand_logo}
-                                alt={active.brand_name || ""}
-                                width={36}
-                                height={36}
-                                className="object-contain"
-                                unoptimized
-                              />
-                            </div>
-                          )}
-                          <div className="min-w-0">
-                            <h3
-                              className="text-base font-bold truncate"
-                              style={{ color: active.brand_color || "#003A8C" }}
-                            >
-                              {active.brand_name}
-                            </h3>
-                            {(active.name_en || active.name_ar) && (
-                              <span className="text-xs text-gray-400 block truncate">
-                                {isAr ? active.name_ar : active.name_en}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-
-                        {/* Description */}
-                        {active.description && (
-                          <p className="text-sm text-gray-600 leading-relaxed mb-4 line-clamp-3">
-                            {active.description}
-                          </p>
-                        )}
-
-                        {/* Info Pills */}
-                        <div className="flex flex-wrap gap-2 mb-4">
-                          {active.city && (
-                            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-700 rounded-full text-xs font-medium">
-                              <MapPin size={12} />
-                              {active.city}
-                            </span>
-                          )}
-                        </div>
-
-                        {/* Actions */}
-                        <div className="flex gap-2 pt-3 border-t border-gray-100 flex-wrap">
-                          <a
-                            href={`https://www.google.com/maps/search/?api=1&query=${active.lat},${active.lng}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl text-xs font-semibold text-white transition-opacity hover:opacity-90 min-w-[100px]"
-                            style={{
-                              backgroundColor: active.brand_color || "#003A8C",
-                            }}
-                          >
-                            <MapPin size={13} />
-                            Google Maps
-                          </a>
-                          {active.website && (
-                            <a
-                              href={active.website}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl text-xs font-semibold border border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors min-w-[80px]"
-                            >
-                              <Globe size={13} />
-                              Website
-                            </a>
-                          )}
-                          {active.linkedin && (
-                            <a
-                              href={active.linkedin}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl text-xs font-semibold border border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors min-w-[80px]"
-                            >
-                              <Linkedin size={13} />
-                              LinkedIn
-                            </a>
-                          )}
-                        </div>
-                      </div>
-                    </motion.div>
-                  </AnimatePresence>
+              {/* Markers & Tooltips */}
+              {locations.map((loc) => (
+                <Overlay key={loc.id} anchor={[loc.lat, loc.lng]} offset={[12, 12]}>
+                  <div 
+                    className="relative group cursor-pointer"
+                    onMouseEnter={() => setHovered(loc.id)}
+                    onMouseLeave={() => setHovered(null)}
+                  >
+                    {/* Pulse Animation */}
+                    <div className="absolute -inset-3 bg-main rounded-full animate-ping opacity-30"></div>
+                    
+                    {/* Marker Dot */}
+                    <div className="relative w-6 h-6 bg-main rounded-full flex items-center justify-center shadow-lg border-[3px] border-white transition-transform duration-300 group-hover:scale-110">
+                      <div className="w-1.5 h-1.5 bg-white rounded-full"></div>
+                    </div>
+                    
+                    {/* Hover Tooltip */}
+                    <AnimatePresence>
+                      {hovered === loc.id && (
+                         <motion.div 
+                           initial={{ opacity: 0, y: 10 }}
+                           animate={{ opacity: 1, y: 0 }}
+                           exit={{ opacity: 0, y: 10 }}
+                           transition={{ duration: 0.2 }}
+                           className="absolute bottom-full mb-3 left-1/2 -translate-x-1/2 px-4 py-2 bg-white text-[#001d4a] text-sm font-bold rounded-lg shadow-xl whitespace-nowrap z-50 pointer-events-none"
+                         >
+                           {isAr ? loc.name_ar : loc.name_en}
+                           <div className="absolute top-full left-1/2 -translate-x-1/2 border-[6px] border-transparent border-t-white"></div>
+                         </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
                 </Overlay>
-              )}
+              ))}
             </Map>
             ) : (
               <div className="w-full h-full bg-[#001d4a]/20 animate-pulse flex items-center justify-center text-white/50">

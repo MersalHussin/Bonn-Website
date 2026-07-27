@@ -416,42 +416,42 @@ export default function AboutUsPage() {
         </section>
 
         {/* ================= OUR TEAM SECTION ================= */}
-        <section className="py-20 px-4 md:px-12 lg:px-24 bg-white border-t border-gray-100">
-          <div className="max-w-7xl mx-auto space-y-12">
-            <div className="text-center max-w-3xl mx-auto space-y-4">
+        {teamMembers.length > 0 && (
+          <section className="py-20 px-4 md:px-12 lg:px-24 bg-white border-t border-gray-100">
+            <div className="max-w-7xl mx-auto space-y-12">
+              <div className="text-center max-w-3xl mx-auto space-y-4">
 
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-[var(--main-color)]">
-                {isRTL ? "فريق بون" : "Boon Team"}
-              </h2>
-              <p className="text-sm md:text-base text-gray-500 leading-relaxed">
-                {isRTL
-                  ? "نفخر بنخبة من أفضل الخبراء والمهندسين والأطباء المتخصصين الذين يكرسون جهودهم للابتكار والجودة."
-                  : "We are proud of our elite team of experts, engineers, and specialists dedicated to innovation and uncompromised quality."}
-              </p>
-            </div>
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-[var(--main-color)]">
+                  {isRTL ? "فريق بون" : "Boon Team"}
+                </h2>
+                <p className="text-sm md:text-base text-gray-500 leading-relaxed">
+                  {isRTL
+                    ? "نفخر بنخبة من أفضل الخبراء والمهندسين والأطباء المتخصصين الذين يكرسون جهودهم للابتكار والجودة."
+                    : "We are proud of our elite team of experts, engineers, and specialists dedicated to innovation and uncompromised quality."}
+                </p>
+              </div>
 
-            {/* Team Members Grid Preview */}
-            {teamMembers.length > 0 && (
+              {/* Team Members Grid Preview */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
                 {teamMembers.map((member, idx) => (
                       <TeamMemberCard key={member.id} member={member} idx={idx} />
                  
                 ))}
               </div>
-            )}
 
-            {/* CTA to View All Team Members */}
-            <div className="text-center pt-6">
-              <Link
-                href="/about/team"
-                className="inline-flex items-center gap-3 px-8 py-4 bg-main text-white font-bold rounded-2xl shadow-lg shadow-main/20 hover:bg-main/90 hover:scale-[1.02] transition-all duration-300 text-sm md:text-base"
-              >
-                <span>{isRTL ? "تعرف على فريق بون الكامل" : "Meet the Full Boon Team"}</span>
-                {isRTL ? <FaArrowLeft /> : <FaArrowRight />}
-              </Link>
+              {/* CTA to View All Team Members */}
+              <div className="text-center pt-6">
+                <Link
+                  href="/about/team"
+                  className="inline-flex items-center gap-3 px-8 py-4 bg-main text-white font-bold rounded-2xl shadow-lg shadow-main/20 hover:bg-main/90 hover:scale-[1.02] transition-all duration-300 text-sm md:text-base"
+                >
+                  <span>{isRTL ? "تعرف على فريق بون الكامل" : "Meet the Full Boon Team"}</span>
+                  {isRTL ? <FaArrowLeft /> : <FaArrowRight />}
+                </Link>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
 
         {/* ================= CERTIFICATIONS SECTION ================= */}
         <section className="py-24 px-4 md:px-12 lg:px-24 bg-[#FCFDFF] border-t border-gray-50">

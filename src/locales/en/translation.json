@@ -1,12 +1,12 @@
 {
-  "hero.headline": "We Transform Medical Ideas Into Globally Competitive Products",
-  "hero.description": "Your trusted partner for manufacturing cosmetic, healthcare, and medical products — from concept to market.",
+  "hero.headline": "We Transform New Ideas Into Globally Competitive Products",
+  "hero.description": "Your trusted partner for manufacturing cosmetic, healthcare, food supplements, and medical products — from concept to market.",
   "hero.startProject": "Start Your Project",
   "hero.exploreServices": "Explore Services",
   "cta.startManufacturing": "Start Manufacturing",
   "home": "Home",
   "about": "About Us",
-  "about_boon": "About Boon",
+  "about_boon": "About Bonn",
   "certifications": "Certifications",
   "contact": "Contact",
   "operation": "Operations",
@@ -235,7 +235,7 @@
   "innovationTitle": "Innovation",
   "innovationText": "Through innovative solutions built with advanced technologies, we actively build impactful new brands.",
   "our_services": "Our Services",
-  "we_build_brands": "We build cosmetic brands from concept to market.",
+  "we_build_brands": "We build cosmetic and food supplement brands from concept to market.",
   "learn_more": "Learn More",
   "our_brands": "Our Brands",
   "Product Ideation & Selection": "Product Ideation & Selection",
@@ -801,7 +801,7 @@
     "title": "Brand Assets",
     "subtitle": "Browse and download company profiles and important resources from Bonn Medical",
     "companyProfile": "Company Profile",
-    "download": "Download File",
+    "download": "Open File",
     "view": "View File"
   }
 }

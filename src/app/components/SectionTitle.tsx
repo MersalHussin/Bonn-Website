@@ -43,7 +43,7 @@ export default function SectionTitle({
   return mount ? (
 
        <div
-       className={`mb-10 md:mb-14 ${isCenter ? "text-center" : ""} ${className}`}
+       className={`${className} mb-10 md:mb-14 ${isCenter ? "text-center" : ""} `}
        dir={align === "auto" ? (i18n.language === "ar" ? "rtl" : "ltr") : undefined}
        >
        

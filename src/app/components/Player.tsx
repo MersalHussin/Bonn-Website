@@ -24,6 +24,7 @@ const VideoContainer = ({ src }: MyPlayerProps) => {
 
   return (
     <div 
+      dir="ltr"
       className={`relative group w-full aspect-video rounded-[30px] overflow-hidden  shadow-lg   transition-all duration-300 ${
         !started || paused ? 'hide-videojs-controls' : ''
       }`}

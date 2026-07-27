@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Container from "./Container";
 import SectionTitle from "./SectionTitle";
+import { MyPlayer } from "./Player";
 
 function useTypingEffect(texts: string[], typingSpeed = 100, pauseTime = 2000) {
   const [displayText, setDisplayText] = useState("");
@@ -63,7 +64,7 @@ export default function About() {
       <Container>
         <div className="flex flex-col-reverse md:flex-row-reverse items-center gap-10">
           {/* Text Section */}
-          <div className="w-full md:w-1/2 text-main space-y-3">
+          <div className="w-full md:w-1/2 text-main ">
             <SectionTitle title={t('whoWeAre')} align="auto" theme="dark" className="mb-0" />
 
             <p className="text-lg leading-relaxed text-[#1A3351]">
@@ -81,15 +82,11 @@ export default function About() {
           </div>
 
           {/* Video Section */}
-          <div className="w-full md:w-1/2 relative rounded-2xl overflow-hidden shadow-2xl border border-main/10 bg-white aspect-video">
-           <div className="relative w-full h-full overflow-hidden rounded-xl bg-black">
-  <iframe
-    src={`${t("aboutVideo")}?controls=1&modestbranding=1&rel=0`}
-    className="w-full h-full absolute inset-0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowFullScreen
-    title={t("about_title") || "About us video"}
-  />
+          <div className="w-full md:w-1/2 relative rounded-2xl overflow-hidden  bg-white aspect-video">
+           <div className="relative w-full h-full overflow-hidden rounded-">
+         <div className="w-full rounded-[20px] overflow-hidden shadow-2xl">
+                  <MyPlayer src="https://res.cloudinary.com/dzgztrsa0/video/upload/v1785134673/bonn_medical_industries_mnlicp.mp4" />
+                </div>
 
   {/* الخدعة: شريط شفاف علوي يغطي منطقة العنوان ويمنع ظهورها عند حركة الماوس */}
   <div className="absolute top-0 left-0 w-full h-20 bg-transparent z-10 pointer-events-auto" />

@@ -36,18 +36,6 @@ export const brands = [
     logo: "/images/Visage.png",
   },
   {
-    name_en: "B1Care",
-    name_ar: "بي 1 كير",
-    slug: "b1care",
-    logo: "/images/B1.png",
-  },
-  {
-    name_en: "PuCare",
-    name_ar: "بو كير",
-    slug: "pucare",
-    logo: "/images/PUCare.png",
-  },
-  {
     name_en: "Vert",
     name_ar: "فيرت",
     slug: "vert",
