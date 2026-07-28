@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import { departmentsData } from "@/app/constants/departmentsData";
-import Breadcrumb from "@/app/components/Breadcrumb";
+import Breadcrumb from "@/app/components/ui/Breadcrumb";
 
 export default function DepartmentsPage() {
   const { i18n } = useTranslation();

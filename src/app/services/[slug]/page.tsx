@@ -17,7 +17,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import Container from "../../components/ui/Container";
-import Breadcrumb from "../../components/Breadcrumb";
+import Breadcrumb from "../../components/ui/Breadcrumb";
 
 /* ================= SERVICE CONFIG ================= */
 type ServiceConfig = {

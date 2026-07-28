@@ -4,7 +4,7 @@ import { cookies } from 'next/headers';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Metadata } from 'next';
-import Breadcrumb from '../../components/Breadcrumb';
+import Breadcrumb from '../../components/ui/Breadcrumb';
 
 export const revalidate = 60;
 

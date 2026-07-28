@@ -8,7 +8,7 @@ import type { OptionProps, SingleValueProps } from "react-select";
 import ReactCountryFlag from "react-country-flag";
 import { components } from "react-select";
 import Link from "next/link";
-import Breadcrumb from "../components/Breadcrumb";
+import Breadcrumb from "../components/ui/Breadcrumb";
 
 const countries = [
   { value: "AF", label: "Afghanistan (أفغانستان)", code: "AF" },

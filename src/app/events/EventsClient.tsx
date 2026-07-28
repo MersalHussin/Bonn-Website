@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import Breadcrumb from '../components/Breadcrumb';
+import Breadcrumb from '../components/ui/Breadcrumb';
 
 interface EventsClientProps {
   isEn: boolean;

@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import ContactUs from "../components/Sections/Contact";
-import Breadcrumb from "../components/Breadcrumb";
+import Breadcrumb from "../components/ui/Breadcrumb";
 
 export default function RandDPage() {
   const { t, i18n } = useTranslation();

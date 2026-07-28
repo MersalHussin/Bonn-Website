@@ -2,7 +2,7 @@
 
 import { useTranslation } from "react-i18next";
 import Container from "../components/ui/Container";
-import Breadcrumb from "../components/Breadcrumb";
+import Breadcrumb from "../components/ui/Breadcrumb";
 
 export default function TermsAndConditions() {
   const { t, i18n } = useTranslation();

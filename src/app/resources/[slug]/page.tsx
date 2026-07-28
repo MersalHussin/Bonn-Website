@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { notFound, useParams } from "next/navigation";
 import { FaDownload, FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import Link from "next/link";
-import Breadcrumb from "../../components/Breadcrumb";
+import Breadcrumb from "../../components/ui/Breadcrumb";
 import Container from "../../components/ui/Container";
 import { getResourcesData } from "../data";
 

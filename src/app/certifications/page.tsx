@@ -3,7 +3,7 @@
 import { useTranslation } from "react-i18next";
 import Image from "next/image";
 import Link from "next/link";
-import Breadcrumb from "../components/Breadcrumb";
+import Breadcrumb from "../components/ui/Breadcrumb";
 
 export default function CertificatesPage() {
   const { t } = useTranslation();

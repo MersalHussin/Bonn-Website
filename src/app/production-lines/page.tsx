@@ -3,7 +3,7 @@
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import ContactUs from "../components/Sections/Contact";
-import Breadcrumb from "../components/Breadcrumb";
+import Breadcrumb from "../components/ui/Breadcrumb";
 
 export default function ProductionLinesPage() {
   const { i18n } = useTranslation();

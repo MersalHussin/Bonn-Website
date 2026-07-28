@@ -2,8 +2,8 @@
 
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import FAQComponent from "../components/FAQ";
-import Breadcrumb from "../components/Breadcrumb";
+import FAQComponent from "../components/Sections/FAQ";
+import Breadcrumb from "../components/ui/Breadcrumb";
 
 export default function FAQPage() {
   const { t } = useTranslation();
