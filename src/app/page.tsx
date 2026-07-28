@@ -1,5 +1,5 @@
 import HeroSlider from './components/pages/Landing';
-import Products from './components/Sections/Services';
+// import Products from './components/Sections/Services';
 import About from "./components/Sections/About"
 import StatsSection from "./components/Sections/StatsSection"
 import ContactUs from './components/Sections/Contact';
@@ -19,7 +19,7 @@ export default function Home() {
       {/* <StatsCarousel/> */}
       <About />
       <StatsSection />
-      <Products />
+      {/* <Products /> */}
       <ArtVid />
       <OurMap />
       <ClientsSection />
