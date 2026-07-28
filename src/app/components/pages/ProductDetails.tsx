@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import Breadcrumb from "./Breadcrumb";
+import Breadcrumb from "../ui/Breadcrumb";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import {

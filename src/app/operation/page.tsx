@@ -1,4 +1,4 @@
-import UnderConstruction from '../components/UnderConstruction';
+import UnderConstruction from '../components/pages/UnderConstruction';
 
 export default function OperationPage() {
   return (

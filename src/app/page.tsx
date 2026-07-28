@@ -1,13 +1,13 @@
-import HeroSlider from './components/Landing';
-import Products from './components/Services';
-import About from "./components/About"
-import StatsSection from "./components/StatsSection"
-import ContactUs from './components/Contact';
-import StatsCarousel from './components/StatCards';
-import ClientsSection from './components/ClientsSection';
-import ArtVid from './components/ArtVid';
-import CTAButton from './components/CTAButton';
-import OurMap from './components/OurMap2';
+import HeroSlider from './components/pages/Landing';
+import Products from './components/Sections/Services';
+import About from "./components/Sections/About"
+import StatsSection from "./components/Sections/StatsSection"
+import ContactUs from './components/Sections/Contact';
+import StatsCarousel from './components/Sections/StatCards';
+import ClientsSection from './components/Sections/ClientsSection';
+import ArtVid from './components/Sections/ArtVid';
+import CTAButton from './components/Sections/CTAButton';
+import OurMap from './components/Sections/OurMap2';
 import Image from 'next/image';
 
 

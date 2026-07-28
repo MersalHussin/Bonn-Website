@@ -5,9 +5,9 @@ import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { FaFilePdf, FaExternalLinkAlt, FaEye } from "react-icons/fa";
 import Link from "next/link";
-import Breadcrumb from "../components/Breadcrumb";
-import SectionTitle from "../components/SectionTitle";
-import Container from "../components/Container";
+import Breadcrumb from "../components/ui/Breadcrumb";
+import SectionTitle from "../components/Sections/SectionTitle";
+import Container from "../components/ui/Container";
 
 import { getResourcesData } from "./data";
 

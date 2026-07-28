@@ -1,7 +1,7 @@
 "use client";
 
-import Breadcrumb from "../components/Breadcrumb";
-import ContactUs from "../components/Contact";
+import Breadcrumb from "../components/ui/Breadcrumb";
+import ContactUs from "../components/Sections/Contact";
 import Lottie from "lottie-react";
 import innovationAnimation from "../../animations/Innovation.json";
 import ResponsAnimation from "../../animations/Respons.json";
@@ -49,7 +49,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { departmentsData } from "../constants/departmentsData";
 import { FaArrowLeft, FaArrowRight, FaSitemap } from "react-icons/fa";
-import TeamMemberCard from "../components/TeamMemberCard";
+import TeamMemberCard from "../components/Sections/TeamMemberCard";
 
 // Typing Effect for Story
 function TypingStory({ text }: { text: string }) {

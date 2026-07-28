@@ -6,7 +6,7 @@ import { PlusCircle, Users, Image as ImageIcon, LayoutList, Trash2, Edit2, X, Sa
 import { toast } from 'sonner';
 import ImageUploader from '../../components/admin/ImageUploader';
 import { useAdminAuth } from '../../context/AdminAuthContext';
-import UnderConstruction from '@/app/components/UnderConstruction';
+import UnderConstruction from '@/app/components/pages/UnderConstruction';
 import { addTeamMember, updateTeamMember, deleteTeamMember } from '../../actions/teamActions';
 
 const supabase = createClient(

@@ -1,6 +1,6 @@
 import { supabaseServer } from "../../lib/supabaseServer";
 import type { Metadata } from "next";
-import ProductDetails from "../../components/ProductDetails";
+import ProductDetails from "../../components/pages/ProductDetails";
 
 export const dynamic = "force-dynamic";
 

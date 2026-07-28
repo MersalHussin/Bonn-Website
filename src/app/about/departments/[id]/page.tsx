@@ -15,9 +15,9 @@ import {
   ShieldCheck,
   Send
 } from "lucide-react";
-import Container from "@/app/components/Container";
+import Container from "@/app/components/ui/Container";
 import { departmentsData } from "@/app/constants/departmentsData";
-import Breadcrumb from "@/app/components/Breadcrumb";
+import Breadcrumb from "@/app/components/ui/Breadcrumb";
 
 export default function DepartmentDetailPage() {
   const { t, i18n } = useTranslation();

@@ -8,7 +8,7 @@ import { IoCloseSharp } from "react-icons/io5";
 import { FaSearch, FaBoxOpen, FaBookOpen, FaBullhorn, FaUsers, FaLayerGroup } from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";
-import { supabase } from "../lib/supabaseClient";
+import { supabase } from "../../lib/supabaseClient";
 
 interface SearchModalProps {
   isOpen: boolean;

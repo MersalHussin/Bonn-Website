@@ -16,7 +16,7 @@ import {
   ArrowLeft,
   type LucideIcon,
 } from "lucide-react";
-import Container from "../../components/Container";
+import Container from "../../components/ui/Container";
 import Breadcrumb from "../../components/Breadcrumb";
 
 /* ================= SERVICE CONFIG ================= */

@@ -5,8 +5,8 @@ import { useState } from "react";
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaCheckCircle, FaHeadset, FaGlobe, FaHandshake } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
-import Container from "./Container";
-import { supabase } from "../lib/supabaseClient";
+import Container from "../ui/Container";
+import { supabase } from "../../lib/supabaseClient";
 
 export default function ContactDetailed() {
   const { t, i18n } = useTranslation();

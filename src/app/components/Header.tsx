@@ -13,7 +13,7 @@ import { IoCloseSharp } from "react-icons/io5";
 import { FaSearch, FaHome, FaHandshake, FaCertificate, FaQuestionCircle, FaBuilding, FaBullhorn, FaStar, FaBox, FaBook, FaRegNewspaper, FaUserCircle, FaFile, FaSitemap } from "react-icons/fa";
 import Image from "next/image";
 import { supabase } from "../lib/supabaseClient";
-import SearchModal from "./SearchModal";
+import SearchModal from "./ui/SearchModal";
 import AboutMenu from "./Navbar/AboutMenu";
 import EventsMenu from "./Navbar/EventsMenu";
 import BrandsMenu from "./Navbar/BrandsMenu";
@@ -118,7 +118,7 @@ useEffect(() => {
 
   const isBlogPost = pathname?.startsWith('/blog/') && pathname.length > 6;
   const isNewsPost = pathname?.startsWith('/news/') && pathname.length > 6;
-  if (pathname?.startsWith('/admin') || isBlogPost || isNewsPost) return null;
+  if (pathname?.startsWith('/admin') || isBlogPost || isNewsPost || pathname?.startsWith('/brands/leVisagePlus')) return null;
 
   return (
     

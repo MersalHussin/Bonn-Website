@@ -5,10 +5,10 @@ import { createClient } from '@supabase/supabase-js';
 import { useTranslation } from 'react-i18next';
 import Head from 'next/head';
 import { Users, User as UserIcon } from 'lucide-react';
-import Breadcrumb from '../../components/Breadcrumb';
+import Breadcrumb from '../../components/ui/Breadcrumb';
 import { motion } from 'framer-motion';
-import UnderConstruction from '@/app/components/UnderConstruction';
-import TeamMemberCard from '@/app/components/TeamMemberCard';
+import UnderConstruction from '@/app/components/pages/UnderConstruction';
+import TeamMemberCard from '@/app/components/Sections/TeamMemberCard';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,

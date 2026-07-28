@@ -1,5 +1,4 @@
-import ContactDetailed from '../components/ContactDetailed';
-import UnderConstruction from '../components/UnderConstruction';
+import ContactDetailed from '../components/Sections/ContactDetailed';
 
 export default function ContactPage() {
   return (

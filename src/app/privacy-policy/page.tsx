@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslation } from "react-i18next";
-import Container from "../components/Container";
+import Container from "../components/ui/Container";
 import Breadcrumb from "../components/Breadcrumb";
 
 export default function PrivacyPolicy() {

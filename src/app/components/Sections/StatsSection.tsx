@@ -12,8 +12,8 @@ import {
   Globe,
   type LucideIcon,
 } from "lucide-react";
-import Container from "./Container";
-import SectionTitle from "./SectionTitle";
+import Container from "../ui/Container";
+import SectionTitle from "../Sections/SectionTitle";
 import { useEffect, useState } from "react";
 
 const stats: { value: number; suffix: string; labelKey: string; icon: LucideIcon }[] = [

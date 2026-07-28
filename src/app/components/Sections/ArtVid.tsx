@@ -2,8 +2,8 @@
 
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import Container from "./Container";
-import { MyPlayer } from "./Player";
+import Container from "../ui/Container";
+import { MyPlayer } from "../ui/Player";
 import i18n from "@/i18n";
 
 export default function ServicesGallery() {

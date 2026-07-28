@@ -5,6 +5,7 @@
   --color-second: #16478d;
   --color-main-light: #05419e;
   --color-main-hover: #032a7a;
+  --color-lv-main: #E11D48;
   --font-din: 'DINArabic', sans-serif;
 }
 
@@ -13,6 +14,7 @@
   --second-color: #16478d;
   --main-color-light: #05419e;
   --main-color-hover: #032a7a;
+  --lv-main: #E11D48;
 }
 
 @font-face {

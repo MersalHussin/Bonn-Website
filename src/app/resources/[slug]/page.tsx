@@ -6,7 +6,7 @@ import { notFound, useParams } from "next/navigation";
 import { FaDownload, FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import Link from "next/link";
 import Breadcrumb from "../../components/Breadcrumb";
-import Container from "../../components/Container";
+import Container from "../../components/ui/Container";
 import { getResourcesData } from "../data";
 
 export default function ResourceViewerPage() {

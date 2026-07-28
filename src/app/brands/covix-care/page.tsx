@@ -71,7 +71,7 @@ const BRAND_UI: Record<
   },
 
   "Le Visage Plus": {
-    primary: "#E11D48",
+    primary: "var(--lv-main)",
     gradient: "from-pink-600 to-rose-400",
     glow: "shadow-pink-500/30",
     badge: "bg-pink-600",

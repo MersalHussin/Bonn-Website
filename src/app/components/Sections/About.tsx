@@ -3,9 +3,9 @@
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Container from "./Container";
+import Container from "../ui/Container";
 import SectionTitle from "./SectionTitle";
-import { MyPlayer } from "./Player";
+import { MyPlayer } from "../ui/Player";
 
 function useTypingEffect(texts: string[], typingSpeed = 100, pauseTime = 2000) {
   const [displayText, setDisplayText] = useState("");

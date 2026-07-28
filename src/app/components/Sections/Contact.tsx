@@ -6,7 +6,7 @@ import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaYoutube, FaLinkedin, Fa
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { toast } from "sonner";
-import Container from "./Container";
+import Container from "../ui/Container";
 import SectionTitle from "./SectionTitle";
 export default function ContactUs() {
   const { t, i18n } = useTranslation();

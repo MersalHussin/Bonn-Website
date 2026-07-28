@@ -4,8 +4,8 @@ import Image from "next/image";
 import { useTranslation } from "react-i18next";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
-import Container from "./Container";
-import SectionTitle from "./SectionTitle";
+import Container from "../ui/Container";
+import SectionTitle from './SectionTitle';
 import "swiper/css";
 
 const clients = [

@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import Link from "next/link";
 import { ArrowRight, ArrowLeft } from "lucide-react";
 import { FaFlask, FaMicroscope, FaVials, FaTags, FaIndustry, FaFileContract } from "react-icons/fa";
-import Container from "./Container";
+import Container from "../ui/Container";
 import SectionTitle from "./SectionTitle";
 
 const services = [

@@ -3,10 +3,9 @@
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { ArrowRight, ArrowLeft } from "lucide-react";
-import i18n from "../../i18n";
 import Link from "next/link";
 import Image from "next/image";
-import Container from "./Container";
+import Container from "../ui/Container";
 import { useEffect, useState } from "react";
 
 export default function Hero() {

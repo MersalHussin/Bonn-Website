@@ -1,6 +1,6 @@
 'use client'
 import { useEffect } from "react";
-import Services from "../components/Services"
+import Services from "../components/Sections/Services"
 
 const ServicesPage = () =>{ 
   useEffect(()=>{

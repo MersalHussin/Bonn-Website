@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { ChevronRight, ChevronLeft, Home } from "lucide-react";
-import Container from "./Container";
+import Container from "../ui/Container";
 
 export type BreadcrumbItem = {
   label: string;

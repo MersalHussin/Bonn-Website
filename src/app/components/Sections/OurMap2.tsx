@@ -4,9 +4,9 @@ import { useEffect, useState, useCallback } from "react";
 import { Map, Marker, Overlay } from "pigeon-maps";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import { supabase } from "../lib/supabaseClient";
+import { supabase } from "../../lib/supabaseClient";
 import Image from "next/image";
-import Container from "./Container";
+import Container from "../ui/Container";
 import {
   X,
   MapPin,

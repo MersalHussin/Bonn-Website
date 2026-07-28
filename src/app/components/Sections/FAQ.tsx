@@ -4,10 +4,10 @@ import React, { useState, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, ChevronDown, HelpCircle, MessageSquare, Mail, X } from "lucide-react";
-import { supabase } from "../lib/supabaseClient";
-import Container from "./Container";
-import { fetchFaqsAction } from "../actions/faqActions";
-import { FAQItemData } from "../constants/defaultFaqs";
+import { supabase } from "../../lib/supabaseClient";
+import Container from "../ui/Container";
+import { fetchFaqsAction } from "../../actions/faqActions";
+import { FAQItemData } from "../../constants/defaultFaqs";
 
 interface FAQItem {
   q: string;
