@@ -37,7 +37,7 @@ export default function Footer() {
         {/* Logo & About */}
         <div className="flex flex-col gap-6 lg:col-span-2">
           <div className="rounded-2xl w-full flex justify-start">
-            <Image src="/images/Logo-White.svg" alt="Bonn Medical Industries" width={150} height={150} className="object-contain" />
+            <Image src="/images/Logo-White.svg" alt="Bonn Medical Industries" width={100} height={100} className="object-contain w-25 md:w-40" />
           </div>
           <p className="text-sm leading-relaxed text-white/70 max-w-sm">
             {isAr 
