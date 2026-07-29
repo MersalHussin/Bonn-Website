@@ -55,17 +55,19 @@ export default function LeVisageContact({ t, lang }: { t: any; lang: string }) {
             </div>
 
             <div className="flex flex-col gap-6 pt-6 mt-8">
-              <a href="mailto:info@bonmedical.com" className="flex items-center gap-4 text-gray-700 hover:text-lv-main transition-colors font-bold text-lg p-4 bg-gray-50 rounded-2xl border border-gray-100">
+              <a href="mailto:Relation@bonnmed.com" className="flex items-center gap-4 text-gray-700 hover:text-lv-main transition-colors font-bold text-lg p-4 bg-gray-50 rounded-2xl border border-gray-100">
                 <div className="w-12 h-12 rounded-full bg-lv-main/10 flex items-center justify-center shrink-0">
                   <FaEnvelope className="text-lv-main text-xl" />
                 </div>
-                info@bonmedical.com
+                Relation@bonnmed.com
               </a>
-              <a href="tel:+96600000000" className="flex items-center gap-4 text-gray-700 hover:text-lv-main transition-colors font-bold text-lg p-4 bg-gray-50 rounded-2xl border border-gray-100">
-                <div className="w-12 h-12 rounded-full bg-lv-main/10 flex items-center justify-center shrink-0">
+              <a href="tel:+966580347173" className="flex text-right items-center gap-4 text-gray-700 hover:text-lv-main transition-colors font-bold text-lg p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                <div className="w-12 h-12 rounded-full  bg-lv-main/10 flex items-center justify-center shrink-0">
                   <FaPhone className="text-lv-main text-xl" />
                 </div>
-                +966 000 000 00
+                <span dir="ltr">
+                +966 5803 47173
+                </span>
               </a>
             </div>
           </motion.div>

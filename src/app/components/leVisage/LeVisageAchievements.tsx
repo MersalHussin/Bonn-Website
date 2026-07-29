@@ -52,7 +52,11 @@ function NumberBox({ value, label, delay = 0, icon: Icon }: NumberBoxProps) {
 
 export default function LeVisageAchievements({ t }: { t: any }) {
   return (
-    <section id="achievements" className="py-24 bg-lv-main relative overflow-hidden">
+    <section id="achievements" className="py-24 bg-lv-main relative overflow-hidden bg-fixed bg-cover bg-center bg-no-repeat bg-opacity-60" style={{ backgroundImage: "url('/images/visageProducts.png')" }}>
+         <div className="absolute inset-0 bg-lv-main/90 " />
+      <div className="absolute inset-0 bg-gradient-to-b from-lv-main/40 via-transparent to-lv-main/90" />
+      <div className="absolute inset-0 bg-gradient-to-r from-lv-main/60 via-transparent to-lv-main/20" />
+
       {/* Subtle background glow */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-black/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none" />

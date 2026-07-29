@@ -118,7 +118,9 @@ useEffect(() => {
 
   const isBlogPost = pathname?.startsWith('/blog/') && pathname.length > 6;
   const isNewsPost = pathname?.startsWith('/news/') && pathname.length > 6;
-  if (pathname?.startsWith('/admin') || isBlogPost || isNewsPost || pathname?.startsWith('/brands/leVisagePlus')) return null;
+  const isLeVisage = pathname?.startsWith('/brands/leVisagePlus');
+  
+  if (pathname?.startsWith('/admin') || isBlogPost || isNewsPost) return null;
 
   return (
     
@@ -162,15 +164,15 @@ useEffect(() => {
                 opacity: [0.5, 0, 0.5]
               }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute inset-0 bg-main/10 rounded-full blur-xl"
+              className={`absolute inset-0 rounded-full blur-xl ${isLeVisage ? "bg-lv-main/10" : "bg-main/10"}`}
             />
             
             <Image
-              src="/images/Logo.svg"
-              alt="Bonn Medical Logo"
+              src={isLeVisage ? "/images/Visage.png" : "/images/Logo.svg"}
+              alt={isLeVisage ? "Le Visage Logo" : "Bonn Medical Logo"}
               width="140"
               height="140"
-              className="object-contain drop-shadow-xl relative z-10"
+              className={`object-contain drop-shadow-xl relative z-10 ${isLeVisage ? "w-[200px]" : ""}`}
               priority
             />
           </motion.div>
@@ -188,13 +190,15 @@ useEffect(() => {
                 initial={{ x: "-100%" }}
                 animate={{ x: "100%" }}
                 transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-                className="w-1/2 h-full bg-main rounded-full"
+                className={`w-1/2 h-full rounded-full ${isLeVisage ? "bg-lv-main" : "bg-main"}`}
               />
             </div>
           </motion.div>
         </div>
       </motion.div>
     )}
+{!isLeVisage && (
+  <>
 <AnimatePresence>
   {isOpen && (
     <motion.div
@@ -608,6 +612,8 @@ useEffect(() => {
         )}
       </AnimatePresence>
     </motion.header>
+  </>
+)}
     </>
   );
 }

@@ -38,19 +38,19 @@ export default function LeVisageAbout({
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.7 }}
-            className="relative lg:h-[500px] flex items-center justify-center"
+            className="relative lg:h-[400px] flex items-center justify-center"
           >
             {/* Background Blob */}
             <div className="absolute inset-0 bg-lv-main/10 rounded-[3rem] rotate-3 scale-105" />
             <div className="absolute inset-0 bg-gradient-to-tr from-rose-100 to-white rounded-[3rem] -rotate-3 scale-105 shadow-xl" />
 
-            <div className="relative w-full h-[400px] md:h-[500px] rounded-[2.5rem] bg-white shadow-2xl z-10 border-lv-main border-4 hover:scale-[1.02] transition-all duration-300 ease-in-out flex items-center justify-center overflow-hidden">
+            <div className="relative w-full h-[400px]  rounded-[2.5rem] bg-white shadow-2xl z-10 border-lv-main border-4 hover:scale-[1.02] transition-all duration-300 ease-in-out flex items-center justify-center overflow-hidden">
               <Image
                 src="/images/visageProducts.png"
                 alt="Le Visage Products"
                 width={800}
                 height={800}
-                className="w-[90%] h-[90%] object-contain drop-shadow-xl"
+                className="w-full h-full object-cover drop-shadow-xl"
               />
             </div>
           </motion.div>

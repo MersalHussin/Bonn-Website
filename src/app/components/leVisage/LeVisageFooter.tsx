@@ -34,7 +34,7 @@ export default function LeVisageFooter() {
       >
         {/* Logo & About */}
         <div className="flex flex-col gap-6 lg:col-span-2">
-          <div className="rounded-2xl w-full flex justify-start bg-white/10 p-4 w-fit items-center">
+          <div className="rounded-2xl w-fit flex justify-start bg-white/10 p-4 w-fit items-center">
             <Image src="/images/Visage.png" alt="Le Visage" width={150} height={100} className="object-contain brightness-0 invert" />
           </div>
           <p className="text-sm leading-relaxed text-white/80 max-w-sm">
@@ -73,22 +73,23 @@ export default function LeVisageFooter() {
         {/* Company Links */}
         <div className="flex flex-col gap-4 lg:col-span-1">
           <h3 className="text-white font-bold text-lg mb-2 relative inline-block w-fit">
-            {t("footer.company", "Company")}
+            {isAr ? "الشركة" : "Company"}
             <span className="absolute -bottom-2 left-0 w-10 h-1 bg-white/30 rounded-full"></span>
           </h3>
-          <Link href="/" className="hover:text-white hover:translate-x-1 transition-all w-fit">{isAr ? "بون للصناعات الطبية" : "Bonn Medical Industries"}</Link>
-          <Link href="/about" className="hover:text-white hover:translate-x-1 transition-all w-fit">{t("about")}</Link>
-          <Link href="/brands" className="hover:text-white hover:translate-x-1 transition-all w-fit">{t("ourbrands", "Our Brands")}</Link>
+          <Link href="#who-we-are" className="hover:text-white hover:translate-x-1 transition-all w-fit">{isAr ? "من نحن" : "Who We Are"}</Link>
+          <Link href="#why-us" className="hover:text-white hover:translate-x-1 transition-all w-fit">{isAr ? "لماذا نحن" : "Why Us"}</Link>
+          <Link href="/" className="hover:text-white hover:translate-x-1 transition-all w-fit font-semibold text-white/90">{isAr ? "بون للصناعات الطبية" : "Bonn Medical Industries"}</Link>
         </div>
 
         {/* Explore Links */}
         <div className="flex flex-col gap-4 lg:col-span-1">
           <h3 className="text-white font-bold text-lg mb-2 relative inline-block w-fit">
-            {t("footer.explore", "Explore")}
+            {isAr ? "استكشف" : "Explore"}
             <span className="absolute -bottom-2 left-0 w-10 h-1 bg-white/30 rounded-full"></span>
           </h3>
-          <Link href="/services" className="hover:text-white hover:translate-x-1 transition-all w-fit">{t("services.title")}</Link>
-          <Link href="/contact" className="hover:text-white hover:translate-x-1 transition-all w-fit">{t("contact")}</Link>
+          <Link href="#products" className="hover:text-white hover:translate-x-1 transition-all w-fit">{isAr ? "المنتجات" : "Products"}</Link>
+          <Link href="#product-journey" className="hover:text-white hover:translate-x-1 transition-all w-fit">{isAr ? "رحلة المنتج" : "Product Journey"}</Link>
+          <Link href="#contact-us" className="hover:text-white hover:translate-x-1 transition-all w-fit">{isAr ? "تواصل معنا" : "Contact Us"}</Link>
         </div>
 
         {/* Legal & Social */}

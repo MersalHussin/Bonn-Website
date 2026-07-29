@@ -54,15 +54,15 @@ export default function LeVisageProducts({
               {/* Products */}
               <div
                 dir={isArabic ? "rtl" : "ltr"}
-                className="flex gap-6 overflow-x-auto pb-6 snap-x snap-mandatory scroll-smooth [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 pb-6"
               >
                 {items.map((p) => (
                   <motion.div
                     key={p.id}
-                    className="group snap-start shrink-0 w-[280px] sm:w-[300px] rounded-[2rem] overflow-hidden bg-white shadow-[0_8px_20px_rgb(0,0,0,0.04)] border border-gray-100 hover:shadow-[0_20px_40px_rgb(225,29,72,0.1)] hover:border-lv-main/30 transition-all duration-300 hover:-translate-y-2 flex flex-col"
+                    className="group rounded-[2rem] overflow-hidden bg-white shadow-[0_8px_20px_rgb(0,0,0,0.04)] border border-gray-100 hover:shadow-[0_20px_40px_rgb(225,29,72,0.1)] hover:border-lv-main/30 transition-all duration-300 hover:-translate-y-2 flex flex-col"
                   >
                     <Link
-                      href={`/products/${p.slug}`}
+                      href={`/brands/leVisagePlus/products/${p.slug}`}
                       className="block relative overflow-hidden h-[240px]"
                     >
                       <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors z-10" />
@@ -83,7 +83,7 @@ export default function LeVisageProducts({
                     </Link>
                     <div className="p-6 bg-white flex-1 flex flex-col">
                       <Link
-                        href={`/products/${p.slug}`}
+                        href={`/brands/leVisagePlus/products/${p.slug}`}
                         className="block space-y-3 mb-6 flex-1"
                       >
                         <h3
@@ -98,7 +98,7 @@ export default function LeVisageProducts({
 
                       <div className="flex items-center justify-between pt-5 border-t border-gray-100 mt-auto">
                         <Link
-                          href={`/products/${p.slug}`}
+                          href={`/brands/leVisagePlus/products/${p.slug}`}
                           className="text-lv-main font-bold text-sm hover:underline flex items-center gap-1 group/link"
                         >
                           {isArabic ? "التفاصيل" : "Details"}
@@ -114,27 +114,7 @@ export default function LeVisageProducts({
                             />
                           )}
                         </Link>
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            toggleLike(p);
-                          }}
-                          className={`flex items-center gap-1.5 transition-colors duration-300 p-2.5 rounded-full bg-gray-50 hover:bg-red-50 ${
-                            liked[p.id] ? "text-red-600" : "text-gray-400"
-                          }`}
-                        >
-                          <Heart
-                            size={22}
-                            className={`transition-all duration-300 ${
-                              liked[p.id]
-                                ? "fill-red-600 scale-110 drop-shadow-md"
-                                : "hover:scale-110"
-                            }`}
-                          />
-                          <span className="text-sm font-semibold">
-                            {p.likes || 0}
-                          </span>
-                        </button>
+                    
                       </div>
                     </div>
                   </motion.div>
@@ -144,20 +124,6 @@ export default function LeVisageProducts({
           );
         })}
 
-        {/* Products CTA Button */}
-        <motion.div {...fadeUp} className="pt-10 flex justify-center">
-          <Link
-            href="/products"
-            className="inline-flex items-center gap-3 bg-lv-main text-white px-10 py-4 rounded-full font-bold text-lg shadow-xl shadow-lv-main/30 hover:shadow-lv-main/50 hover:-translate-y-1 transition-all"
-          >
-            {lang === "ar" ? "تصفح جميع المنتجات" : "Explore All Products"}
-            {lang === "ar" ? (
-              <ArrowLeft size={20} className="stroke-[3px]" />
-            ) : (
-              <ArrowRight size={20} className="stroke-[3px]" />
-            )}
-          </Link>
-        </motion.div>
       </div>
     </section>
   );

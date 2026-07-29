@@ -19,6 +19,9 @@ export const metadata: Metadata = {
   title: "Bonn Medical Industries | GMP & ISO Certified Cosmetics Manufacturer in Saudi Arabia",
   description:
     "Bonn Medical Industries (BMI) is a Saudi GMP & ISO certified factory specializing in cosmetics, skincare, haircare, and medical products manufacturing. We provide private label, OEM, packaging, and SFDA registration support for local and international brands.",
+  icons: {
+    icon: '/favicon.ico',
+  },
   keywords: [
     "بون",
     "Bonn Medical",
@@ -140,7 +143,7 @@ export default async function RootLayout({
   const dir = lang === "ar" ? "rtl" : "ltr";
 
   return (
-    <html lang={lang} dir={dir}>
+    <html lang={lang} dir={dir} className="scroll-smooth">
       <body className="font-din antialiased overflow-x-hidden">
         <script
   type="application/ld+json"

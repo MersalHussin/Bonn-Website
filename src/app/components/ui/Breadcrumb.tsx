@@ -14,12 +14,27 @@ type BreadcrumbProps = {
   items: BreadcrumbItem[];
   /** Optional additional className */
   className?: string;
+  /** Optional custom home href */
+  homeHref?: string;
+  /** Optional custom home label to replace the Home icon */
+  homeLabel?: string;
+  /** Theme to dictate text colors */
+  theme?: "default" | "leVisage";
 };
 
-export default function Breadcrumb({ items, className = "" }: BreadcrumbProps) {
+export default function Breadcrumb({ 
+  items, 
+  className = "", 
+  homeHref = "/", 
+  homeLabel,
+  theme = "default" 
+}: BreadcrumbProps) {
   const { i18n } = useTranslation();
   const isRTL = i18n.language === "ar";
   const Chevron = isRTL ? ChevronLeft : ChevronRight;
+
+  const textColor = theme === "leVisage" ? "text-lv-main" : "text-main";
+  const hoverTextColor = theme === "leVisage" ? "hover:text-lv-main" : "hover:text-main";
 
   return (
     <nav
@@ -29,14 +44,14 @@ export default function Breadcrumb({ items, className = "" }: BreadcrumbProps) {
     >
       <Container>
         <ol className="flex items-center gap-2 py-4 text-sm flex-wrap">
-          {/* Home icon */}
+          {/* Home icon or custom label */}
           <li className="flex items-center gap-2">
             <Link
-              href="/"
-              className="flex items-center gap-1 text-gray-400 hover:text-main transition-colors duration-200"
+              href={homeHref}
+              className={`flex items-center gap-1 text-gray-400 ${hoverTextColor} transition-colors duration-200 font-semibold`}
               aria-label="Home"
             >
-              <Home size={15} strokeWidth={2} />
+              {homeLabel ? <span>{homeLabel}</span> : <Home size={15} strokeWidth={2} />}
             </Link>
           </li>
 
@@ -51,13 +66,13 @@ export default function Breadcrumb({ items, className = "" }: BreadcrumbProps) {
                   strokeWidth={2}
                 />
                 {isLast || !item.href ? (
-                  <span className="text-main font-semibold truncate max-w-[200px]">
+                  <span className={`${textColor} font-semibold truncate max-w-[200px]`}>
                     {item.label}
                   </span>
                 ) : (
                   <Link
                     href={item.href}
-                    className="text-gray-400 hover:text-main transition-colors duration-200 truncate max-w-[200px]"
+                    className={`text-gray-400 ${hoverTextColor} transition-colors duration-200 truncate max-w-[200px]`}
                   >
                     {item.label}
                   </Link>
