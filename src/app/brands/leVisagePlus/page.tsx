@@ -19,7 +19,7 @@ import LeVisageAchievements from "../../components/leVisage/LeVisageAchievements
 import LeVisageTimeline from "../../components/leVisage/LeVisageTimeline";
 import LeVisageProducts from "../../components/leVisage/LeVisageProducts";
 import LeVisageContact from "../../components/leVisage/LeVisageContact";
-import { mockProducts } from "./products/data";
+// Removed mockProducts import
 
 export default function LeVisagePage() {
   const { i18n } = useTranslation();
@@ -87,7 +87,7 @@ export default function LeVisagePage() {
   const grouped = useMemo(() => {
     const map: Record<string, Product[]> = {};
 
-    const displayProducts = products.length > 0 ? products : mockProducts;
+    const displayProducts = products;
 
 
     displayProducts.forEach((p) => {
@@ -120,6 +120,7 @@ export default function LeVisagePage() {
           liked={liked}
           toggleLike={toggleLike}
           fadeUp={fadeUp}
+          loading={loading}
         />
         <LeVisageTimeline t={t} />
         
