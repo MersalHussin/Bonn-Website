@@ -4,7 +4,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
-import Breadcrumb from "../../../../components/ui/Breadcrumb";
+import Breadcrumb from "../../components/ui/Breadcrumb";
 
 export default function ProductClient({ product }: { product: any }) {
   const { i18n } = useTranslation();
@@ -14,10 +14,10 @@ export default function ProductClient({ product }: { product: any }) {
     <main dir={isArabic ? "rtl" : "ltr"} className="min-h-screen bg-[#F8FAFF] pt-24 pb-24 font-sans">
       <div className="max-w-7xl mx-auto px-6">
         <Breadcrumb
-          homeHref="/brands/leVisagePlus"
+          homeHref="/"
           theme="leVisage"
           items={[
-            { label: isArabic ? "المنتجات" : "Products", href: "/brands/leVisagePlus#products" },
+            { label: isArabic ? "المنتجات" : "Products", href: "/#products" },
             { label: isArabic ? product.name_ar : product.name_en },
           ]}
           className="mb-8 !bg-transparent !border-none !px-0"
@@ -97,7 +97,7 @@ export default function ProductClient({ product }: { product: any }) {
 
           <div className="pt-8">
             <Link
-              href="/brands/leVisagePlus/contact"
+              href="/#contact-us"
               className="inline-flex justify-center items-center gap-3 bg-lv-main text-white px-10 py-4 rounded-full font-bold text-lg shadow-lg shadow-lv-main/30 hover:shadow-xl hover:shadow-lv-main/40 hover:-translate-y-0.5 transition-all duration-300"
             >
               {isArabic ? "تواصل معنا" : "Contact us now"}

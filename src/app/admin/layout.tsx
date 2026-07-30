@@ -1,73 +1,61 @@
 'use client';
 
-import { ReactNode, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import Sidebar from '../components/admin/Sidebar';
-import { AdminAuthProvider, useAdminAuth } from '../context/AdminAuthContext';
+import { ReactNode } from 'react';
+import { LeVisageAuthProvider, useLeVisageAuth } from './context/LeVisageAuthContext';
+import { supabase } from '@/app/lib/supabaseClient';
+import Link from 'next/link';
+import { LogOut, Package } from 'lucide-react';
 
-function AdminContent({ children }: { children: ReactNode }) {
-  const { user, role, loading } = useAdminAuth();
-  const router = useRouter();
-
-  useEffect(() => {
-    document.body.classList.add('admin-mode');
-    
-    // Aggressively hide chatbase widget using JS to handle delayed loading
-    const hideChatbase = () => {
-      document.querySelectorAll('iframe').forEach(iframe => {
-        const src = iframe.src || '';
-        const id = iframe.id || '';
-        if (src.includes('chatbase') || id.includes('chatbase') || id.includes('chatbase-bubble')) {
-          iframe.style.setProperty('display', 'none', 'important');
-        }
-      });
-      document.querySelectorAll('div[id*="chatbase"], div[class*="chatbase"]').forEach(div => {
-        (div as HTMLElement).style.setProperty('display', 'none', 'important');
-      });
-    };
-
-    hideChatbase();
-    const interval = setInterval(hideChatbase, 1000);
-
-    if (!loading && (!user || !role)) {
-      router.replace("/login");
-    }
-    
-    return () => {
-      document.body.classList.remove('admin-mode');
-      clearInterval(interval);
-    };
-  }, [user, role, loading, router]);
+function AdminShell({ children }: { children: ReactNode }) {
+  const { user, loading } = useLeVisageAuth();
 
   if (loading) {
     return (
-      <div className="admin-loading">
-        <div className="admin-spinner" />
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-lv-main"></div>
       </div>
     );
   }
 
-  // Double check so nothing renders before redirect happens
-  if (!user || !role) {
-    return null; 
-  }
-
   return (
-    <div className="admin-shell" dir="rtl">
-      <Sidebar />
-      <div className="admin-content-area">
-        <main className="admin-main">
-          {children}
-        </main>
-      </div>
+    <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row" dir="rtl">
+      {user && (
+        <aside className="w-full md:w-64 bg-white border-l border-gray-200 shadow-sm flex flex-col">
+          <div className="p-6 border-b border-gray-200">
+            <h2 className="text-2xl font-bold text-lv-main">LeVisage Admin</h2>
+          </div>
+          <nav className="flex-1 p-4 space-y-2">
+            <Link 
+              href="/levisage/admin" 
+              className="flex items-center gap-3 px-4 py-3 text-gray-700 bg-gray-50 rounded-lg font-medium transition-colors"
+            >
+              <Package size={20} />
+              المنتجات
+            </Link>
+          </nav>
+          <div className="p-4 border-t border-gray-200">
+            <button
+              onClick={() => supabase.auth.signOut()}
+              className="flex items-center gap-3 w-full px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg font-medium transition-colors"
+            >
+              <LogOut size={20} />
+              تسجيل الخروج
+            </button>
+          </div>
+        </aside>
+      )}
+      
+      <main className="flex-1 p-6 md:p-8 lg:p-12 overflow-y-auto">
+        {children}
+      </main>
     </div>
   );
 }
 
-export default function AdminLayout({ children }: { children: ReactNode }) {
+export default function LeVisageAdminLayout({ children }: { children: ReactNode }) {
   return (
-    <AdminAuthProvider>
-      <AdminContent>{children}</AdminContent>
-    </AdminAuthProvider>
+    <LeVisageAuthProvider>
+      <AdminShell>{children}</AdminShell>
+    </LeVisageAuthProvider>
   );
 }

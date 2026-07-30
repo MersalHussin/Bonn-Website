@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { iconMap, Feature } from "../../brands/leVisagePlus/types";
+import { iconMap, Feature } from "../../types";
 import { Globe } from "lucide-react";
 
 export default function LeVisageFeatures({ t }: { t: any }) {

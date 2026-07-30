@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, Heart } from "lucide-react";
-import { Product, BRAND_UI } from "../../brands/leVisagePlus/types";
+import { Product, BRAND_UI } from "../../types";
 
 export default function LeVisageProducts({
   t,
@@ -62,7 +62,7 @@ export default function LeVisageProducts({
                     className="group rounded-[2rem] overflow-hidden bg-white shadow-[0_8px_20px_rgb(0,0,0,0.04)] border border-gray-100 hover:shadow-[0_20px_40px_rgb(225,29,72,0.1)] hover:border-lv-main/30 transition-all duration-300 hover:-translate-y-2 flex flex-col"
                   >
                     <Link
-                      href={`/brands/leVisagePlus/products/${p.slug}`}
+                      href={`/products/${p.slug}`}
                       className="block relative overflow-hidden h-[240px]"
                     >
                       <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors z-10" />
@@ -83,7 +83,7 @@ export default function LeVisageProducts({
                     </Link>
                     <div className="p-6 bg-white flex-1 flex flex-col">
                       <Link
-                        href={`/brands/leVisagePlus/products/${p.slug}`}
+                        href={`/products/${p.slug}`}
                         className="block space-y-3 mb-6 flex-1"
                       >
                         <h3
@@ -98,7 +98,7 @@ export default function LeVisageProducts({
 
                       <div className="flex items-center justify-between pt-5 border-t border-gray-100 mt-auto">
                         <Link
-                          href={`/brands/leVisagePlus/products/${p.slug}`}
+                          href={`/products/${p.slug}`}
                           className="text-lv-main font-bold text-sm hover:underline flex items-center gap-1 group/link"
                         >
                           {isArabic ? "التفاصيل" : "Details"}

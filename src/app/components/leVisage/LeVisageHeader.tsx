@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslation } from "react-i18next";
+import "../../../i18n";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
@@ -66,7 +67,7 @@ export default function LeVisageHeader() {
   };
 
   const navLinks = [
-    { href: "/brands/leVisagePlus", label: isArabic ? "الرئيسية" : "Home" },
+    { href: "/", label: isArabic ? "الرئيسية" : "Home" },
     { href: "#who-we-are", label: isArabic ? "من نحن" : "Who We Are" },
     { href: "#why-us", label: isArabic ? "لماذا نحن" : "Why Us" },
     { href: "#achievements", label: isArabic ? "الإنجازات" : "Achievements" },
@@ -83,7 +84,7 @@ export default function LeVisageHeader() {
       >
         <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between relative flex-row-reverse lg:flex-row">
           
-          <Link href="/brands/leVisagePlus" className="shrink-0 flex items-center justify-center">
+          <Link href="/" className="shrink-0 flex items-center justify-center">
             <Image src="/images/Visage.png" alt="Le Visage Logo" width="100" height="50" className="object-contain" priority />
           </Link>
 

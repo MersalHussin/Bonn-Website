@@ -45,7 +45,7 @@ export async function addLeVisageProduct(data: any) {
     if (error) throw error;
     
     revalidatePath('/levisage/admin', 'layout');
-    revalidatePath('/brands/leVisagePlus/products', 'page');
+    revalidatePath('/products', 'page');
     
     return { success: true, data: product };
   } catch (error: any) {
@@ -65,7 +65,7 @@ export async function updateLeVisageProduct(id: string, data: any) {
     if (error) throw error;
     
     revalidatePath('/levisage/admin', 'layout');
-    revalidatePath('/brands/leVisagePlus/products', 'page');
+    revalidatePath('/products', 'page');
     
     return { success: true, data: product };
   } catch (error: any) {
@@ -83,7 +83,7 @@ export async function deleteLeVisageProduct(id: string) {
     if (error) throw error;
     
     revalidatePath('/levisage/admin', 'layout');
-    revalidatePath('/brands/leVisagePlus/products', 'page');
+    revalidatePath('/products', 'page');
     
     return { success: true };
   } catch (error: any) {
