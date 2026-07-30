@@ -1,28 +1,45 @@
-import "dotenv/config";
+import type { NextConfig } from 'next';
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig: NextConfig = {
   images: {
-    domains: ['res.cloudinary.com'],
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'vdxlzjspsvykqrzgcyvo.supabase.co',
+        hostname: 'res.cloudinary.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'eemqlrorjawsoeqlyaeu.supabase.co',
         pathname: '/storage/v1/object/public/**',
       },
       {
         protocol: 'https',
         hostname: 'drive.google.com',
-                pathname: '/**',
-
+        pathname: '/**',
       },
     ],
   },
-compiler: { removeConsole: true },
-
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
+  experimental: {
+    optimizePackageImports: [
+      'react-icons',
+      'lucide-react',
+      'framer-motion',
+      'firebase',
+      'firebase/app',
+      'firebase/auth',
+      'firebase/firestore',
+      'firebase/analytics',
+      '@supabase/supabase-js',
+      'lottie-react',
+    ],
+  },
+  serverExternalPackages: ['googleapis', 'firebase-admin'],
 };
 
-module.exports = nextConfig;
-
-
 export default nextConfig;
+
+

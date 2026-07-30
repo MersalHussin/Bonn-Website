@@ -6,12 +6,17 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 
 export default function LeVisageHero({ t, lang }: { t: any; lang: string }) {
   return (
-    <section
-      className="relative flex items-center justify-center min-h-[95vh] bg-fixed bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: "url('/images/visageProducts.png')" }}
-    >
+    <section className="relative flex items-center justify-center min-h-[95vh] overflow-hidden">
+      <Image
+        src="/images/visageProducts.png"
+        alt="Le Visage Hero Background"
+        fill
+        className="object-cover object-center"
+        priority
+      />
+
       {/* Overlays */}
-      <div className="absolute inset-0 bg-lv-main/80 " />
+      <div className="absolute inset-0 bg-lv-main/80" />
       <div className="absolute inset-0 bg-gradient-to-b from-lv-main/40 via-transparent to-lv-main/90" />
       <div className="absolute inset-0 bg-gradient-to-r from-lv-main/60 via-transparent to-lv-main/20" />
 
