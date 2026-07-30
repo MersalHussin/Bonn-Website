@@ -272,8 +272,6 @@ Covix Care positions itself as a premium yet accessible brand: specializing in c
 };
 
 export default function CovixCarePage() {  
-    const [products, setProducts] = useState<Product[]>([]);
-    const [liked, setLiked] = useState<Record<string, boolean>>({});
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -320,59 +318,6 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 };
 
 
-  
-    /* ================= FETCH ================= */
-    useEffect(() => {
-      const load = async () => {
-        const { data, error } = await supabase
-        .from("products")
-        .select("*")
-          .or("disabled.is.null,disabled.eq.false");
-  
-        if (error) {
-          console.error(error);
-          return;
-        }
-  
-        setProducts(data || []);
-      };
-  
-      load();
-    }, []);
-  
-    /* ================= GROUP + SORT ================= */
-    const grouped = useMemo(() => {
-      const map: Record<string, Product[]> = {};
-  
-      products.forEach((p) => {
-        const key = p.brand?.trim() || "Other";
-        if (!map[key]) map[key] = [];
-        map[key].push(p);
-      });
-  
-      Object.values(map).forEach((list) =>
-        list.sort((a, b) => {
-          if (a.best_selling && !b.best_selling) return -1;
-          if (!a.best_selling && b.best_selling) return 1;
-          return (b.likes || 0) - (a.likes || 0);
-        })
-      );
-  
-      return map;
-    }, [products]);
-  
-    /* ================= LIKE TOGGLE ================= */
-    const toggleLike = async (p: Product) => {
-      const isLiked = liked[p.id];
-      const newLikes = (p.likes || 0) + (isLiked ? -1 : 1);
-  
-      setLiked((prev) => ({ ...prev, [p.id]: !isLiked }));
-      setProducts((prev) =>
-        prev.map((x) => (x.id === p.id ? { ...x, likes: newLikes } : x))
-      );
-  
-      await supabase.from("products").update({ likes: newLikes }).eq("id", p.id);
-    };
   const { i18n } = useTranslation();
   const lang = i18n && i18n.language === "ar" ? "ar" : "en";
   const t = useMemo(() => translations[lang], [lang]);
@@ -601,92 +546,7 @@ We also expanded intimate care into a full range — because real care means off
   </div>
 </section>
 
-{/* PRODUCTS CTA + GRID */}
-<section className="py-20 bg-gradient-to-b from-white to-[#fff7f0]">
-  <div className="max-w-7xl mx-auto px-6 text-center space-y-12">
 
-    {/* Main CTA */}
-    <motion.h2 {...fadeUp} className="text-3xl md:text-4xl font-bold text-[#f36f1a]">
-      {t.ctaTitle} {/* "Ready to feel the difference?" */}
-    </motion.h2>
-
-    {/* Subtitle for products */}
-    <motion.p {...fadeUp} className="text-xl md:text-2xl font-semibold text-gray-800">
-      {lang === "ar" ? "منتجات كوفيكس كير" : "Covix Care Products"}
-    </motion.p>
-
-    {/* PRODUCTS CAROUSEL */}
-    {Object.entries(grouped).map(([brandName, items]) => {
-      const brandUI = BRAND_UI[brandName];
-      const primary = brandUI?.primary || "var(--main-color)";
-
-      return (
-        <div key={brandName} className="space-y-8">
-          {/* Products */}
-          <div
-            dir={isArabic ? "rtl" : "ltr"}
-            className="
-              flex gap-6 overflow-x-auto pb-6 snap-x snap-mandatory
-              scroll-smooth [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden
-            "
-          >
-            {items.map((p) => (
-              <motion.div
-                key={p.id}
-                whileHover={{ y: -5 }}
-                className="
-                  snap-start shrink-0 w-[250px] sm:w-[270px]
-                  rounded-2xl overflow-hidden bg-white/80 backdrop-blur
-                  border border-gray-100 shadow-md hover:shadow-lg
-                  transition
-                "
-              >
-                <Link href={`/products/${p.slug}`} className="block">
-                  <Image
-                    src={p.images?.[0] || "/placeholder.png"}
-                    alt={isArabic ? p.name_ar : p.name_en}
-                    width={400}
-                    height={260}
-                    className="h-48 w-full object-cover"
-                  />
-                  <div className="p-5 space-y-2">
-                    <h3 className="font-semibold text-base leading-tight" style={{ color: primary }}>
-                      {isArabic ? p.name_ar : p.name_en}
-                    </h3>
-                    <p className="text-sm text-gray-600 line-clamp-2">
-                      {isArabic ? p.description_ar : p.description_en}
-                    </p>
-
-                    <div className="flex items-center justify-between pt-4">
-                      {p.best_selling && (
-                        <span className="text-xs px-2 py-1 rounded bg-red-600 text-white">
-                          Best Seller
-                        </span>
-                      )}
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault();
-                          toggleLike(p);
-                        }}
-                        className={`flex items-center gap-1 transition ${liked[p.id] ? "text-red-600" : "text-gray-400"}`}
-                      >
-                        <Heart
-                          size={20}
-                          className={`transition ${liked[p.id] ? "fill-red-600 scale-110" : "hover:scale-110"}`}
-                        />
-                        <span className="text-xs">{p.likes || 0}</span>
-                      </button>
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      );
-    })}
-  </div>
-</section>
 {/* ================= COMPETITIVE ADVANTAGE ================= */}
 <section className="py-20 bg-[#fff7f0]">
   <div className="max-w-7xl mx-auto px-6">

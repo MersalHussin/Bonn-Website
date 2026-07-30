@@ -30,20 +30,39 @@ export default function LeVisagePage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let mounted = true;
     const fetchProducts = async () => {
       setLoading(true);
-      const { data, error } = await supabase
-        .from("products")
-        .select("*")
-        .ilike("brand", "%le visage%");
+      
+      try {
+        const fetchPromise = supabase
+          .from("levisage_products")
+          .select("*")
+          .order('created_at', { ascending: false });
+          
+        const timeoutPromise = new Promise<{ data: any, error: any }>((_, reject) => 
+          setTimeout(() => reject(new Error('Timeout')), 10000)
+        );
+        
+        const { data, error } = await Promise.race([fetchPromise, timeoutPromise]) as any;
 
-      if (!error && data) {
-        setProducts(data);
+        if (mounted && !error && data) {
+          setProducts(data);
+        } else if (error) {
+          console.error("Error fetching products:", error);
+        }
+      } catch (err) {
+        console.error("Fetch timed out or failed:", err);
+      } finally {
+        if (mounted) setLoading(false);
       }
-      setLoading(false);
     };
 
     fetchProducts();
+    
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   const fadeUp = {
@@ -72,7 +91,7 @@ export default function LeVisagePage() {
 
 
     displayProducts.forEach((p) => {
-      const brand = p.brand || "Other";
+      const brand = p.brand || "Le Visage Plus";
       if (!map[brand]) map[brand] = [];
       map[brand].push(p as Product);
     });

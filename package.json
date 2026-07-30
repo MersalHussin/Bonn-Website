@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-"dev": "next dev",
+"dev": "next dev --turbo",
     "build": "next build",
     "postbuild": "next-sitemap",
     "start": "next start",
@@ -14,8 +14,6 @@
     "@prisma/client": "^6.12.0",
     "@react-google-maps/api": "^2.20.8",
     "@react-oauth/google": "^0.13.4",
-    "@react-three/drei": "^10.6.1",
-    "@react-three/fiber": "^9.3.0",
     "@supabase/supabase-js": "^2.90.0",
     "@videojs/react": "^10.0.0-beta.24",
     "arabic-persian-reshaper": "^1.0.1",
@@ -49,8 +47,7 @@
     "react-select": "^5.10.2",
     "resend": "^6.17.2",
     "sonner": "^2.0.7",
-    "swiper": "^12.0.1",
-    "three": "^0.179.1"
+    "swiper": "^12.0.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

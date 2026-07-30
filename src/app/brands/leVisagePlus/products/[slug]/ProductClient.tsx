@@ -27,7 +27,7 @@ export default function ProductClient({ product }: { product: any }) {
       <section className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
         <div className="w-full aspect-square relative rounded-[2rem] overflow-hidden bg-white shadow-xl border border-gray-100">
           <Image 
-            src={product.images[0] || "/placeholder.png"} 
+            src={product.images?.[0] || "/placeholder.png"} 
             alt={isArabic ? product.name_ar : product.name_en}
             fill
             className="object-cover"
@@ -41,7 +41,7 @@ export default function ProductClient({ product }: { product: any }) {
 
         <div className="space-y-6 pt-4">
           <div className="text-sm font-bold text-lv-main uppercase tracking-widest">
-            {product.category?.join(" • ")}
+            {product.category?.join(" • ") || ""}
           </div>
           
           <h1 className="text-4xl lg:text-5xl font-extrabold text-gray-900 leading-tight">
@@ -78,7 +78,7 @@ export default function ProductClient({ product }: { product: any }) {
                   {isArabic ? "المكونات الرئيسية" : "Key Ingredients"}
                 </h3>
                 <ul className="list-disc list-inside text-gray-600 leading-relaxed space-y-1">
-                  {(isArabic ? product.ingredients_ar : product.ingredients_en).map((ing: string, idx: number) => (
+                  {((isArabic ? product.ingredients_ar : product.ingredients_en) || []).map((ing: string, idx: number) => (
                     <li key={idx}>{ing}</li>
                   ))}
                 </ul>

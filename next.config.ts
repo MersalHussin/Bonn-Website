@@ -38,6 +38,9 @@ const nextConfig: NextConfig = {
     ],
   },
   serverExternalPackages: ['googleapis', 'firebase-admin'],
+  turbopack: {
+    root: import.meta.dirname,
+  },
 };
 
 export default nextConfig;
