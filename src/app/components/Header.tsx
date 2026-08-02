@@ -569,7 +569,7 @@ useEffect(() => {
                               {brands.map((brand: any) => {
                                 const brandName = i18n.language === "ar" ? brand.name_ar : brand.name_en;
                                 return (
-                                  <Link key={brand.slug} href={`/brands/${brand.slug}`} dir={i18n.language === "ar" ? "rtl" : "ltr"} onClick={() => { setBrandsOpen(false); setIsOpen(false); }} className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-main/5 transition">
+                                  <Link key={brand.slug} href={brand.externalLink ? brand.externalLink : `/brands/${brand.slug}`} target={brand.externalLink ? "_blank" : undefined} rel={brand.externalLink ? "noopener noreferrer" : undefined} dir={i18n.language === "ar" ? "rtl" : "ltr"} onClick={() => { setBrandsOpen(false); setIsOpen(false); }} className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-main/5 transition">
                                     <div className="min-w-[40px] flex justify-center bg-white p-1 rounded-md shadow-sm border border-gray-100">
                                       <Image src={brand.logo} alt={brandName} width={36} height={20} className="object-contain" />
                                     </div>

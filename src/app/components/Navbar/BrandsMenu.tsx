@@ -25,12 +25,14 @@ export default function BrandsMenu({ isOpen, closeMenus, mounted, t, i18n }: IPr
           style={{ originY: 0, transform: "translateZ(0)" }}
           className="absolute top-[100%] mt-4 bg-white shadow-xl border border-gray-100 z-50 rounded-2xl overflow-hidden w-[260px] ltr:left-0 rtl:right-0 flex flex-col p-2"
         >
-          {brands.map((brand) => {
+          {brands.map((brand: any) => {
             const brandName = mounted && i18n.language === "ar" ? brand.name_ar : brand.name_en;
             return (
               <Link
                 key={brand.slug}
-                href={`/brands/${brand.slug}`}
+                href={brand.externalLink ? brand.externalLink : `/brands/${brand.slug}`}
+                target={brand.externalLink ? "_blank" : undefined}
+                rel={brand.externalLink ? "noopener noreferrer" : undefined}
                 dir={i18n.language === "ar" ? "rtl" : "ltr"}
                 onClick={closeMenus}
                 className="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition group border border-transparent hover:border-slate-100"

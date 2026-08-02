@@ -34,6 +34,7 @@ export const brands = [
     name_ar: "لو فيزاج بلس",
     slug: "leVisagePlus",
     logo: "/images/Visage.png",
+    externalLink: "https://levisage.bonnmed.com/",
   },
   {
     name_en: "Vert",
