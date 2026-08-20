@@ -28,6 +28,7 @@ export const brands = [
     name_ar: "كوفيكس كير",
     slug: "covix-care",
     logo: "/images/covix.png",
+    externalLink: "https://covixcare.bonnmed.com/",
   },
   {
     name_en: "Le Visage Plus",

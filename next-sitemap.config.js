@@ -14,7 +14,7 @@ module.exports = {
       '/services',
       '/registration',
       '/contact',
-      '/covix-care',
+      '/brands',
     ];
 
     return paths.map((path) => ({
