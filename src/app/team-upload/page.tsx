@@ -62,7 +62,8 @@ export default function TeamUploadPage() {
           name_en: nameEn || null,
           title_ar: titleAr, 
           title_en: titleEn || null,
-          image_url: imageUrl || null
+          image_url: imageUrl || null,
+          is_visible: false
       });
 
       if (!result.success) throw new Error(result.error);

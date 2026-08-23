@@ -80,6 +80,7 @@ export default function AboutUsPage() {
       const { data, error } = await supabase
         .from('team_members')
         .select('*')
+        .eq('is_visible', true)
         .order('created_at', { ascending: true })
         .limit(3);
 

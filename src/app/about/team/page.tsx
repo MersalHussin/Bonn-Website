@@ -36,6 +36,7 @@ export default function TeamPage() {
       const { data, error } = await supabase
         .from('team_members')
         .select('*')
+        .eq('is_visible', true)
         .order('created_at', { ascending: true });
 
       if (!error && data) {

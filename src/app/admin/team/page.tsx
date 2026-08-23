@@ -22,6 +22,7 @@ interface TeamMember {
   title_en: string;
   image_url: string;
   created_at: string;
+  is_visible: boolean;
 }
 
 export default function TeamAdminPage() {
@@ -30,6 +31,7 @@ export default function TeamAdminPage() {
   const [nameEn, setNameEn] = useState('');
   const [titleEn, setTitleEn] = useState('');
   const [imageUrl, setImageUrl] = useState('');
+  const [isVisible, setIsVisible] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
   
   const [activeTab, setActiveTab] = useState<'ar' | 'en'>('ar');
@@ -83,6 +85,7 @@ export default function TeamAdminPage() {
     setNameEn(member.name_en || '');
     setTitleEn(member.title_en || '');
     setImageUrl(member.image_url || '');
+    setIsVisible(member.is_visible ?? false);
     
     setActiveTab('ar');
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -94,6 +97,7 @@ export default function TeamAdminPage() {
     setNameEn('');
     setTitleEn('');
     setImageUrl('');
+    setIsVisible(false);
     setEditingId(null);
     setActiveTab('ar');
   };
@@ -109,7 +113,8 @@ export default function TeamAdminPage() {
             name_en: nameEn || null,
             title_ar: titleAr, 
             title_en: titleEn || null,
-            image_url: imageUrl || null
+            image_url: imageUrl || null,
+            is_visible: isVisible
         });
 
         if (!result.success) throw new Error(result.error);
@@ -125,7 +130,8 @@ export default function TeamAdminPage() {
             name_en: nameEn || null,
             title_ar: titleAr, 
             title_en: titleEn || null,
-            image_url: imageUrl || null
+            image_url: imageUrl || null,
+            is_visible: isVisible
         });
 
         if (!result.success) throw new Error(result.error);
@@ -264,6 +270,32 @@ export default function TeamAdminPage() {
                 folder="Team member"
               />
 
+              <div className="flex items-center justify-between p-4 bg-gray-50 rounded-xl border border-gray-200">
+                <div>
+                  <h3 className="text-sm font-semibold text-gray-900">حالة الظهور</h3>
+                  <p className="text-xs text-gray-500 mt-1">
+                    {isVisible ? 'العضو سيظهر في صفحة الفريق' : 'العضو مخفي ولن يظهر في صفحة الفريق'}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setIsVisible(!isVisible)}
+                  className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-main focus:ring-offset-2 ${
+                    isVisible ? 'bg-main' : 'bg-gray-200'
+                  }`}
+                  role="switch"
+                  aria-checked={isVisible}
+                >
+                  <span className="sr-only">Toggle visibility</span>
+                  <span
+                    aria-hidden="true"
+                    className={`inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
+                      isVisible ? '-translate-x-5' : 'translate-x-0'
+                    }`}
+                  />
+                </button>
+              </div>
+
               <button
                 type="submit"
                 disabled={loading}
@@ -327,9 +359,14 @@ export default function TeamAdminPage() {
                       </div>
                       
                       <div className="flex-1 w-full min-w-0 text-center">
-                        <h3 className="text-lg font-bold text-gray-900 mb-1">
-                          {member.name_ar}
-                        </h3>
+                        <div className="flex justify-center items-center gap-2 mb-1">
+                          <h3 className="text-lg font-bold text-gray-900">
+                            {member.name_ar}
+                          </h3>
+                          <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${member.is_visible ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'}`}>
+                            {member.is_visible ? 'ظاهر' : 'مخفي'}
+                          </span>
+                        </div>
                         <p className="text-main text-sm font-semibold">
                           {member.title_ar}
                         </p>
