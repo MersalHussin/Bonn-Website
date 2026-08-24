@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
 import Container from "./Container";
 import { supabase } from "../lib/supabaseClient";
+import { Turnstile } from "@marsidev/react-turnstile";
 
 export default function ContactDetailed() {
   const { t, i18n } = useTranslation();
@@ -19,6 +20,7 @@ export default function ContactDetailed() {
   });
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState<string>("");
 
   const handleEmailClick = (e: React.MouseEvent<HTMLAnchorElement>, email: string) => {
     e.preventDefault();
@@ -38,22 +40,29 @@ export default function ContactDetailed() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
+    if (!turnstileToken) {
+      toast.error(i18n.language === "ar" ? "يرجى إكمال التحقق الأمني أولاً" : "Please complete the security check first");
+      return;
+    }
+
     setIsSubmitting(true);
     
     try {
-      const { error } = await supabase
-        .from('contact_messages')
-        .insert([
-          {
-            name: formData.name,
-            email: formData.email,
-            phone: formData.phone || null,
-            subject: formData.subject,
-            message: formData.message,
-          }
-        ]);
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...formData,
+          turnstileToken,
+        }),
+      });
 
-      if (error) throw error;
+      const result = await res.json();
+
+      if (!result.success) {
+        throw new Error(result.message || "Failed to submit");
+      }
 
       setSubmitted(true);
       setFormData({
@@ -63,6 +72,7 @@ export default function ContactDetailed() {
         subject: t("options.general"),
         message: "",
       });
+      setTurnstileToken("");
       
       setTimeout(() => {
         setSubmitted(false);
@@ -239,6 +249,15 @@ export default function ContactDetailed() {
               className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-main/20 focus:border-main transition resize-none bg-gray-50/50"
             ></textarea>
             
+            {/* ويدجت الكابتشا المخفية */}
+            <Turnstile
+              siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+              onSuccess={(token) => setTurnstileToken(token)}
+              onError={() => setTurnstileToken("")}
+              onExpire={() => setTurnstileToken("")}
+              options={{ size: 'invisible' }}
+            />
+            
             <button
               type="submit"
               disabled={isSubmitting}
@@ -247,6 +266,23 @@ export default function ContactDetailed() {
               {isSubmitting ? (isRTL ? "جاري الإرسال..." : "Sending...") : t("send")}
             </button>
 
+            <p className="text-xs text-gray-500 mt-4 text-center">
+              {isRTL ? (
+                <>
+                  هذا الموقع محمي بواسطة Cloudflare Turnstile وتطبق عليه 
+                  <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer" className="text-main hover:underline mx-1">سياسة الخصوصية</a>
+                  و
+                  <a href="https://www.cloudflare.com/website-terms/" target="_blank" rel="noopener noreferrer" className="text-main hover:underline mx-1">شروط الخدمة</a>.
+                </>
+              ) : (
+                <>
+                  This site is protected by Cloudflare Turnstile and the Cloudflare 
+                  <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer" className="text-main hover:underline mx-1">Privacy Policy</a>
+                  and
+                  <a href="https://www.cloudflare.com/website-terms/" target="_blank" rel="noopener noreferrer" className="text-main hover:underline mx-1">Terms of Service</a> apply.
+                </>
+              )}
+            </p>
             <AnimatePresence>
               {submitted && (
                 <motion.p 
