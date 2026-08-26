@@ -12,6 +12,28 @@ export async function POST(req: Request) {
     const sheets = getSheetsClient();
     const body = await req.json();
 
+    const turnstileToken = body.turnstileToken;
+
+    if (!turnstileToken) {
+      return NextResponse.json({ success: false, message: "رمز الكابتشا مفقود" }, { status: 400 });
+    }
+
+    // Verify Cloudflare Turnstile
+    const verifyRes = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        secret: process.env.TURNSTILE_SECRET_KEY!,
+        response: turnstileToken,
+      }),
+    });
+
+    const verifyData = await verifyRes.json();
+
+    if (!verifyData.success) {
+      return NextResponse.json({ success: false, message: "فشل التحقق الأمني" }, { status: 403 });
+    }
+
     const values = [
       [
         body.companyName,

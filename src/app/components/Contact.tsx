@@ -1,13 +1,14 @@
 "use client";
 
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaYoutube, FaLinkedin, FaTiktok, FaCheckCircle, FaHeadset, FaGlobe, FaHandshake } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { toast } from "sonner";
 import Container from "./Container";
 import SectionTitle from "./SectionTitle";
+import { Turnstile } from "@marsidev/react-turnstile";
 export default function ContactUs() {
   const { t, i18n } = useTranslation();
 
@@ -24,6 +25,8 @@ export default function ContactUs() {
   const [isSubscribing, setIsSubscribing] = useState(false);
   const [isNewsletterModalOpen, setIsNewsletterModalOpen] = useState(false);
   const [newsletterError, setNewsletterError] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const turnstileRef = useRef<any>(null);
 
   const handleNewsletterSubmit = async () => {
     setNewsletterError("");
@@ -33,13 +36,18 @@ export default function ContactUs() {
       return;
     }
     
+    if (!turnstileToken) {
+      setNewsletterError(i18n.language === "ar" ? "يرجى إكمال التحقق الأمني أولاً" : "Please complete the security check first");
+      return;
+    }
+
     setIsSubscribing(true);
     
     try {
       const res = await fetch("/api/newsletter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: newsletterEmail }),
+        body: JSON.stringify({ email: newsletterEmail, turnstileToken }),
       });
       
       const data = await res.json();
@@ -50,10 +58,12 @@ export default function ContactUs() {
       
       setIsNewsletterModalOpen(true);
       setNewsletterEmail("");
+      setTurnstileToken("");
     } catch (error: any) {
       setNewsletterError(error.message || (i18n.language === "ar" ? "حدث خطأ ما، يرجى المحاولة لاحقاً" : "An error occurred, please try again"));
     } finally {
       setIsSubscribing(false);
+      turnstileRef.current?.reset();
     }
   };
 
@@ -198,6 +208,33 @@ export default function ContactUs() {
                 {newsletterError}
               </motion.p>
             )}
+
+            <Turnstile
+              ref={turnstileRef}
+              siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+              onSuccess={(token) => setTurnstileToken(token)}
+              onError={() => setTurnstileToken("")}
+              onExpire={() => setTurnstileToken("")}
+              options={{ size: 'invisible' }}
+            />
+
+            <p className="text-xs text-gray-400 mt-3 px-1">
+              {isRTL ? (
+                <>
+                  هذا الموقع محمي بواسطة Cloudflare Turnstile وتطبق عليه 
+                  <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer" className="text-main hover:underline mx-1">سياسة الخصوصية</a>
+                  و
+                  <a href="https://www.cloudflare.com/website-terms/" target="_blank" rel="noopener noreferrer" className="text-main hover:underline mx-1">شروط الخدمة</a>.
+                </>
+              ) : (
+                <>
+                  This site is protected by Cloudflare Turnstile and the Cloudflare 
+                  <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer" className="text-main hover:underline mx-1">Privacy Policy</a>
+                  and
+                  <a href="https://www.cloudflare.com/website-terms/" target="_blank" rel="noopener noreferrer" className="text-main hover:underline mx-1">Terms of Service</a> apply.
+                </>
+              )}
+            </p>
           </div>
         </div>
 

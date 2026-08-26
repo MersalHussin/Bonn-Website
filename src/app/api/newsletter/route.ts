@@ -7,7 +7,27 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: Request) {
   try {
-    const { email } = await request.json();
+    const { email, turnstileToken } = await request.json();
+
+    if (!turnstileToken) {
+      return NextResponse.json({ error: "رمز الكابتشا مفقود" }, { status: 400 });
+    }
+
+    // Verify Cloudflare Turnstile
+    const verifyRes = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        secret: process.env.TURNSTILE_SECRET_KEY!,
+        response: turnstileToken,
+      }),
+    });
+
+    const verifyData = await verifyRes.json();
+
+    if (!verifyData.success) {
+      return NextResponse.json({ error: "فشل التحقق الأمني" }, { status: 403 });
+    }
 
     if (!email || !email.includes('@')) {
       return NextResponse.json(

@@ -9,6 +9,7 @@ import ReactCountryFlag from "react-country-flag";
 import { components } from "react-select";
 import Link from "next/link";
 import Breadcrumb from "../components/Breadcrumb";
+import { Turnstile } from "@marsidev/react-turnstile";
 
 const countries = [
   { value: "AF", label: "Afghanistan (أفغانستان)", code: "AF" },
@@ -284,6 +285,8 @@ export default function FullClientEvaluationForm() {
   const [selectedCountry, setSelectedCountry] = useState<CountryOption | null>(null);
   const [successMessage, setSuccessMessage] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState<string>("");
+  const turnstileRef = useRef<any>(null);
 
   const isStepCompleted = (stepIndex: number): boolean => {
     switch (stepIndex) {
@@ -465,12 +468,17 @@ export default function FullClientEvaluationForm() {
       return;
     }
 
+    if (!turnstileToken) {
+      alert(isRTL ? "يرجى إكمال التحقق الأمني أولاً" : "Please complete the security check first");
+      return;
+    }
+
     if (isSubmitting) return;
 
     setIsSubmitting(true);
 
     try {
-      const payload = { ...formData };
+      const payload = { ...formData, turnstileToken };
 
       const res = await fetch("/api/sheet", {
         method: "POST",
@@ -499,6 +507,7 @@ export default function FullClientEvaluationForm() {
       alert("حدث خطأ غير متوقع. شوف الـ console.");
     } finally {
       setIsSubmitting(false);
+      turnstileRef.current?.reset();
     }
   };
 
@@ -1233,6 +1242,37 @@ export default function FullClientEvaluationForm() {
               </motion.div>
             )}
           </AnimatePresence>
+
+          {/* Turnstile & Privacy Info (Only on last step) */}
+          {currentStep === 6 && (
+            <div className="mt-6 flex flex-col items-center">
+              <Turnstile
+                ref={turnstileRef}
+                siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+                onSuccess={(token) => setTurnstileToken(token)}
+                onError={() => setTurnstileToken("")}
+                onExpire={() => setTurnstileToken("")}
+                options={{ size: 'invisible' }}
+              />
+              <p className="text-xs text-gray-500 mt-2 text-center max-w-md">
+                {isRTL ? (
+                  <>
+                    هذا الموقع محمي بواسطة Cloudflare Turnstile وتطبق عليه 
+                    <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer" className="text-main hover:underline mx-1">سياسة الخصوصية </a>
+                    و
+                    <a href="https://www.cloudflare.com/website-terms/" target="_blank" rel="noopener noreferrer" className="text-main hover:underline mx-1">شروط الخدمة</a>.
+                  </>
+                ) : (
+                  <>
+                    This site is protected by Cloudflare Turnstile and the Cloudflare 
+                    <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer" className="text-main hover:underline mx-1">Privacy Policy</a>
+                    and
+                    <a href="https://www.cloudflare.com/website-terms/" target="_blank" rel="noopener noreferrer" className="text-main hover:underline mx-1">Terms of Service</a> apply.
+                  </>
+                )}
+              </p>
+            </div>
+          )}
 
           {/* Buttons Area */}
           <div className="flex justify-between items-center mt-6 pt-4 border-t border-gray-100 gap-4">

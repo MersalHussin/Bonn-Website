@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaCheckCircle, FaHeadset, FaGlobe, FaHandshake } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
@@ -21,6 +21,7 @@ export default function ContactDetailed() {
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState<string>("");
+  const turnstileRef = useRef<any>(null);
 
   const handleEmailClick = (e: React.MouseEvent<HTMLAnchorElement>, email: string) => {
     e.preventDefault();
@@ -82,6 +83,7 @@ export default function ContactDetailed() {
       toast.error(i18n.language === "ar" ? "حدث خطأ أثناء الإرسال" : "An error occurred while sending");
     } finally {
       setIsSubmitting(false);
+      turnstileRef.current?.reset();
     }
   };
 
@@ -251,6 +253,7 @@ export default function ContactDetailed() {
             
             {/* ويدجت الكابتشا المخفية */}
             <Turnstile
+              ref={turnstileRef}
               siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
               onSuccess={(token) => setTurnstileToken(token)}
               onError={() => setTurnstileToken("")}
