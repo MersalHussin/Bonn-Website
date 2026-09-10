@@ -38,6 +38,13 @@ export const brands = [
     externalLink: "https://levisage.bonnmed.com/",
   },
   {
+    name_en: "Sensa",
+    name_ar: "سينسا",
+    slug: "sensa",
+    logo: "/images/Sensa.png",
+    externalLink: "https://sensa.bonnmed.com/",
+  },
+  {
     name_en: "Vert",
     name_ar: "فيرت",
     slug: "vert",
