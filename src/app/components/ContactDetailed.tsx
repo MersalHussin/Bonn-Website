@@ -142,11 +142,24 @@ export default function ContactDetailed() {
               </div>
             </div>
 
+    <div className="flex items-start gap-4">
+              <div className="w-12 h-12 bg-main/10 rounded-full flex items-center justify-center shrink-0">
+                <FaHandshake className="text-xl text-main" />
+              </div>
+              <div>
+                <h4 className="font-semibold text-gray-900">{isRTL ? "المبيعات الحكومية ( نوبكو )" : "Government Sales (NUPCO)"}</h4>
+           <a href="mailto:Omar.nabil@bonnmed.com" onClick={(e) => handleEmailClick(e, "Omar.nabil@bonnmed.com")} className="flex items-center gap-3 text-gray-600 hover:text-main transition-colors text-sm">
+                    <FaEnvelope className="text-main/70 shrink-0" /> Omar.nabil@bonnmed.com
+                  </a>
+              </div>
+            </div>
+
             {/* Export & Private Label */}
             <div className="flex items-start gap-4">
               <div className="w-12 h-12 bg-main/10 rounded-full flex items-center justify-center shrink-0">
                 <FaGlobe className="text-xl text-main" />
               </div>
+              
               <div>
                 <h4 className="font-semibold text-gray-900">{isRTL ? "التصديرو التصنيع" : "Export & Private Label"}</h4>
                 <div className="mt-2 space-y-2">
@@ -162,6 +175,7 @@ export default function ContactDetailed() {
                 </div>
               </div>
             </div>
+            
 
             {/* Sales */}
             <div className="flex items-start gap-4">
