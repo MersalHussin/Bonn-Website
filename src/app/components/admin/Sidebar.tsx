@@ -18,6 +18,8 @@ import {
   HelpCircle,
   ChevronDown,
   ChevronUp,
+  Menu,
+  X
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAdminAuth } from "../../context/AdminAuthContext";
@@ -34,12 +36,30 @@ export default function Sidebar() {
     pathname.startsWith("/admin/customers");
 
   const [isCustomersOpen, setIsCustomersOpen] = useState(isCustomerSectionActive);
+  const [activeMobileSheet, setActiveMobileSheet] = useState<"customers" | "content" | "menu" | null>(null);
 
   useEffect(() => {
     if (isCustomerSectionActive) {
       setIsCustomersOpen(true);
     }
   }, [pathname, isCustomerSectionActive]);
+
+  useEffect(() => {
+    // Close mobile sheets on route change
+    setActiveMobileSheet(null);
+  }, [pathname]);
+
+  // Lock body scroll when a mobile sheet is open
+  useEffect(() => {
+    if (activeMobileSheet) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [activeMobileSheet]);
 
   const handleLogout = async () => {
     try {
@@ -66,10 +86,15 @@ export default function Sidebar() {
     { name: "الفريق", href: "/admin/team", icon: Users },
   ];
 
-  const allItems = [
-    menuItems[0],
-    ...customerSubItems,
-    ...menuItems.slice(1)
+  const contentSubItems = [
+    { name: "إدارة الأسئلة الشائعة", href: "/admin/faqs", icon: HelpCircle },
+    { name: "المقالات", href: "/admin/blog", icon: FileText },
+    { name: "الأخبار", href: "/admin/news", icon: Newspaper },
+  ];
+
+  const moreSubItems = [
+    { name: "الوظائف", href: "/admin/jobs", icon: Briefcase },
+    { name: "الفريق", href: "/admin/team", icon: Users },
   ];
 
   return (
@@ -192,43 +217,183 @@ export default function Sidebar() {
         </div>
       </aside>
 
-      {/* Mobile Bottom Navigation */}
+      {/* Mobile Bottom Navigation (Native App Style) */}
       <nav 
         dir="rtl" 
-        className="md:hidden flex items-center overflow-x-auto bg-[#04349C] text-white fixed bottom-0 left-0 right-0 z-[2147483647] h-[75px] shadow-[0_-4px_20px_rgba(0,0,0,0.1)] pb-[env(safe-area-inset-bottom)]"
-        style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}
+        className="md:hidden flex items-center justify-around bg-[#ffffff] border-t border-gray-200 text-gray-500 fixed bottom-0 left-0 right-0 z-[2147483647] h-[75px] pb-[env(safe-area-inset-bottom)] px-2 shadow-[0_-4px_15px_rgba(0,0,0,0.05)]"
       >
-        <style dangerouslySetInnerHTML={{ __html: `
-          nav::-webkit-scrollbar { display: none; }
-        `}} />
-        {allItems.map((item) => {
-          const isActive = pathname === item.href;
-          const Icon = item.icon;
-
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`flex flex-col items-center justify-center min-w-[76px] px-2 h-full gap-1.5 transition-all ${
-                isActive ? "text-white" : "text-white/60 hover:text-white/90"
-              }`}
-            >
-              <Icon size={20} strokeWidth={isActive ? 2.5 : 1.8} className={isActive ? "drop-shadow-md" : ""} />
-              <span className={`text-[10px] whitespace-nowrap ${isActive ? "font-bold" : "font-medium"}`}>
-                {item.name}
-              </span>
-            </Link>
-          );
-        })}
-        {/* Mobile Logout */}
-        <button 
-          onClick={handleLogout} 
-          className="flex flex-col items-center justify-center min-w-[76px] px-2 h-full gap-1.5 text-white/60 hover:text-red-400 transition-all cursor-pointer"
+        {/* 1. Dashboard Tab */}
+        <Link
+          href="/admin"
+          onClick={() => setActiveMobileSheet(null)}
+          className={`flex flex-col items-center justify-center w-[70px] h-full gap-1 transition-all ${
+            pathname === "/admin" && !activeMobileSheet ? "text-[#04349C]" : "text-gray-500 hover:text-gray-900"
+          }`}
         >
-          <LogOut size={20} strokeWidth={1.8} />
-          <span className="text-[10px] whitespace-nowrap font-medium">خروج</span>
+          <LayoutDashboard size={22} strokeWidth={pathname === "/admin" && !activeMobileSheet ? 2.5 : 2} />
+          <span className={`text-[11px] whitespace-nowrap ${pathname === "/admin" && !activeMobileSheet ? "font-bold" : "font-medium"}`}>
+            الرئيسية
+          </span>
+        </Link>
+
+        {/* 2. Customers Tab */}
+        <button
+          onClick={() => setActiveMobileSheet(activeMobileSheet === "customers" ? null : "customers")}
+          className={`flex flex-col items-center justify-center w-[70px] h-full gap-1 transition-all ${
+            activeMobileSheet === "customers" || (isCustomerSectionActive && !activeMobileSheet) ? "text-[#04349C]" : "text-gray-500 hover:text-gray-900"
+          }`}
+        >
+          <Users size={22} strokeWidth={activeMobileSheet === "customers" || (isCustomerSectionActive && !activeMobileSheet) ? 2.5 : 2} />
+          <span className={`text-[11px] whitespace-nowrap ${activeMobileSheet === "customers" || (isCustomerSectionActive && !activeMobileSheet) ? "font-bold" : "font-medium"}`}>
+            العملاء
+          </span>
+        </button>
+
+        {/* 3. Content Tab */}
+        <button
+          onClick={() => setActiveMobileSheet(activeMobileSheet === "content" ? null : "content")}
+          className={`flex flex-col items-center justify-center w-[70px] h-full gap-1 transition-all ${
+            activeMobileSheet === "content" || (contentSubItems.some(i => pathname === i.href) && !activeMobileSheet) ? "text-[#04349C]" : "text-gray-500 hover:text-gray-900"
+          }`}
+        >
+          <FileText size={22} strokeWidth={activeMobileSheet === "content" || (contentSubItems.some(i => pathname === i.href) && !activeMobileSheet) ? 2.5 : 2} />
+          <span className={`text-[11px] whitespace-nowrap ${activeMobileSheet === "content" || (contentSubItems.some(i => pathname === i.href) && !activeMobileSheet) ? "font-bold" : "font-medium"}`}>
+            المحتوى
+          </span>
+        </button>
+
+        {/* 4. Menu Tab */}
+        <button
+          onClick={() => setActiveMobileSheet(activeMobileSheet === "menu" ? null : "menu")}
+          className={`flex flex-col items-center justify-center w-[70px] h-full gap-1 transition-all ${
+            activeMobileSheet === "menu" || (moreSubItems.some(i => pathname === i.href) && !activeMobileSheet) ? "text-[#04349C]" : "text-gray-500 hover:text-gray-900"
+          }`}
+        >
+          <Menu size={22} strokeWidth={activeMobileSheet === "menu" || (moreSubItems.some(i => pathname === i.href) && !activeMobileSheet) ? 2.5 : 2} />
+          <span className={`text-[11px] whitespace-nowrap ${activeMobileSheet === "menu" || (moreSubItems.some(i => pathname === i.href) && !activeMobileSheet) ? "font-bold" : "font-medium"}`}>
+            القائمة
+          </span>
         </button>
       </nav>
+
+      {/* Mobile Bottom Sheets */}
+      <AnimatePresence>
+        {activeMobileSheet && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="md:hidden mobile-sheet-overlay"
+              onClick={() => setActiveMobileSheet(null)}
+            />
+
+            {/* Sheet Content */}
+            <motion.div
+              dir="rtl"
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="md:hidden mobile-sheet-container"
+            >
+              {/* Handle bar for visual cue */}
+              <div className="w-full flex justify-center pt-3 pb-1">
+                <div className="w-12 h-1.5 bg-gray-200 rounded-full" />
+              </div>
+
+              {/* Sheet Header */}
+              <div className="flex items-center justify-between px-5 py-3 border-b border-gray-100">
+                <h3 className="font-bold text-lg text-gray-800">
+                  {activeMobileSheet === "customers" && "من العملاء"}
+                  {activeMobileSheet === "content" && "إدارة المحتوى"}
+                  {activeMobileSheet === "menu" && "المزيد"}
+                </h3>
+                <button
+                  onClick={() => setActiveMobileSheet(null)}
+                  className="p-1 text-gray-400 hover:text-gray-600 bg-gray-50 rounded-full"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              {/* Sheet Links */}
+              <div className="p-4 space-y-2">
+                {activeMobileSheet === "customers" && customerSubItems.map(item => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setActiveMobileSheet(null)}
+                    className={`flex items-center gap-3 p-4 rounded-xl transition-all ${
+                      pathname === item.href ? "bg-[#04349C]/10 text-[#04349C] font-bold" : "bg-gray-50 text-gray-700 hover:bg-gray-100"
+                    }`}
+                  >
+                    <div className={`p-2 rounded-lg ${pathname === item.href ? "bg-[#04349C] text-white" : "bg-white text-gray-500 shadow-sm"}`}>
+                      <item.icon size={20} strokeWidth={pathname === item.href ? 2.5 : 2} />
+                    </div>
+                    <span>{item.name}</span>
+                  </Link>
+                ))}
+
+                {activeMobileSheet === "content" && contentSubItems.map(item => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setActiveMobileSheet(null)}
+                    className={`flex items-center gap-3 p-4 rounded-xl transition-all ${
+                      pathname === item.href ? "bg-[#04349C]/10 text-[#04349C] font-bold" : "bg-gray-50 text-gray-700 hover:bg-gray-100"
+                    }`}
+                  >
+                    <div className={`p-2 rounded-lg ${pathname === item.href ? "bg-[#04349C] text-white" : "bg-white text-gray-500 shadow-sm"}`}>
+                      <item.icon size={20} strokeWidth={pathname === item.href ? 2.5 : 2} />
+                    </div>
+                    <span>{item.name}</span>
+                  </Link>
+                ))}
+
+                {activeMobileSheet === "menu" && (
+                  <>
+                    {moreSubItems.map(item => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={() => setActiveMobileSheet(null)}
+                        className={`flex items-center gap-3 p-4 rounded-xl transition-all ${
+                          pathname === item.href ? "bg-[#04349C]/10 text-[#04349C] font-bold" : "bg-gray-50 text-gray-700 hover:bg-gray-100"
+                        }`}
+                      >
+                        <div className={`p-2 rounded-lg ${pathname === item.href ? "bg-[#04349C] text-white" : "bg-white text-gray-500 shadow-sm"}`}>
+                          <item.icon size={20} strokeWidth={pathname === item.href ? 2.5 : 2} />
+                        </div>
+                        <span>{item.name}</span>
+                      </Link>
+                    ))}
+
+                    <div className="my-2 border-t border-gray-100" />
+                    
+                    {user?.email && (
+                      <div className="px-4 py-2">
+                         <p className="text-xs text-gray-400">مسجل كـ</p>
+                         <p className="text-sm font-semibold text-gray-700 truncate">{user.email}</p>
+                      </div>
+                    )}
+                    
+                    <button
+                      onClick={handleLogout}
+                      className="w-full flex items-center justify-center gap-2 p-4 mt-2 rounded-xl bg-red-50 text-red-600 hover:bg-red-100 transition-all font-bold"
+                    >
+                      <LogOut size={20} />
+                      <span>تسجيل الخروج</span>
+                    </button>
+                  </>
+                )}
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </>
   );
 }

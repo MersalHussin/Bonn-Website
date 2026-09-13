@@ -41,7 +41,7 @@ export const brands = [
     name_en: "Sensa",
     name_ar: "سينسا",
     slug: "sensa",
-    logo: "/images/Sensa.png",
+    logo: "/images/SENSA.png",
     externalLink: "https://sensa.bonnmed.com/",
   },
   {
