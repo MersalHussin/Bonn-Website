@@ -161,7 +161,7 @@ export default function ContactDetailed() {
               </div>
               
               <div>
-                <h4 className="font-semibold text-gray-900">{isRTL ? "التصديرو التصنيع" : "Export & Private Label"}</h4>
+                <h4 className="font-semibold text-gray-900">{isRTL ? "التصدير و التصنيع" : "Export & Private Label"}</h4>
                 <div className="mt-2 space-y-2">
                   <a href="mailto:Export@bonnmed.com" onClick={(e) => handleEmailClick(e, "Export@bonnmed.com")} className="flex items-center gap-3 text-gray-600 hover:text-main transition-colors text-sm">
                     <FaEnvelope className="text-main/70 shrink-0" /> Export@bonnmed.com
