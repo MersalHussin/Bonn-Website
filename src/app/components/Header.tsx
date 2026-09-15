@@ -427,7 +427,7 @@ useEffect(() => {
               <div className="w-[44px]"></div> {/* Spacer to balance the close button */}
             </div>
 
-            <div className="flex-1 overflow-y-auto pt-6 pb-10 h-20 hide-scrollbar flex flex-col gap-6">
+            <div className="flex-1 overflow-y-auto pt-6 pb-10 hide-scrollbar flex flex-col gap-6">
               {/* Language & Search Top Section */}
               <div className="flex flex-col gap-4">
                 <div className="relative">

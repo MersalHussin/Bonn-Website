@@ -31,7 +31,7 @@ export default function FloatingCTA() {
       animate={show ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
       transition={{ duration: 0.4 }}
       className={`
-fixed bottom-6 left-1/2 -translate-x-1/2 z-[9999]
+fixed bottom-6 left-1/2 -translate-x-1/2 z-[90]
       `}
     >
               <div

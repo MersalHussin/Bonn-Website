@@ -179,7 +179,7 @@ export default function OurMap() {
               attribution={false}
               twoFingerDrag={true}
               provider={(x, y, z) =>
-                `https://a.basemaps.cartocdn.com/light_all/${z}/${x}/${y}@2x.png`
+                `https://a.tile.openstreetmap.org/${z}/${x}/${y}.png`
               }
             >
               {/* Markers & Tooltips */}
