@@ -6,13 +6,14 @@ import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../lib/firebaseConfig";
 import { useRouter } from "next/navigation";
 
-export type Role = "admin" | "super_user" | null;
+export type Role = "admin" | "super_user" | "ceo" | null;
 
 interface AdminAuthContextType {
   user: User | null;
   role: Role;
   loading: boolean;
   isSuperUser: boolean;
+  isCeo: boolean;
 }
 
 const AdminAuthContext = createContext<AdminAuthContextType>({
@@ -20,6 +21,7 @@ const AdminAuthContext = createContext<AdminAuthContextType>({
   role: null,
   loading: true,
   isSuperUser: false,
+  isCeo: false,
 });
 
 export const useAdminAuth = () => useContext(AdminAuthContext);
@@ -39,7 +41,7 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
             const userData = userDoc.data();
             const userRole = userData.role as Role;
             
-            if (userRole === "admin" || userRole === "super_user") {
+            if (userRole === "admin" || userRole === "super_user" || userRole === "ceo") {
               setUser(firebaseUser);
               setRole(userRole);
             } else {
@@ -73,7 +75,8 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
         user,
         role,
         loading,
-        isSuperUser: role === "super_user",
+        isSuperUser: role === "super_user" || role === "ceo",
+        isCeo: role === "ceo",
       }}
     >
       {children}

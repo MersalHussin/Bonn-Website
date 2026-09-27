@@ -30,7 +30,7 @@ export default function AdminLogin() {
           const userDoc = await getDoc(doc(db, "Users", user.uid));
           if (userDoc.exists()) {
             const userData = userDoc.data();
-            if (userData.role === "admin" || userData.role === "super_user") {
+            if (userData.role === "admin" || userData.role === "super_user" || userData.role === "ceo") {
               router.replace("/admin");
             } else {
               setLoading(false);
@@ -75,7 +75,7 @@ export default function AdminLogin() {
       const userDoc = await getDoc(doc(db, "Users", uid));
       if (userDoc.exists()) {
         const userData = userDoc.data();
-        if (userData.role === "admin" || userData.role === "super_user") {
+        if (userData.role === "admin" || userData.role === "super_user" || userData.role === "ceo") {
           router.push("/admin");
           return;
         }

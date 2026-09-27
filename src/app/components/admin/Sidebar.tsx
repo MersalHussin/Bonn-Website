@@ -27,7 +27,7 @@ import { useAdminAuth } from "../../context/AdminAuthContext";
 export default function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
-  const { user, role } = useAdminAuth();
+  const { user, role, isCeo } = useAdminAuth();
 
   const isCustomerSectionActive =
     pathname.startsWith("/admin/clients") ||
@@ -84,6 +84,7 @@ export default function Sidebar() {
     { name: "الأخبار", href: "/admin/news", icon: Newspaper },
     { name: "الوظائف", href: "/admin/jobs", icon: Briefcase },
     { name: "الفريق", href: "/admin/team", icon: Users },
+    ...(isCeo ? [{ name: "إدارة المديرين", href: "/admin/users", icon: Users }] : []),
   ];
 
   const contentSubItems = [
@@ -95,6 +96,7 @@ export default function Sidebar() {
   const moreSubItems = [
     { name: "الوظائف", href: "/admin/jobs", icon: Briefcase },
     { name: "الفريق", href: "/admin/team", icon: Users },
+    ...(isCeo ? [{ name: "إدارة المديرين", href: "/admin/users", icon: Users }] : []),
   ];
 
   return (
