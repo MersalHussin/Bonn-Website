@@ -185,11 +185,11 @@ export default function ContactDetailed() {
               <div>
                 <h4 className="font-semibold text-gray-900">{isRTL ? "المبيعات" : "Sales"}</h4>
                 <div className="mt-2 space-y-2">
-                  <a href="mailto:noureldeen@bonnmed.com" onClick={(e) => handleEmailClick(e, "noureldeen@bonnmed.com")} className="flex items-center gap-3 text-gray-600 hover:text-main transition-colors text-sm">
-                    <FaEnvelope className="text-main/70 shrink-0" /> noureldeen@bonnmed.com
+                  <a href="mailto:mohamed.atif@bonnmed.com" onClick={(e) => handleEmailClick(e, "mohamed.atif@bonnmed.com")} className="flex items-center gap-3 text-gray-600 hover:text-main transition-colors text-sm">
+                    <FaEnvelope className="text-main/70 shrink-0" /> mohamed.atif@bonnmed.com
                   </a>
-                  <a href="tel:+966547341532" className="flex items-center gap-3 text-gray-600 hover:text-main transition-colors text-sm" dir="ltr">
-                    <FaPhone className="text-main/70 shrink-0" /> +966 547 341 532
+                  <a href="tel:+966580347173" className="flex items-center gap-3 text-gray-600 hover:text-main transition-colors text-sm" dir="ltr">
+                    <FaPhone className="text-main/70 shrink-0" /> +966 58 034 7173
                   </a>
                 </div>
               </div>
