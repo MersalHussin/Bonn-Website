@@ -26,6 +26,7 @@ export type Location = {
   brand_color?: string;
   brand_logo?: string;
   brand_key?: string;
+  online_stores?: { name: string; url: string }[];
 };
 
 export default function AdminLocationsPage() {

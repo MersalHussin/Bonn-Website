@@ -45,15 +45,17 @@ export const brands = [
     externalLink: "https://sensa.bonnmed.com/",
   },
   {
-    name_en: "Vert",
-    name_ar: "فيرت",
-    slug: "vert",
-    logo: "/images/Vert.png",
+    name_en: "Havera",
+    name_ar: "هافيرا",
+    slug: "havera",
+    logo: "/images/Havera.png",
+        externalLink: "https://havera.bonnmed.com/",
   },
   {
-    name_en: "Rubin",
-    name_ar: "روبين",
-    slug: "rubin",
-    logo: "/images/Rubin.png",
+    name_en: "Boon",
+    name_ar: "بون للمكملات الغذائية",
+    slug: "boon",
+    logo: "/images/Logo.svg",
+    externalLink: "https://food.bonnmed.com/",
   }
 ];

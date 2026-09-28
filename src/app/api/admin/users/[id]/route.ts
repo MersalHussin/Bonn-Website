@@ -19,10 +19,11 @@ async function verifyCeo(req: Request) {
   return { db, callerUid: uid };
 }
 
-export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+export async function DELETE(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { db, callerUid } = await verifyCeo(req);
-    const targetUid = params.id;
+    const { id } = await params;
+    const targetUid = id;
 
     if (callerUid === targetUid) {
       return NextResponse.json({ error: "لا يمكنك حذف حسابك الخاص" }, { status: 400 });
@@ -47,10 +48,11 @@ export async function DELETE(req: Request, { params }: { params: { id: string } 
   }
 }
 
-export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+export async function PATCH(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { db, callerUid } = await verifyCeo(req);
-    const targetUid = params.id;
+    const { id } = await params;
+    const targetUid = id;
     const { role, password } = await req.json();
 
     if (callerUid === targetUid && role && role !== "ceo") {

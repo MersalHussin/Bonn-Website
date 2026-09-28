@@ -31,6 +31,7 @@ type LocationData = {
   lng: number;
   active: boolean;
   brand_color?: string;
+  online_stores?: { name: string; url: string }[];
 };
 
 /* ===== MOCK DATA ===== */
@@ -119,8 +120,19 @@ export default function OurMap() {
 
   const [locations, setLocations] = useState<LocationData[]>(MOCK_LOCATIONS);
   const [hovered, setHovered] = useState<string | null>(null);
+  const [selectedLocation, setSelectedLocation] = useState<LocationData | null>(null);
   const [center, setCenter] = useState<[number, number]>([24.7136, 46.6753]);
   const [zoom, setZoom] = useState(4);
+
+  useEffect(() => {
+    const fetchLocations = async () => {
+      const { data, error } = await supabase.from("locations").select("*").eq("active", true);
+      if (!error && data && data.length > 0) {
+        setLocations(data);
+      }
+    };
+    fetchLocations();
+  }, []);
 
 
 
@@ -194,13 +206,13 @@ export default function OurMap() {
                     <div className="absolute -inset-3 bg-main rounded-full animate-ping opacity-30"></div>
                     
                     {/* Marker Dot */}
-                    <div className="relative w-6 h-6 bg-main rounded-full flex items-center justify-center shadow-lg border-[3px] border-white transition-transform duration-300 group-hover:scale-110">
+                    <div className="relative w-6 h-6 bg-main rounded-full flex items-center justify-center shadow-lg border-[3px] border-white transition-transform duration-300 group-hover:scale-110" onClick={() => setSelectedLocation(loc)}>
                       <div className="w-1.5 h-1.5 bg-white rounded-full"></div>
                     </div>
                     
                     {/* Hover Tooltip */}
                     <AnimatePresence>
-                      {hovered === loc.id && (
+                      {hovered === loc.id && selectedLocation?.id !== loc.id && (
                          <motion.div 
                            initial={{ opacity: 0, y: 10 }}
                            animate={{ opacity: 1, y: 0 }}
@@ -211,6 +223,41 @@ export default function OurMap() {
                            {isAr ? loc.name_ar : loc.name_en}
                            <div className="absolute top-full left-1/2 -translate-x-1/2 border-[6px] border-transparent border-t-white"></div>
                          </motion.div>
+                      )}
+                    </AnimatePresence>
+
+                    {/* Click Popup (Online Stores) */}
+                    <AnimatePresence>
+                      {selectedLocation?.id === loc.id && (
+                        <motion.div 
+                          initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                          animate={{ opacity: 1, scale: 1, y: 0 }}
+                          exit={{ opacity: 0, scale: 0.9, y: 10 }}
+                          transition={{ duration: 0.2 }}
+                          className="absolute bottom-full mb-4 left-1/2 -translate-x-1/2 p-4 bg-white text-[#001d4a] text-sm rounded-xl shadow-2xl z-[60] w-64 cursor-default"
+                        >
+                          <div className="flex justify-between items-center mb-2">
+                            <h4 className="font-bold text-lg">{isAr ? loc.name_ar : loc.name_en}</h4>
+                            <button onClick={(e) => { e.stopPropagation(); setSelectedLocation(null); }} className="text-gray-400 hover:text-gray-600">
+                              <X size={16} />
+                            </button>
+                          </div>
+                          
+                          {loc.online_stores && loc.online_stores.length > 0 ? (
+                            <div className="flex flex-col gap-2 mt-3">
+                              <p className="text-gray-500 font-semibold text-xs uppercase">{isAr ? "المتاجر الإلكترونية" : "Online Stores"}</p>
+                              {loc.online_stores.map((store, idx) => (
+                                <a key={idx} href={store.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-slate-50 hover:bg-main/5 p-2 rounded-lg transition-colors border border-gray-100">
+                                  <Globe size={14} className="text-main" />
+                                  <span className="font-medium">{store.name}</span>
+                                </a>
+                              ))}
+                            </div>
+                          ) : (
+                            <p className="text-gray-500 text-sm mt-2">{isAr ? "لا توجد متاجر مضافة حالياً." : "No online stores added yet."}</p>
+                          )}
+                          <div className="absolute top-full left-1/2 -translate-x-1/2 border-[8px] border-transparent border-t-white"></div>
+                        </motion.div>
                       )}
                     </AnimatePresence>
                   </div>

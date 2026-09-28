@@ -19,7 +19,8 @@ import {
   ChevronDown,
   ChevronUp,
   Menu,
-  X
+  X,
+  Globe
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAdminAuth } from "../../context/AdminAuthContext";
@@ -84,6 +85,7 @@ export default function Sidebar() {
     { name: "الأخبار", href: "/admin/news", icon: Newspaper },
     { name: "الوظائف", href: "/admin/jobs", icon: Briefcase },
     { name: "الفريق", href: "/admin/team", icon: Users },
+    { name: "الفروع والمتاجر", href: "/admin/locations", icon: Globe },
     ...(isCeo ? [{ name: "إدارة المديرين", href: "/admin/users", icon: Users }] : []),
   ];
 
@@ -96,6 +98,7 @@ export default function Sidebar() {
   const moreSubItems = [
     { name: "الوظائف", href: "/admin/jobs", icon: Briefcase },
     { name: "الفريق", href: "/admin/team", icon: Users },
+    { name: "الفروع والمتاجر", href: "/admin/locations", icon: Globe },
     ...(isCeo ? [{ name: "إدارة المديرين", href: "/admin/users", icon: Users }] : []),
   ];
 
